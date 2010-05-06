@@ -17,5 +17,5 @@ for word in words:
         print "Entry for '" + word + "':", definition
         print
     else:
-        print word, "is undefined"
+        print "'" + word + "'", "is undefined"
         print

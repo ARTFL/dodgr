@@ -1,5 +1,6 @@
 from base import Base
 
+
 class Separated(Base):
     """Load a dictionary from a tab-separated file. Expects to find one
     entry per line, with a headword, the separator, and then a definition."""

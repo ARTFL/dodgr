@@ -6,4 +6,4 @@ class Base(object):
 
     def load(self):
         """Load a dictionary"""
-        raise Exception('load method to be implemented in descendant class')        
+        raise Exception('load method to be implemented in descendant class')
