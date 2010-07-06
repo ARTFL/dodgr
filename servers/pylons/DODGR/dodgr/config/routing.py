@@ -7,6 +7,7 @@ refer to the routes manual at http://routes.groovie.org/docs/
 from pylons import config
 from routes import Mapper
 
+
 def make_map():
     """Create, configure and return the routes Mapper"""
     map = Mapper(directory=config['pylons.paths']['controllers'],
@@ -20,6 +21,7 @@ def make_map():
 
     # CUSTOM ROUTES HERE
 
+    map.connect('/define/{word}', controller='dodgrdico', action='define')
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
 
