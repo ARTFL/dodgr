@@ -1,5 +1,9 @@
 """The application's Globals object"""
 
+import loaders
+import dico
+
+
 class Globals(object):
 
     """Globals acts as a container for objects available throughout the
@@ -13,3 +17,6 @@ class Globals(object):
         'app_globals' variable
 
         """
+        loader = loaders.Separated('/w/artfl/projects/'
+                            'dodgr/data/test/test.tab')
+        self.dico = dico.Simple(loader)
