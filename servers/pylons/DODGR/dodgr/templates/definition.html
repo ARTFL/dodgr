@@ -1,8 +1,8 @@
 % if c.definitions:
 	% for definition in c.definitions:
 <div class="entry">
-	<div class="headword">${definition[0]}</div>
-	<div class="definition">${definition[1]}</div>
+	<div class="headword">${definition[0] | n}</div>
+	<div class="definition">${definition[1] | n}</div>
 </div>
 	% endfor
 % else:
