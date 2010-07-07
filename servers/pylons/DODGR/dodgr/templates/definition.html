@@ -1,12 +1,22 @@
-% if c.definitions:
-	% for definition in c.definitions:
-<div class="entry">
-	<div class="headword">${definition[0] | n}</div>
-	<div class="definition">${definition[1] | n}</div>
-</div>
-	% endfor
-% else:
-<div class="empty">
-No definitions.
-</div>
-% endif
+${entries(c.definitions)}
+
+<%def name="entries(definitions)">
+    <%def name="entry(definition)">
+		<div class="entry">
+			<div class="headword">${definition[0] | n}</div>
+			<div class="definition">${definition[1] | n}</div>
+		</div>
+    </%def>
+
+	% if c.definitions:
+		Entries for ${c.word}:
+		% for definition in c.definitions:
+			${entry(definition)}
+	    % endfor
+	% else:
+		<div class="empty">
+			No entries for ${c.word}.
+		</div>
+	% endif
+</%def>
+
