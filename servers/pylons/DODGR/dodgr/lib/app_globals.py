@@ -1,7 +1,7 @@
 """The application's Globals object"""
-
-import loaders
+import cPickle
 import dico
+import dico.mappers
 
 
 class Globals(object):
@@ -17,6 +17,7 @@ class Globals(object):
         'app_globals' variable
 
         """
-        loader = loaders.Separated('/w/artfl/projects/'
-                            'dodgr/data/test/test.tab')
-        self.dico = dico.Simple(loader)
+        # TODO: paths should live in config somewhere
+        pickle = open('/w/artfl/corpora/idol/dico_pickles/latest.pickle')
+        self.dico = cPickle.load(pickle)
+        pickle.close()
