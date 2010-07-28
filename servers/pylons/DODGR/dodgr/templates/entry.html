@@ -1,0 +1,26 @@
+<%inherit file="/base.html"/>\
+
+<%def name="title()">Entry for ${c.word}</%def>
+
+${show_entries(c.entries)}
+
+<%def name="show_entries(entries)">
+    <%def name="show_entry(entry)">
+		<div class="entry">
+			<div class="headword">${entry.headwords[0][0] | n}</div>
+			<div class="content">${entry.content | n}</div>
+		</div>
+    </%def>
+
+	% if c.entries:
+		Entries for ${c.word}:
+		% for entry in c.entries:
+			${show_entry(entry)}
+	    % endfor
+	% else:
+		<div class="empty">
+			No entries for ${c.word}.
+		</div>
+	% endif
+</%def>
+
