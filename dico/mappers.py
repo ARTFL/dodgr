@@ -28,6 +28,7 @@ form.
 TODO: mappings for query input strings into strings to match against the 
 index
 """
+import re
 import unicodedata
 
 class Base(object):
@@ -111,3 +112,18 @@ class French(Base):
         
         return forms
 
+class IdolMapper(French):
+    """Mapper for IDOL dictionary"""
+
+    def citation_form(cls, dirty_form):
+        """IDOL has some peculiarities. Headwords are in ALLCAPS, for one.
+        Some of the data contains <sup>...</sup> for different forms of the
+        same headword, and there are other tags."""
+
+        # TODO: remove punctuation... strip - from n-fixes ???
+        clean_form = dirty_form.lower()
+        clean_form = re.sub('<[^>]*>[^<]*<[^>]*>', '', clean_form)
+
+        # TODO: fix masc/fem forms... this just blows away the fem
+        clean_form = re.sub('\s*,.*$', '', clean_form)
+        return clean_form
