@@ -92,3 +92,11 @@ class EntryBased(object):
         except KeyError:
             return None
         return [self._entries[id] for id in entry_ids]
+
+    def get_entry(self, entry_id):
+        """Return a specific entry by id"""
+        try:
+            return self._entries[entry_id]
+        except IndexError:
+            return None
+
