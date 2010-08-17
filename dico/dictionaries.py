@@ -62,7 +62,7 @@ class EntryBased(object):
         entry_id = 0
         for entry_input in loader.load():
             # Don't build entries if there are errors
-            if entry_input['error']:
+            if 'error' in entry_input and entry_input['error']:
                 continue
 
             entry = entries.Entry(prop_dict=entry_input)
