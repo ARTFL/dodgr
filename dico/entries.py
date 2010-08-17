@@ -45,7 +45,10 @@ class Entry(object):
 
         entry = u'Headwords:\n'
         for hw in self.headwords:
-            entry += hw[0] + ' (' + hw[1] + ')\n'
+            if hw[1]:
+                entry += hw[0] + ' (' + hw[1] + ')\n'
+            else:
+                entry += hw[0] + '\n'
         if self.prons:
             entry += 'Prons: ' + ', '.join(self.prons) + '\n'
         if self.examples:
