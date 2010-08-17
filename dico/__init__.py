@@ -1,2 +1,2 @@
-from dictionaries import Simple, EntryBased
+from dictionaries import Simple, EntryBased, Stack
 import mappers
