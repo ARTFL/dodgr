@@ -43,7 +43,9 @@ class Simple(object):
 class EntryBased(object):
     """A dictionary organized as a collection of Entry objects"""
 
-    def __init__(self, loader, mapper):
+    def __init__(self, name, citation, loader, mapper):
+        self.name = name
+        self.citation = citation
         self.mapper = mapper
         self._index = {}
         self._headwords = []
