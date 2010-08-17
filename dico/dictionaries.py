@@ -100,3 +100,47 @@ class EntryBased(object):
         except IndexError:
             return None
 
+
+class Stack(object):
+    """Container for a collection of dictionaries"""
+
+    def __init__(self, dicos=[]):
+        """Create the stack"""
+        self.dicos = []
+        for dico in dicos:
+            self.add_dico(dico)
+
+    def __len__(self):
+        """Length of the stack is the number of dicos it contains"""
+        return len(self._dicos)
+
+    def __iter__(self):
+        """Yielded dicos upon iteration"""
+        for i in range(len(self)):
+            yield self.dicos[i]
+
+    def add_dico(self, dico):
+        """Load a dico into the stack"""
+        self.dicos.append(dico)
+        # dico_id = len(dicos) - 1
+        # entry_id = 0
+        # for entry in dico:
+        #     for headword in entry.headwords:
+        #         try:
+        #             self._index[headword[0]].add((dico_id, entry_id))
+        #         except KeyError:
+        #             self._index[headword[0]] = set((dico_id, entry_id))
+
+    def define(self, word):
+        """Return a list of all entries for a word"""
+        dico_entries = {}
+        for dico in self.dicos:
+            entries = dico.define(word)
+            if entries:
+                dico_entries[(dico.name, dico.citation)] = [entry for entry
+                                                            in entries]
+
+        if dico_entries:
+            return dico_entries
+        else:
+            return None
