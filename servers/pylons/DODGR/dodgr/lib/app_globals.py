@@ -17,7 +17,8 @@ class Globals(object):
         'app_globals' variable
 
         """
-        # TODO: paths should live in config somewhere
-        pickle = open('/w/artfl/corpora/idol/dico_pickles/latest.pickle')
-        self.dico = cPickle.load(pickle)
-        pickle.close()
+        # TODO: pickle location should be in config somewhere
+        pickle_file = '/w/artfl/corpora/stack_pickles/latest.pickle'
+        pickle_handle = open(pickle_file, 'r')
+        self.stack = cPickle.load(pickle_handle)
+        pickle_handle.close()
