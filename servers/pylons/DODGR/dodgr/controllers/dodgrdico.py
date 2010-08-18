@@ -20,5 +20,5 @@ class DodgrdicoController(BaseController):
     def define(self, word):
         """Load up the test dictionary and serve the definition, if any, for
         the word defined in the route"""
-        c.entries = app_globals.dico.define(word)
+        c.dico_entries = app_globals.stack.define(word)
         return render('/entry.html')
