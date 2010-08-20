@@ -1,5 +1,8 @@
 """Dictionary models"""
+import json
+import MySQLdb
 import entries
+
 
 class Simple(object):
     """A very simple dictionary, with only headwords and defintions"""
@@ -100,6 +103,86 @@ class EntryBased(object):
         except IndexError:
             return None
 
+class MySQLBased(object):
+    """A dictionary stored in MySQL tables"""
+
+    def __init__(self, name, citation, mapper, cursor, loader=None):
+        self.name = name
+        self.citation = citation
+        self.mapper = mapper
+        self.cursor = cursor
+        if loader:
+            self._build(loader)
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
+    def _build(self, loader):
+        """Build the dictionary data tables from the loader data"""
+
+        # Setup the initial tables
+        entry_table = self.name + '_entries'
+        index_table = self.name + '_index'
+        self.cursor.execute('DROP TABLE IF EXISTS `' + entry_table + '`')
+        self.cursor.execute('DROP TABLE IF EXISTS `' + index_table + '`')
+        self.cursor.execute("""CREATE TABLE `""" + entry_table + """` (
+                            `id` int(11) NOT NULL AUTO_INCREMENT,
+                            `entry` mediumtext CHARACTER SET utf8,
+                            PRIMARY KEY (`id`))
+                            ENGINE=MyISAM
+                            DEFAULT CHARSET=utf8;""")
+        self.cursor.execute("""CREATE TABLE `""" + index_table + """` (
+                            `id` int(11) NOT NULL AUTO_INCREMENT,
+                            `headword` varchar(255) CHARACTER SET utf8,
+                            `entry_id` int,
+                            PRIMARY KEY (`id`))
+                            ENGINE=MyISAM
+                            DEFAULT CHARSET=utf8;""")
+
+        entry_id = 1
+        for entry_input in loader.load():
+            # Don't build entries if there are errors
+            if 'error' in entry_input and entry_input['error']:
+                continue
+
+            self.cursor.execute("""INSERT INTO `""" + entry_table + """`
+                           (entry) VALUES (%s)""", json.dumps(entry_input))
+            for headword in entry_input['headwords']:
+                citation_form = self.mapper.citation_form(headword[0])
+                self.cursor.execute("""INSERT INTO `""" + index_table + """`
+                               (headword, entry_id) VALUES (%s, %s)""",
+                               (citation_form, entry_id))
+            entry_id += 1
+
+    def define(self, word):
+        """Return a list of all entries for a word"""
+
+        entry_table = self.name + '_entries'
+        index_table = self.name + '_index'
+        self.cursor.execute("""SELECT `""" + entry_table + """`.entry
+                            FROM `""" + entry_table + """`
+                            LEFT JOIN `""" + index_table + """`
+                            ON `""" + index_table + """`.entry_id
+                            = `""" + entry_table + """`.id
+                            WHERE `""" + index_table + """`.headword = %s""",
+                            word)
+        entry_rows = self.cursor.fetchall()
+        entry_list = []
+        for entry_row in entry_rows:
+            entry_dict = json.loads(entry_row[0])
+            entry_list.append(entries.Entry(prop_dict=entry_dict))
+
+        return entry_list
+
+    def get_entry(self, entry_id):
+        """Return a specific entry by id"""
+        try:
+            return self._entries[entry_id]
+        except IndexError:
+            return None
 
 class Stack(object):
     """Container for a collection of dictionaries"""
