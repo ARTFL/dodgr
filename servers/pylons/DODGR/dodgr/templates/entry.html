@@ -4,8 +4,10 @@
 
 % if c.dico_entries:
 	Dictionaries with entries for ${c.word}:
+	<hr>
 	% for citation, entries in c.dico_entries.iteritems():
 		${show_dico_entries(citation[1], entries)}
+		<hr>
 	% endfor
 % else:
 	<div class="empty">
@@ -14,10 +16,11 @@
 % endif
 
 ${show_corpa_sentences(c.corpasentences)}
-
+<hr>
 ${show_littre_sentences(c.littresentences)}
-
+<hr>
 ${show_web_sentences(c.websentences)}
+<hr>
 
 <%def name="show_dico_entries(citation, entries)">
 	<div class="dico_entries_container">
