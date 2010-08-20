@@ -62,4 +62,4 @@ class Globals(object):
             stack_dicos.append(daf_dico)
 
         self.stack = dico.Stack(dicos=stack_dicos)
-
+        self.db = db

@@ -13,6 +13,12 @@
 	</div>
 % endif
 
+${show_corpa_sentences(c.corpasentences)}
+
+${show_littre_sentences(c.littresentences)}
+
+${show_web_sentences(c.websentences)}
+
 <%def name="show_dico_entries(citation, entries)">
 	<div class="dico_entries_container">
 		<h1>${citation}</h1>
@@ -60,3 +66,49 @@
 	</div>
 </%def>
 
+<%def name="show_corpa_sentences(sentences)">
+	<div class="corpa_sentences_container">
+		<h1>Corpa Sentences</h1>
+		<ul>
+		% for sentence in sentences:
+			<div class="corpa_sentences_container">
+				<li>
+					${sentence}
+				</li>
+			</div>
+	    % endfor
+		</ul>
+	</div>
+</%def>
+
+<%def name="show_littre_sentences(sentences)">
+	<div class="littre_sentences_container">
+		<h1>Littré Sentences</h1>
+		<ul>
+		% for sentence in sentences:
+			<div class="littre_sentence">
+				<li>
+					${sentence['content']} (${sentence['source']})
+				</li>
+			</div>
+	    % endfor
+		</ul>
+	</div>
+</%def>
+
+<%def name="show_web_sentences(sentences)">
+	<div class="web_sentences_container">
+		<h1>Web Sentences</h1>
+		<ul>
+		% for sentence in sentences:
+			<div class="web_sentence">
+				<li>${sentence['content']}
+					(<a href="http://${sentence['link']}">
+						${sentence['source']})
+					</a>
+				</li>
+			</div>
+	    % endfor
+		</ul>
+	</div>
+</%def>
