@@ -21,24 +21,51 @@ class DodgrdicoController(BaseController):
         """Load up the test dictionary and serve the definition, if any, for
         the word defined in the route"""
         c.dico_entries = app_globals.stack.define(word)
+        c.prons = []
+        c.num_entries = 0
+        if c.dico_entries:
+            c.num_dicos = len(c.dico_entries)
+            for citation, entries in c.dico_entries.iteritems():
+                for entry in entries:
+                    c.num_entries += 1
+                    if entry.prons:
+                        c.prons += entry.prons
+        else:
+            c.num_dicos = 0
+
 
         cursor = app_globals.db.cursor()
+        c.num_sentences = 0
+        c.num_corpora = 0
 
-        cursor.execute("""SELECT content FROM corpasentences WHERE headword =
-                       %s""", word)
+        cursor.execute("""SELECT content FROM corpasentences_utf8
+                          WHERE headword = %s""", word)
         corpasentence_rows = cursor.fetchall()
-        c.corpasentences = [row[0] for row in corpasentence_rows]
 
-        cursor.execute("""SELECT content, source FROM littresentences WHERE
-                       headword = %s""", word)
+        c.corpasentences = [row[0] for row in
+                            corpasentence_rows]
+        c.num_sentences += len(c.corpasentences)
+        if (len(c.corpasentences) > 0):
+            c.num_corpora += 1
+
+
+        cursor.execute("""SELECT content, source FROM littresentences_utf8
+                          WHERE headword = %s""", word)
         littresentence_rows = cursor.fetchall()
         c.littresentences = [{'content': row[0], 'source': row[1]} for row in
                              littresentence_rows]
+        c.num_sentences += len(c.littresentences)
+        if (len(c.littresentences) > 0):
+            c.num_corpora += 1
 
-        cursor.execute("""SELECT content, source, link FROM websentences WHERE
-                      headword = %s""", word)
+        cursor.execute("""SELECT content, source, link FROM websentences_utf8
+                          WHERE headword = %s""", word)
         websentence_rows = cursor.fetchall()
+
         c.websentences = [{'content': row[0], 'source': row[1],
                            'link': row[2]} for row in websentence_rows]
+        c.num_sentences += len(c.websentences)
+        if (len(c.websentences) > 0):
+            c.num_corpora += 1
 
         return render('/entry.html')
