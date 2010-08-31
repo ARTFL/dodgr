@@ -15,7 +15,7 @@ ${entries(c.definitions)}
 	% if c.definitions:
 		Entries for ${c.word}:
 		% for definition in c.definitions:
-			${entry(definition)}
+			${h.sanitize_html(entry(definition))}
 	    % endfor
 	% else:
 		<div class="empty">
