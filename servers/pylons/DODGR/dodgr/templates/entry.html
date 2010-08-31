@@ -1,26 +1,20 @@
+# -*- coding: utf-8 -*-
 <%inherit file="/base.html"/>\
 
 <%def name="title()">Entries for ${c.word}</%def>
 
 % if c.dico_entries:
-	Dictionaries with entries for ${c.word}:
-	<hr>
+	${c.num_entries} défintions trouveés dans ${c.num_dicos} dictionnaires.
 	% for citation, entries in c.dico_entries.iteritems():
 		${show_dico_entries(citation[1], entries)}
-		<hr>
+
 	% endfor
 % else:
 	<div class="empty">
-		No entries for ${c.word}.
+		Pas de définitions.
 	</div>
 % endif
 
-${show_corpa_sentences(c.corpasentences)}
-<hr>
-${show_littre_sentences(c.littresentences)}
-<hr>
-${show_web_sentences(c.websentences)}
-<hr>
 % if c.num_sentences > 0:
 	${c.num_sentences} phrases trouveés dans ${c.num_corpora} corpora.
 	${show_corpa_sentences(c.corpasentences)}
@@ -32,18 +26,23 @@ ${show_web_sentences(c.websentences)}
 
 
 <%def name="show_dico_entries(citation, entries)">
+	<div class="block_header" style="display: block">
+		<div class='triangle'>▽</div>
+		<div class="dictionary_name">${citation}</div>
+		<div class="entry_count">${len(entries)}</div>
+	</div>
 	<div class="dico_entries_container">
-		<h1>${citation}</h1>
 		% for entry in entries:
+			<div class="dico_entry">
 			${show_entry(entry)}
+			</div>
 	    % endfor
 	</div>
 </%def>
 
 <%def name="show_entry(entry)">
-
+<!--
 	<div class="headword_container">
-		<h2>Headwords</h2>
 		% for headword in entry.headwords:
 			<div class="headword">
 				${headword[0] | n}
@@ -51,41 +50,45 @@ ${show_web_sentences(c.websentences)}
 			 		${headword[1] | n}
 				% endif
 			</div>
+
 		% endfor
 	</div>
 
 	% if entry.prons:
 		<div class="pron_container">
-			<h2>Pronunciations</h2>
 			% for pron in entry.prons:
-				<div class="pron">${pron | n}</div>
+				<div class="pron">${h.sanitize_html(pron) | n}</div>
 			% endfor
 		</div>
 	% endif
+
 
 	% if entry.examples:
 		<div class="example_container">
 			<h2>Examples</h2>
 			% for example in entry.examples:
-				<div class="example">${example | n}</div>
+				<div class="example">${h.sanitize_html(example) | n}</div>
 			% endfor
 		</div>
 	% endif
-
+-->
 	<div class="entry_container">
-		<h2>Content</h2>
-		<div class="content">${entry.content | n}</div>
+		<div class="content">${h.sanitize_html(entry.content) | n}</div>
 	</div>
 </%def>
 
 <%def name="show_corpa_sentences(sentences)">
+	<div class="block_header">
+		<div class='triangle'>▽</div>
+		<div class="corpus_name">Copra</div>
+		<div class="entry_count">${len(sentences)}</div>
+	</div>
 	<div class="corpa_sentences_container">
-		<h1>Corpa Sentences</h1>
 		<ul>
 		% for sentence in sentences:
 			<div class="corpa_sentences_container">
 				<li>
-					${sentence}
+					${sentence | n}
 				</li>
 			</div>
 	    % endfor
@@ -94,8 +97,12 @@ ${show_web_sentences(c.websentences)}
 </%def>
 
 <%def name="show_littre_sentences(sentences)">
+	<div class="block_header">
+		<div class='triangle'>▽</div>
+		<div class="corpus_name">Littré</div>
+		<div class="entry_count">${len(sentences)}</div>
+	</div>
 	<div class="littre_sentences_container">
-		<h1>Littré Sentences</h1>
 		<ul>
 		% for sentence in sentences:
 			<div class="littre_sentence">
@@ -109,12 +116,16 @@ ${show_web_sentences(c.websentences)}
 </%def>
 
 <%def name="show_web_sentences(sentences)">
+	<div class="block_header">
+		<div class='triangle'>▽</div>
+		<div class="corpus_name">WWW</div>
+		<div class="entry_count">${len(sentences)}</div>
+	</div>
 	<div class="web_sentences_container">
-		<h1>Web Sentences</h1>
 		<ul>
 		% for sentence in sentences:
 			<div class="web_sentence">
-				<li>${sentence['content']}
+				<li>${sentence['content'] | n}
 					(<a href="http://${sentence['link']}">
 						${sentence['source']})
 					</a>
