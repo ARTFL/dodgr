@@ -1,0 +1,70 @@
+#header {
+    text-align: left;
+    font-size: 100%;
+    font-family: 'Copperplate Gothic Bold';
+    color: #670000;
+    border-bottom: 1px solid #000000;
+}
+
+.main_headword {
+    font-size: 500%;
+    font-family: 'Copperplate Gothic Bold';
+    color: #670000;
+/*    border-bottom: 1px solid #000000;
+*/}
+
+.headword {
+    font-size: 130%;
+    font-family: 'Copperplate Gothic Bold';
+    color: #670000;
+    background: #eee;
+}
+
+div.block_header {
+    font-size: 120%;
+    font-family: 'Copperplate Gothic Bold';
+    color: #000;
+    background: #eee;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 4px;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    overflow: auto;
+}
+
+
+div.dictionary_name, div.corpus_name {
+    float: left;
+    padding: .5%;
+}
+
+div.triangle {
+    padding-top: 0.5%;
+    margin-left: 1%;
+    margin-right: 1%;
+    float: left;
+    color: #aaa;
+}
+
+div.entry_count {
+    background: #ddd;
+    float: right;
+    padding: .5%;
+    width: 4%;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.dico_entries_container {
+    border: 1px solid #aaa;
+    display: block;
+}
+
+.main_pron_container {
+    text-align: right;
+}
+
+.entry_pron_container, .entry_container, .example_container {
+    margin: 2%;
+}
