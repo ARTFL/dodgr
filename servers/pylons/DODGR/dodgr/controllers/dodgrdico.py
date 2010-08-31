@@ -23,9 +23,6 @@ class DodgrdicoController(BaseController):
         c.dico_entries = app_globals.stack.define(word)
 
         cursor = app_globals.db.cursor()
-        cursor.execute('SET NAMES utf8;')
-        cursor.execute('SET CHARACTER SET utf8;')
-        cursor.execute('SET character_set_connection=utf8;')
 
         cursor.execute("""SELECT content FROM corpasentences WHERE headword =
                        %s""", word)
