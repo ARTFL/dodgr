@@ -50,14 +50,18 @@
 						</div>
 					% endfor
 				</div>
+				% if c.synonyms:
 				<div class="nyms_container">
 					<h2 class="nyms_header">Synonymes</h2>
 					${', '.join(c.synonyms)}
 				</div>
+				% endif
+				% if c.antonyms:
 				<div class="nyms_container">
 					<h2 class="nyms_header">Antonymes</h2>
 					${', '.join(c.antonyms)}
 				</div>
+				% endif
 			</div>
 
 			<div id="footer" class="span-24 last">
