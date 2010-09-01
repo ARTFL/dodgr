@@ -1,14 +1,33 @@
+body {
+    font-family:Arial, Helvetica, sans-serif;
+}
+
 #header {
-    text-align: left;
     font-size: 180%;
     font-family: 'Copperplate Gothic Bold';
     color: #670000;
     border-bottom: 1px solid #000000;
+    padding: .2%;
 }
 
-.main_headword h1 {
+#footer {
+    color:#FFFFFF;
+    background-color:#670000;
+    font-size: 90%;
+    padding: .2%;
+    margin-top: 1%;
+}
+
+#footer a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1%;
+}
+
+#main_headword h1 {
     font-weight: bold;
     font-size: 220%;
+    margin: 0;
     margin-top: 1%;
 }
 
@@ -46,7 +65,6 @@ div.block_header {
     overflow: auto;
 }
 
-
 div.dictionary_name, div.corpus_name {
     float: left;
     padding: .5%;
@@ -70,13 +88,22 @@ div.entry_count {
     font-size: 90%;
 }
 
+div.search_bar {
+    margin: .4%;
+    float: right;
+}
+
+
+div.search_bar input {
+    margin: 0;
+}
+
 .dico_entries_container {
     border: 1px solid #aaa;
     display: block;
 }
 
 .main_pron_container, .nyms_container {
-    text-align: right;
 }
 
 .entry_pron_container, .entry_container, .example_container {
@@ -84,6 +111,6 @@ div.entry_count {
 }
 
 h2.nyms_header, h2.pron_header {
-    font-size: 18px;
-    margin-bottom: 2px;
+    font-size: 120%;
+    margin-bottom: 1%;
 }
