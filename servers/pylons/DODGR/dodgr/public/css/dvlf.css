@@ -114,3 +114,9 @@ h2.nyms_header, h2.pron_header {
     font-size: 120%;
     margin-bottom: 1%;
 }
+
+.word_reference_trigger {
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 4%;
+}
