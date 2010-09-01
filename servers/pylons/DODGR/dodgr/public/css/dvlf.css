@@ -68,3 +68,8 @@ div.entry_count {
 .entry_pron_container, .entry_container, .example_container {
     margin: 2%;
 }
+
+h2.nyms_header, h2.pron_header {
+    font-size: 18px;
+    margin-bottom: 2px;
+}
