@@ -12,6 +12,20 @@
     margin-top: 1%;
 }
 
+#main_headword_form {
+    margin: 0;
+}
+
+#main_headword_form input {
+    border: 1px solid #fff;
+    font-weight: bold;
+    font-size: 220%;
+    margin: 0;
+    padding: 0;
+    margin-top: 1%;
+    width: 100%;
+}
+
 .headword {
     font-size: 130%;
     font-family: 'Copperplate Gothic Bold';

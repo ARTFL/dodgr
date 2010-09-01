@@ -37,7 +37,14 @@
 			</div>
 
 			<div class="span-15">
-				<div class="main_headword"><h1>${c.word}</h1></div>
+				<div id="main_headword_container">
+					<form>
+						<div id="main_headword_form">
+							<input type="text" id="main_headword_input"
+							 value="${c.word}" />
+						</div>
+					</form>
+				</div>
        			${self.body()}
 			</div>
 
