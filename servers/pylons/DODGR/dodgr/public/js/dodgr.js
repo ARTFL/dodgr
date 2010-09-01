@@ -1,7 +1,5 @@
 
 $(document).ready(function() {
-    // setup ul.tabs to work as tabs for each div directly under div.panes
-    // $("ul.tabs").tabs("div.panes > div");    
 
     // Toggle the visibility of the dictionary for each section after the
     // header is clicked.
