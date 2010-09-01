@@ -1,4 +1,5 @@
 import logging
+import json
 
 from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to
@@ -67,5 +68,17 @@ class DodgrdicoController(BaseController):
         c.num_sentences += len(c.websentences)
         if (len(c.websentences) > 0):
             c.num_corpora += 1
+
+        # Syonoyms and antonyms
+        cursor.execute("""SELECT synonyms, antonyms FROM nyms
+                          WHERE word = %s""", word)
+        nym_row = cursor.fetchone()
+        c.synonyms = []
+        c.antonyms = []
+
+        if nym_row:
+            c.synonyms = json.loads(nym_row[0])
+            c.antonyms = json.loads(nym_row[1])
+
 
         return render('/entry.html')

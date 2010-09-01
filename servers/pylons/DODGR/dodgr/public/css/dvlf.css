@@ -61,7 +61,7 @@ div.entry_count {
     display: block;
 }
 
-.main_pron_container {
+.main_pron_container, .nyms_container {
     text-align: right;
 }
 

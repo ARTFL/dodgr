@@ -41,13 +41,23 @@
        			${self.body()}
 			</div>
 
-			<div class="span-6 last main_pron_container">
-				% for pron in c.prons:
+			<div class="span-6 last">
+				<div class="main_pron_container">
 					<h2 class="pron_header">Prononciation</h2>
-					<div class="pron">
-						${pron | n}
-					</div>
-				% endfor
+					% for pron in c.prons:
+						<div class="pron">
+							${pron | n}
+						</div>
+					% endfor
+				</div>
+				<div class="nyms_container">
+					<h2 class="nyms_header">Synonymes</h2>
+					${', '.join(c.synonyms)}
+				</div>
+				<div class="nyms_container">
+					<h2 class="nyms_header">Antonymes</h2>
+					${', '.join(c.antonyms)}
+				</div>
 			</div>
 
 			<div id="footer" class="span-24 last">
