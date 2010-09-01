@@ -1,3 +1,10 @@
+<%def name="search_bar()">
+	<div class="search_bar">
+		<input type="text" value="Recherche d'un mot" />
+		<input type="submit" value="OK" />
+	</div>
+</%def>
+
 <html>
     <head>
         <title>${self.title()}</title>
@@ -27,9 +34,12 @@
 		<div class="container">
 
 			<div id="header" class="span-24 last">
-				Dictionnaire vivant de la langue française
-				<input type="text" value="Recherche d'un mot" />
-				<input type="submit" value="OK" />
+				<div class="span-16">
+					Dictionnaire vivant de la langue française
+				</div>
+				<div class="span-8 last">
+					${self.search_bar()}
+				</div>
 			</div>
 
 			<div id="index_alpha" class="span-3">
@@ -71,12 +81,11 @@
 				% endif
 			</div>
 
-			<div id="footer" class="span-24 last">
-				<span>
-					<a>The ARTFL Project</a> | University of Chicago | Nous contacter | À propos du DVLF | Outils linguistiques</span>
-					<input type="text" value="Recherche d'un mot" />
-					<input type="submit" value="OK" />
-
+			<div id="footer" class="span-24">
+				<div class="span-16" id="footer_links"><a>The ARTFL Project</a> | University of Chicago | Nous contacter | À propos du DVLF | Outils linguistiques</div>
+				<div class="span-8 last">
+					${self.search_bar()}
+				</div>
 	        </div>
 		</div>
     </body>
