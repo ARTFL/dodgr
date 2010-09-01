@@ -1,6 +1,6 @@
 #header {
     text-align: left;
-    font-size: 100%;
+    font-size: 180%;
     font-family: 'Copperplate Gothic Bold';
     color: #670000;
     border-bottom: 1px solid #000000;
@@ -21,7 +21,7 @@
 }
 
 div.block_header {
-    font-size: 120%;
+    font-size: 110%;
     font-family: 'Copperplate Gothic Bold';
     color: #000;
     background: #eee;
@@ -54,6 +54,7 @@ div.entry_count {
     width: 4%;
     text-align: center;
     font-family: sans-serif;
+    font-size: 90%;
 }
 
 .dico_entries_container {
