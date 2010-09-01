@@ -59,14 +59,16 @@
 			</div>
 
 			<div class="span-6 last">
-				<div class="main_pron_container">
-					<h2 class="pron_header">Prononciation</h2>
-					% for pron in c.prons:
-						<div class="pron">
-							${pron | n}
-						</div>
-					% endfor
-				</div>
+				% if c.prons:
+					<div class="main_pron_container">
+						<h2 class="pron_header">Prononciation</h2>
+						% for pron in c.prons:
+							<div class="pron">
+								${pron | n}
+							</div>
+						% endfor
+					</div>
+				% endif
 				% if c.synonyms:
 				<div class="nyms_container">
 					<h2 class="nyms_header">Synonymes</h2>
