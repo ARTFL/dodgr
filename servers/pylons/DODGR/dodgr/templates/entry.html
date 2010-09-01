@@ -17,9 +17,15 @@
 
 % if c.num_sentences > 0:
 	${c.num_sentences} phrases trouveés dans ${c.num_corpora} corpora.
-	${show_corpa_sentences(c.corpasentences)}
-	${show_littre_sentences(c.littresentences)}
-	${show_web_sentences(c.websentences)}
+	% if c.corpasentences:
+		${show_corpa_sentences(c.corpasentences)}
+	% endif
+	% if c.littresentences:
+		${show_littre_sentences(c.littresentences)}
+	% endif
+	% if c.websentences:
+		${show_web_sentences(c.websentences)}
+	% endif
 % else:
 	Pas de phrases.
 % endif
