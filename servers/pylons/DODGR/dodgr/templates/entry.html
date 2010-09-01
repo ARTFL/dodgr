@@ -4,7 +4,8 @@
 <%def name="title()">ARTFL :: Dictionnaire vivant de la langue française :: ${c.word}</%def>
 
 % if c.dico_entries:
-	${c.num_entries} défintions trouveés dans ${c.num_dicos} dictionnaires.
+	${h.pluralize(['défintion', 'trouveé'], c.num_entries)} dans
+	${h.pluralize(['dictionnaire'], c.num_dicos)}.
 	% for citation, entries in c.dico_entries.iteritems():
 		${show_dico_entries(citation[1], entries)}
 
@@ -16,7 +17,8 @@
 % endif
 
 % if c.num_sentences > 0:
-	${c.num_sentences} phrases trouveés dans ${c.num_corpora} corpora.
+	${h.pluralize(['phrase', 'trouveé'],c.num_sentences)} dans
+	${h.pluralize(['corpus'], c.num_corpora, plurals=['corpora'])}.
 	% if c.corpasentences:
 		${show_corpa_sentences(c.corpasentences)}
 	% endif
