@@ -21,8 +21,16 @@ def make_map():
 
     # CUSTOM ROUTES HERE
 
+    map.connect('/?mot={word}', controller='dodgrdico', action='define')
     map.connect('/define/{word}', controller='dodgrdico', action='define')
+    map.connect('/mots/{word}', controller='dodgrdico', action='define')
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
+
+    # STATIC ROUTES
+
+    map.connect('jquery',
+        'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
+         _static=True)
 
     return map
