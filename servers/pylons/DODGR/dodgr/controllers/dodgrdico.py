@@ -18,6 +18,13 @@ class DodgrdicoController(BaseController):
         # or, return a response
         return 'Hello World'
 
+    def lookup(self):
+        """This action handles incoming search requests."""
+
+        word = request.params['word']
+        return redirect_to(url_for(controller='dodgrdico', action='define',
+                            word=word))
+
     def define(self, word):
         """Load up the test dictionary and serve the definition, if any, for
         the word defined in the route"""
