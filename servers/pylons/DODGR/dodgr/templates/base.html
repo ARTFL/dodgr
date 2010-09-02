@@ -61,7 +61,8 @@
 				% if c.prons:
 					<div class="main_pron_container">
 						<h2 class="pron_header">Prononciation</h2>
-						% for pron in c.prons:
+						% # TODO -- find a better way to get uniq'ed prons
+						% for pron in set(c.prons):
 							<div class="pron">
 								${pron | n}
 							</div>
