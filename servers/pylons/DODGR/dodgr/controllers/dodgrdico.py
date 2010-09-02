@@ -34,6 +34,8 @@ class DodgrdicoController(BaseController):
         else:
             c.num_dicos = 0
 
+        # TODO get all this sentence stuff out of here
+        sentence_limit = 20
 
         cursor = app_globals.db.cursor()
         c.num_sentences = 0
@@ -45,6 +47,7 @@ class DodgrdicoController(BaseController):
 
         c.corpasentences = [row[0] for row in
                             corpasentence_rows]
+        c.corpasentences = c.corpasentences[:sentence_limit]
         c.num_sentences += len(c.corpasentences)
         if (len(c.corpasentences) > 0):
             c.num_corpora += 1
@@ -55,6 +58,7 @@ class DodgrdicoController(BaseController):
         littresentence_rows = cursor.fetchall()
         c.littresentences = [{'content': row[0], 'source': row[1]} for row in
                              littresentence_rows]
+        c.littresentences = c.littresentences[:sentence_limit]
         c.num_sentences += len(c.littresentences)
         if (len(c.littresentences) > 0):
             c.num_corpora += 1
@@ -62,9 +66,9 @@ class DodgrdicoController(BaseController):
         cursor.execute("""SELECT content, source, link FROM websentences_utf8
                           WHERE headword = %s""", word)
         websentence_rows = cursor.fetchall()
-
         c.websentences = [{'content': row[0], 'source': row[1],
                            'link': row[2]} for row in websentence_rows]
+        c.websentences = c.websentences[:sentence_limit]
         c.num_sentences += len(c.websentences)
         if (len(c.websentences) > 0):
             c.num_corpora += 1
