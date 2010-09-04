@@ -10,6 +10,7 @@ import tidylib
 
 from pylons.controllers.util import url_for
 
+
 def sanitize_html(html):
     document, errors = tidylib.tidy_document(html,
                                 options={'numeric-entities': 1})
@@ -45,4 +46,5 @@ def stealth_headword_link(word):
     """Return a "stealth" link for the word"""
 
     word_url = url_for(controller='dodgrdico', action='define', word=word)
-    return '<a class="stealth_headword" href="' + word_url + '">' + word + '</a>'
+    return '<a class="stealth_headword" href="' + word_url + '">' + word +\
+           '</a>'
