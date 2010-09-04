@@ -1,4 +1,5 @@
 import logging
+import re
 import json
 
 from pylons import request, response, session, tmpl_context as c
@@ -76,6 +77,12 @@ class DodgrdicoController(BaseController):
         c.websentences = [{'content': row[0], 'source': row[1],
                            'link': row[2]} for row in websentence_rows]
         c.websentences = c.websentences[:sentence_limit]
+        link_pattern = re.compile('(\w+\.)+\w+\/')
+        i = 0
+        for i in range(len(c.websentences)):
+            link = c.websentences[i]['link']
+            if not link_pattern.match(link):
+                c.websentences[i]['link'] = None
         c.num_sentences += len(c.websentences)
         if (len(c.websentences) > 0):
             c.num_corpora += 1

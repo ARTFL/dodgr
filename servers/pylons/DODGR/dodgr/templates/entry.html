@@ -134,9 +134,13 @@
 		% for sentence in sentences:
 			<div class="web_sentence">
 				<li>${sentence['content'] | n}
+				% if sentence['link']:
 					(<a href="http://${sentence['link']}">
 						${sentence['source']})
 					</a>
+				% else:
+					(${sentence['source']})
+				% endif
 				</li>
 			</div>
 	    % endfor
