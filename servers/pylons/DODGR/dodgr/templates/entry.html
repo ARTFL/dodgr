@@ -92,7 +92,7 @@
 		<div class="entry_count">${len(sentences)}</div>
 	</div>
 	<div class="corpa_sentences_container">
-		<ul>
+		<ul class="citations">
 		% for sentence in sentences:
 			<div class="corpa_sentences_container">
 				<li>
@@ -111,7 +111,7 @@
 		<div class="entry_count">${len(sentences)}</div>
 	</div>
 	<div class="littre_sentences_container">
-		<ul>
+		<ul class="citations">
 		% for sentence in sentences:
 			<div class="littre_sentence">
 				<li>
@@ -130,7 +130,7 @@
 		<div class="entry_count">${len(sentences)}</div>
 	</div>
 	<div class="web_sentences_container">
-		<ul>
+		<ul class="citations">
 		% for sentence in sentences:
 			<div class="web_sentence">
 				<li>${sentence['content'] | n}

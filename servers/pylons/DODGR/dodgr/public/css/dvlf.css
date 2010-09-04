@@ -120,3 +120,19 @@ h2.nyms_header, h2.pron_header {
     text-decoration: underline;
     margin-top: 4%;
 }
+
+a.stealth_headword {
+    text-decoration: none;
+    color: #000;
+}
+
+ul.citations {
+    list-style-type: none;
+    list-style-position: inside;
+    margin-left: 0;
+    padding-left: 1%;
+}
+
+ul.citations li {
+    margin-top: 1%;
+}

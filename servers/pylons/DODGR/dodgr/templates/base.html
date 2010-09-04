@@ -72,13 +72,15 @@
 				% if c.synonyms:
 				<div class="nyms_container">
 					<h2 class="nyms_header">Synonymes</h2>
-					${', '.join(c.synonyms)}
+					${', '.join([h.stealth_headword_link(word) for word in
+					             c.synonyms]) | n}
 				</div>
 				% endif
 				% if c.antonyms:
 				<div class="nyms_container">
 					<h2 class="nyms_header">Antonymes</h2>
-					${', '.join(c.antonyms)}
+					${', '.join([h.stealth_headword_link(word) for word in
+					             c.antonyms]) | n}
 				</div>
 				% endif
 				<div class="word_reference_trigger">
