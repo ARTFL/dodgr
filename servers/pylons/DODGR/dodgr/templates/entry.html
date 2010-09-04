@@ -4,7 +4,7 @@
 <%def name="title()">ARTFL :: Dictionnaire vivant de la langue française :: ${c.word}</%def>
 
 % if c.dico_entries:
-	${h.pluralize(['défintion', 'trouveé'], c.num_entries)} dans
+	${h.pluralize(['définition', 'trouvée'], c.num_entries)} dans
 	${h.pluralize(['dictionnaire'], c.num_dicos)}.
 	% for dico_name, citation, entries in c.dico_entries:
 		${show_dico_entries(citation, entries)}
