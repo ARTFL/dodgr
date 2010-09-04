@@ -1,7 +1,9 @@
 <%def name="search_bar()">
 	<div class="search_bar">
-		<input type="text" value="Recherche d'un mot" />
-		<input type="submit" value="OK" />
+		<form action="${url('/s')}" method="get">
+			<input type="text" name="word" value="Recherche d'un mot" />
+			<input type="submit" value="OK" />
+		</form>
 	</div>
 </%def>
 
@@ -47,10 +49,10 @@
 
 			<div class="span-15">
 				<div id="main_headword_container">
-					<form>
+					<form action="${url('/s')}" method="get">
 						<div id="main_headword_form">
 							<input type="text" id="main_headword_input"
-							 value="${c.word}" />
+							 name="word" value="${c.word}" />
 						</div>
 					</form>
 				</div>
