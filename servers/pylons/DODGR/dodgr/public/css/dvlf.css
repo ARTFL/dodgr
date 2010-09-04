@@ -126,6 +126,10 @@ a.stealth_headword {
     color: #000;
 }
 
+a.stealth_headword:hover {
+    text-decoration: underline;
+}
+
 ul.citations {
     list-style-type: none;
     list-style-position: inside;
