@@ -8,6 +8,7 @@ available to Controllers. This module is available to templates as 'h'.
 
 import tidylib
 
+from pylons.controllers.util import url_for
 
 def sanitize_html(html):
     document, errors = tidylib.tidy_document(html,
@@ -38,3 +39,10 @@ def pluralize(word, count, plurals=None):
         if not plurals:
             plurals = [word + 's' for word in words]
         return str(count) + ' ' + ' '.join(plurals)
+
+
+def stealth_headword_link(word):
+    """Return a "stealth" link for the word"""
+
+    word_url = url_for(controller='dodgrdico', action='define', word=word)
+    return '<a class="stealth_headword" href="' + word_url + '">' + word + '</a>'
