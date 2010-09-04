@@ -1,6 +1,7 @@
 import logging
 import re
 import json
+import MySQLdb
 
 from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to, url_for
@@ -45,7 +46,14 @@ class DodgrdicoController(BaseController):
         # TODO get all this sentence stuff out of here
         sentence_limit = 20
 
-        cursor = app_globals.db.cursor()
+        db = MySQLdb.connect(user='dvlf', passwd='dvlf', db='dvlf',
+                             use_unicode=True)
+        cursor = db.cursor()
+        db.set_character_set('utf8')
+        cursor.execute('SET NAMES utf8;')
+        cursor.execute('SET CHARACTER SET utf8;')
+        cursor.execute('SET character_set_connection=utf8;')
+
         c.num_sentences = 0
         c.num_corpora = 0
 
