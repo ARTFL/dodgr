@@ -20,8 +20,8 @@ class Globals(object):
         'app_globals' variable
 
         """
-        db = MySQLdb.connect(user='dvlf2', passwd='d00v33d', db='dvlf',
-                             use_unicode=True)
+        db = MySQLdb.connect(user='dvlf_readonly', passwd='d00r33d',
+                             db='dvlf', use_unicode=True)
         cursor = db.cursor()
         db.set_character_set('utf8')
         cursor.execute('SET NAMES utf8;')
