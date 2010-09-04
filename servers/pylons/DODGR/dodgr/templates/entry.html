@@ -6,8 +6,8 @@
 % if c.dico_entries:
 	${h.pluralize(['défintion', 'trouveé'], c.num_entries)} dans
 	${h.pluralize(['dictionnaire'], c.num_dicos)}.
-	% for citation, entries in c.dico_entries.iteritems():
-		${show_dico_entries(citation[1], entries)}
+	% for dico_name, citation, entries in c.dico_entries:
+		${show_dico_entries(citation, entries)}
 
 	% endfor
 % else:

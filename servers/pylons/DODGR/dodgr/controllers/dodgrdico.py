@@ -33,7 +33,7 @@ class DodgrdicoController(BaseController):
         c.num_entries = 0
         if c.dico_entries:
             c.num_dicos = len(c.dico_entries)
-            for citation, entries in c.dico_entries.iteritems():
+            for dico_name, citation, entries in c.dico_entries:
                 for entry in entries:
                     c.num_entries += 1
                     if entry.prons:

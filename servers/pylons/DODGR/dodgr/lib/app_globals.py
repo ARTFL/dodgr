@@ -28,35 +28,35 @@ class Globals(object):
         cursor.execute('SET CHARACTER SET utf8;')
         cursor.execute('SET character_set_connection=utf8;')
 
-        dicos = {u'NICOT1606':
+        dicos = [(u'NICOT1606',
                  u'Jean Nicot\'s Thresor de la langue française '
-                 u'(1606)',
-                 u'ACAD1694':
+                 u'(1606)'),
+                 (u'ACAD1694',
                  u'Dictionnaire de L\'Académie française 1st edition '
-                 u'(1694)',
-                 u'ACAD1762':
+                 u'(1694)'),
+                 (u'ACAD1762',
                  u'Dictionnaire de L\'Académie française 4th edition '
-                 u'(1762)',
-                 u'ACAD1798':
-                 u'Dictionnaire de L\'Académie française 5th edition '
-                 u'(1798)',
-                 u'ACAD1835':
-                 u'Dictionnaire de L\'Académie française 6th edition '
-                 u'(1835)',
-                 u'ACAD1932':
-                 u'Dictionnaire de L\'Académie française 8th edition '
-                 u'(1932-1935)',
-                 u'FERAUD1787':
+                 u'(1762)'),
+                 (u'FERAUD1787',
                  u'Jean-François Féraud\'s Dictionaire critique de '
-                 u'la langue française (1787-1788)',
-                 u'LITTRE1872':
+                 u'la langue française (1787-1788)'),
+                 (u'ACAD1798',
+                 u'Dictionnaire de L\'Académie française 5th edition '
+                 u'(1798)'),
+                 (u'ACAD1835',
+                 u'Dictionnaire de L\'Académie française 6th edition '
+                 u'(1835)'),
+                 (u'LITTRE1872',
                  u'Émile Littré\'s Dictionnaire de la langue '
-                 u'française (1872-1877)',
-                 u'TLFI':
-                 u'Le Trésor de la Langue Française Informatisé'}
+                 u'française (1872-1877)'),
+                 (u'ACAD1932',
+                 u'Dictionnaire de L\'Académie française 8th edition '
+                 u'(1932-1935)'),
+                 (u'TLFI',
+                 u'Le Trésor de la Langue Française Informatisé')]
 
         stack_dicos = []
-        for name, citation in dicos.iteritems():
+        for name, citation in dicos:
             mapper = dico.mappers.IdolMapper()
             daf_dico = dico.MySQLBased(name, citation, mapper, cursor)
             stack_dicos.append(daf_dico)

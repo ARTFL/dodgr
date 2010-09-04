@@ -216,13 +216,11 @@ class Stack(object):
 
     def define(self, word):
         """Return a list of all entries for a word"""
-        dico_entries = {}
+        dico_entries = []
         for dico in self.dicos:
             entries = dico.define(word)
             if entries:
-                dico_entries[(dico.name, dico.citation)] = [entry for entry
-                                                            in entries]
-
+                dico_entries.append((dico.name, dico.citation, entries))
         if dico_entries:
             return dico_entries
         else:
