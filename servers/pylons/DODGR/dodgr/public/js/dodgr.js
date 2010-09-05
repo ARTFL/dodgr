@@ -38,6 +38,12 @@ $(document).ready(function() {
         }
     });
 
+    // Clear out the default text in the search bar when it's focused
+    $('input.search_bar_word').focus(function() {
+        if ($(this).val() == "Recherche d'un mot") {
+            $(this).val('');
+       }
+    });
 
 });
 
