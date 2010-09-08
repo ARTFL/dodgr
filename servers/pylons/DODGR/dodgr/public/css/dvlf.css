@@ -128,6 +128,7 @@ a.stealth_headword {
 
 a.stealth_headword:hover {
     text-decoration: underline;
+    color: #670000;
 }
 
 ul.citations {
