@@ -234,3 +234,14 @@ class Stack(object):
             return dico_entries
         else:
             return None
+
+    # TODO this shouldn't be a MySQL-only thing, it should work off an API
+    # that EntryBased dicos also expose
+    def index_neighbors(self, word, distance=20):
+        """Fetch all the neighboring headwords from the index table"""
+        word_id = self.index.index(word)
+        start = word_id - distance
+        if start < 0:
+            start = 0
+        stop = word_id + distance + 1
+        return self.index[start:stop]
