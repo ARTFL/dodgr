@@ -140,3 +140,16 @@ ul.citations {
 ul.citations li {
     margin-top: 1%;
 }
+
+ol#wordwheel {
+    list-style-type: none;
+    list-style-position: inside;
+    margin-left: 0;
+    padding-left: 1%;
+    font-size: 100%;
+}
+
+ol#wordwheel li.headword {
+    font-weight: bold;
+    font-style: italic;
+}
