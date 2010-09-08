@@ -120,8 +120,17 @@ class MySQLBased(object):
     def __len__(self):
         pass
 
+    # TODO -- MySQLBased and EntryBased should yield the same kind
+    # of thing on iteration; right now, EntryBased gives out Entries;
+    # MySQLBased gives out headwords.
     def __iter__(self):
-        pass
+        """Fetch all the headwords from the index table"""
+        index_table = self.name + '_index'
+        self.cursor.execute("""SELECT headword
+                            FROM `""" + self.index_table + """`""")
+        headword_rows = self.cursor.fetchall()
+        for row in headword_rows:
+            yield row[0]
 
     def _build(self, loader):
         """Build the dictionary data tables from the loader data"""
@@ -193,6 +202,7 @@ class Stack(object):
     def __init__(self, dicos=[]):
         """Create the stack"""
         self.dicos = []
+        self.index = []
         for dico in dicos:
             self.add_dico(dico)
 
