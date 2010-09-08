@@ -1,3 +1,5 @@
+<%namespace name="wordwheel" file="/wordwheel.html" />
+
 <%def name="search_bar()">
 	<div class="search_bar">
 		<form action="${url('/s')}" method="get">
@@ -45,9 +47,7 @@
 			</div>
 
 			<div id="index_alpha" class="span-3">
-				whooosh!<br>
-				wordwheel here<br>
-				wheeeeee!
+				${wordwheel.wheel(c.neighbors, headword=c.word)}
 			</div>
 
 			<div class="span-15">

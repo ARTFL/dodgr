@@ -106,5 +106,6 @@ class DodgrdicoController(BaseController):
             c.synonyms = json.loads(nym_row[0])
             c.antonyms = json.loads(nym_row[1])
 
+        c.neighbors = app_globals.stack.index_neighbors(word)
 
         return render('/entry.html')
