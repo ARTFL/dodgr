@@ -205,14 +205,10 @@ class Stack(object):
     def add_dico(self, dico):
         """Load a dico into the stack"""
         self.dicos.append(dico)
-        # dico_id = len(dicos) - 1
-        # entry_id = 0
-        # for entry in dico:
-        #     for headword in entry.headwords:
-        #         try:
-        #             self._index[headword[0]].add((dico_id, entry_id))
-        #         except KeyError:
-        #             self._index[headword[0]] = set((dico_id, entry_id))
+        for headword in dico:
+            self.index.append(headword)
+        self.index = list(set(self.index))
+        self.index.sort()
 
     def define(self, word):
         """Return a list of all entries for a word"""
