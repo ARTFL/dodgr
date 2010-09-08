@@ -111,6 +111,9 @@ class MySQLBased(object):
         self.citation = citation
         self.mapper = mapper
         self.cursor = cursor
+        self.entry_table = self.name + '_entries'
+        self.index_table = self.name + '_index'
+
         if loader:
             self._build(loader)
 
