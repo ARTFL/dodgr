@@ -3,11 +3,13 @@ body {
 }
 
 #header {
-    font-size: 180%;
+    font-size: 250%;
     font-family: 'Copperplate Gothic Bold';
     color: #670000;
     border-bottom: 1px solid #000000;
     padding: .2%;
+    padding-bottom: 0;
+    vertical-align: bottom;
 }
 
 #footer {
