@@ -1,0 +1,17 @@
+<%def name="wheel(words, headword=None)">
+	<div class="wordwheel_container">
+		<ol id="wordwheel">
+			${spokes(words, headword=headword)}
+		</ol>
+	</div>
+</%def>
+
+<%def name="spokes(words, headword=None)">
+	% for word in words:
+		% if headword and word == headword:
+			<li class="headword">${word}</li>
+		% else:
+			<li>${h.stealth_headword_link(word) | n}</li>
+		% endif
+	% endfor
+</%def>
