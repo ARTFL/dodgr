@@ -43,9 +43,7 @@ class DodgrdicoController(BaseController):
         else:
             c.num_dicos = 0
 
-        # TODO get all this sentence stuff out of here
-        sentence_limit = 20
-
+        # DB connection
         db = MySQLdb.connect(user='dvlf_readonly', passwd='d00r33d',
                              db='dvlf', use_unicode=True)
         cursor = db.cursor()
@@ -53,6 +51,15 @@ class DodgrdicoController(BaseController):
         cursor.execute('SET NAMES utf8;')
         cursor.execute('SET CHARACTER SET utf8;')
         cursor.execute('SET character_set_connection=utf8;')
+
+        # User-submitted definitions
+        cursor.execute("""SELECT content FROM submit
+                          WHERE headword = %s""", word)
+        userdef_rows = cursor.fetchall()
+        c.userdefs = [row[0] for row in userdef_rows]
+
+        # TODO get all this sentence stuff out of here
+        sentence_limit = 20
 
         c.num_sentences = 0
         c.num_corpora = 0

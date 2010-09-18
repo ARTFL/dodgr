@@ -16,6 +16,10 @@
 	</div>
 % endif
 
+% if len(c.userdefs) > 0:
+	${show_user_defs(c.userdefs)}
+% endif
+
 % if c.num_sentences > 0:
 	${h.pluralize(['phrase', 'trouveé'],c.num_sentences)} dans
 	${h.pluralize(['corpus'], c.num_corpora, plurals=['corpora'])}.
@@ -82,6 +86,27 @@
 -->
 	<div class="entry_container">
 		<div class="content">${h.sanitize_html(entry.content) | n}</div>
+	</div>
+</%def>
+
+<%def name="show_user_defs(userdefs)">
+	<div class="block_header" style="display: block">
+		<div class='triangle'>▽</div>
+		<div class="dictionary_name">Propositions d'Utilisateurs</div>
+		<div class="entry_count">${len(userdefs)}</div>
+	</div>
+	<div class="dico_entries_container">
+		% for userdef in userdefs:
+			<div class="dico_entry">
+			${show_user_def(userdef)}
+			</div>
+	    % endfor
+	</div>
+</%def>
+
+<%def name="show_user_def(content)">
+	<div class="entry_container">
+		<div class="content">${h.sanitize_html(content) | n}</div>
 	</div>
 </%def>
 
