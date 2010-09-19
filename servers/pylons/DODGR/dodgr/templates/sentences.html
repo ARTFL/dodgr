@@ -1,0 +1,80 @@
+<%def name="all_sentences()">
+	% if c.num_sentences > 0:
+		${h.pluralize(['phrase', 'trouveé'],c.num_sentences)} dans
+		${h.pluralize(['corpus'], c.num_corpora, plurals=['corpora'])}.
+		% if c.corpasentences:
+			${corpa_sentences(c.corpasentences)}
+		% endif
+		% if c.littresentences:
+			${littre_sentences(c.littresentences)}
+		% endif
+		% if c.websentences:
+			${web_sentences(c.websentences)}
+		% endif
+	% else:
+		Pas de phrases.
+	% endif
+</%def>
+
+<%def name="corpa_sentences(sentences)">
+	<div class="block_header">
+		<div class='triangle'>▽</div>
+		<div class="corpus_name">CorpaText</div>
+		<div class="entry_count">${len(sentences)}</div>
+	</div>
+	<div class="corpa_sentences_container">
+		<ul class="citations">
+		% for sentence in sentences:
+			<div class="corpa_sentences_container">
+				<li>
+					${sentence | n}
+				</li>
+			</div>
+	    % endfor
+		</ul>
+	</div>
+</%def>
+
+<%def name="littre_sentences(sentences)">
+	<div class="block_header">
+		<div class='triangle'>▽</div>
+		<div class="corpus_name">Littré</div>
+		<div class="entry_count">${len(sentences)}</div>
+	</div>
+	<div class="littre_sentences_container">
+		<ul class="citations">
+		% for sentence in sentences:
+			<div class="littre_sentence">
+				<li>
+					${sentence['content']} (${sentence['source']})
+				</li>
+			</div>
+	    % endfor
+		</ul>
+	</div>
+</%def>
+
+<%def name="web_sentences(sentences)">
+	<div class="block_header">
+		<div class='triangle'>▽</div>
+		<div class="corpus_name">WWW</div>
+		<div class="entry_count">${len(sentences)}</div>
+	</div>
+	<div class="web_sentences_container">
+		<ul class="citations">
+		% for sentence in sentences:
+			<div class="web_sentence">
+				<li>${sentence['content'] | n}
+				% if sentence['link']:
+					(<a href="http://${sentence['link']}">
+						${sentence['source']})
+					</a>
+				% else:
+					(${sentence['source']})
+				% endif
+				</li>
+			</div>
+	    % endfor
+		</ul>
+	</div>
+</%def>

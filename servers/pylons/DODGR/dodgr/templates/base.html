@@ -1,15 +1,5 @@
 <%namespace name="wordwheel" file="/wordwheel.html" />
 
-<%def name="search_bar()">
-	<div class="search_bar">
-		<form action="${url('/s')}" method="get">
-			<input type="text" name="word" class="search_bar_word"
-			 value="Recherche d'un mot" />
-			<input type="submit" value="OK" />
-		</form>
-	</div>
-</%def>
-
 <html>
     <head>
         <title>${self.title()}</title>
@@ -37,73 +27,12 @@
 
 		<div class="container">
 
-			<div id="header" class="span-24 last">
-				<div class="span-3">
-					<img src="${url('/img/dvlf_logo_medium.gif')}" 
-					 height="40">
-				</div>
-				<div class="span-13">
-					Dictionnaire vivant de la langue française
-				</div>
-				<div class="span-8 last">
-					${self.search_bar()}
-				</div>
-			</div>
+			<%include file="compact_header.html" />
 
-			<div id="index_alpha" class="span-3">
-				${wordwheel.wheel(c.neighbors, headword=c.word)}
-			</div>
+			${self.body()}
 
-			<div class="span-15">
-				<div id="main_headword_container">
-					<form action="${url('/s')}" method="get">
-						<div id="main_headword_form">
-							<input type="text" id="main_headword_input"
-							 name="word" value="${c.word}" />
-						</div>
-					</form>
-				</div>
-       			${self.body()}
-			</div>
+			<%include file="footer.html" />
 
-			<div class="span-6 last">
-				% if c.prons:
-					<div class="main_pron_container">
-						<h2 class="pron_header">Prononciation</h2>
-						<!-- # TODO find a better way to get uniq'ed prons-->
-						% for pron in set(c.prons):
-							<div class="pron">
-								${pron | n}
-							</div>
-						% endfor
-					</div>
-				% endif
-				% if c.synonyms:
-				<div class="nyms_container">
-					<h2 class="nyms_header">Synonymes</h2>
-					${', '.join([h.stealth_headword_link(word) for word in
-					             c.synonyms]) | n}
-				</div>
-				% endif
-				% if c.antonyms:
-				<div class="nyms_container">
-					<h2 class="nyms_header">Antonymes</h2>
-					${', '.join([h.stealth_headword_link(word) for word in
-					             c.antonyms]) | n}
-				</div>
-				% endif
-				<div class="word_reference_trigger">
-					Activer WordReference
-				</div>
-				<div id="word_reference_container"></div>
-			</div>
-
-			<div id="footer" class="span-24">
-				<div class="span-16" id="footer_links"><a>The ARTFL Project</a> | University of Chicago | Nous contacter | À propos du DVLF | Outils linguistiques</div>
-				<div class="span-8 last">
-					${self.search_bar()}
-				</div>
-	        </div>
 		</div>
     </body>
 </html>
