@@ -115,4 +115,4 @@ class DodgrdicoController(BaseController):
 
         c.neighbors = app_globals.stack.index_neighbors(word)
 
-        return render('/entry.html')
+        return render('/profile.html')
