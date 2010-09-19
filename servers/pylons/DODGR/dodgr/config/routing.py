@@ -33,4 +33,9 @@ def make_map():
         'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
          _static=True)
 
+    # Redirect the trailing-slash version to no slash, which should be the
+    # canonical URL
+    map.redirect('/*(url)/', '/{url}',
+                 _redirect_code='301 Moved Permanently')
+
     return map
