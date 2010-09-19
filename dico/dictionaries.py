@@ -1,5 +1,6 @@
 """Dictionary models"""
 import json
+import bisect
 import MySQLdb
 import entries
 
@@ -241,9 +242,18 @@ class Stack(object):
     # that EntryBased dicos also expose
     def index_neighbors(self, word, distance=20):
         """Fetch all the neighboring headwords from the index table"""
-        word_id = self.index.index(word)
-        start = word_id - distance
-        if start < 0:
-            start = 0
-        stop = word_id + distance + 1
-        return self.index[start:stop]
+        if word in self.index:
+            word_id = self.index.index(word)
+            start = word_id - distance
+            if start < 0:
+                start = 0
+            stop = word_id + distance + 1
+            return self.index[start:stop]
+        else:
+            word_id = bisect.bisect_left(self.index, word)
+            start = word_id - distance
+            if start < 0:
+                start = 0
+            stop = word_id + distance
+            return self.index[start:word_id] + [word] +\
+                   self.index[word_id:stop]
