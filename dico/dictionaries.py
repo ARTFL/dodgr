@@ -103,6 +103,7 @@ class EntryBased(object):
         except IndexError:
             return None
 
+
 class MySQLBased(object):
     """A dictionary stored in MySQL tables"""
 
@@ -195,6 +196,7 @@ class MySQLBased(object):
             return self._entries[entry_id]
         except IndexError:
             return None
+
 
 class Stack(object):
     """Container for a collection of dictionaries"""
