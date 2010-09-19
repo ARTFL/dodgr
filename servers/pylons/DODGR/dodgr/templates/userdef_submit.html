@@ -1,0 +1,21 @@
+# -*- coding: utf-8 -*-
+<%inherit file="/base.html"/>\
+
+<%def name="title()">ARTFL :: Dictionnaire vivant de la langue française :: Ajouter une définition</%def>
+
+<p>Enter your word and definition or use example;  then fill out the reCAPTCHA and press "Submit"</p>
+
+<p>Please limit your submission to 250 characters per field.</p>
+
+<form action="${url('/soumissions/submit')}" method="post">
+	<label for="headword">Word:</label><br>
+	<input type="text" name="headword" />
+	<br />
+	<label for="definition">Definition:</label><br>
+	<textarea name="definition" /></textarea>
+
+	${c.recaptcha | n}
+
+	<input type="submit" />
+	<input type="reset" />
+</form>
