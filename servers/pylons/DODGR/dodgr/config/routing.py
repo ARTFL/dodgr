@@ -21,7 +21,7 @@ def make_map():
 
     # CUSTOM ROUTES HERE
 
-    map.connect('/home', controller='dodgrdico', action='home')
+    map.connect('/', controller='dodgrdico', action='home')
     map.connect('/s', controller='dodgrdico', action='lookup')
     map.connect('define', '/mot/{word}', controller='dodgrdico',
                 action='define')
