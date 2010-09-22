@@ -20,6 +20,11 @@ class DodgrdicoController(BaseController):
         # or, return a response
         return 'Hello World'
 
+    def home(self):
+        """Test"""
+
+        return render('/home.html')
+
     def lookup(self):
         """This action handles incoming search requests."""
 
