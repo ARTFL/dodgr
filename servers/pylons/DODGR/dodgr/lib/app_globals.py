@@ -34,7 +34,7 @@ class Globals(object):
                  u'Dictionnaire de L\'Académie française 8th edition '
                  u'(1932-1935)'),
                  (u'LITTRE1872',
-                 u'Émile Littré\'s Dictionnaire de la langue '
+                 u'Émile Littré: Dictionnaire de la langue '
                  u'française (1872-1877)'),
                  (u'ACAD1835',
                  u'Dictionnaire de L\'Académie française 6th edition '
@@ -43,7 +43,7 @@ class Globals(object):
                  u'Dictionnaire de L\'Académie française 5th edition '
                  u'(1798)'),
                  (u'FERAUD1787',
-                 u'Jean-François Féraud\'s Dictionaire critique de '
+                 u'Jean-François Féraud: Dictionaire critique de '
                  u'la langue française (1787-1788)'),
                  (u'ACAD1762',
                  u'Dictionnaire de L\'Académie française 4th edition '
@@ -52,7 +52,7 @@ class Globals(object):
                  u'Dictionnaire de L\'Académie française 1st edition '
                  u'(1694)'),
                  (u'NICOT1606',
-                 u'Jean Nicot\'s Thresor de la langue française '
+                 u'Jean Nicot: Thresor de la langue française '
                  u'(1606)')]
 
         stack_dicos = []
