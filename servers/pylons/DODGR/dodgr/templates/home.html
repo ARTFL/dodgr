@@ -1,7 +1,25 @@
 <html> 
-
 <head> 
 <title> Le Dictionnaire vivant de la langue française </title>
+      <link rel="stylesheet"
+                 href="${url('/css/blueprint/screen.css')}"
+                 type="text/css" media="screen, projection">
+                <link rel="stylesheet"
+                 href="${url('/css/blueprint/print.css')}"
+                 type="text/css" media="print">
+                <link rel="stylesheet"
+                 href="${url('/css/blueprint/typography.css')}"
+                 type="text/css" media="screen, projection">
+                <!--[if lt IE 8]>                                                                                                                                                  
+                <link rel="stylesheet"                                                                                                                                             
+                 href="'${url('css/blueprint/ie.css')}"                                                                                                                            
+                 type="text/css" media="screen, projection">                                                                                                                       
+                <![endif]-->
+                <link rel="stylesheet" href="${url('/css/dvlf.css')}"
+                 type="text/css" media="screen, projection">
+                <script src="${url('jquery')}"></script>
+                <script src="${url('/js/dodgr.js')}"></script>
+
 </head>
 <body> 
 <br>
@@ -9,8 +27,6 @@
 <br>
 <center>Le Dictionnaire vivant de la langue française</center>
 <br>
-<br> 
-Coming soon to a browser near you...<br>
 <br>
 Le Dictionnaire vivant de la langue française (DVLF) is an experimental approach to dictionary compilation
 that will offer an interactive and community-oriented alternative to traditional methods of French
@@ -21,6 +37,10 @@ dictionary's traditionally normative role by giving French speakers and learners
 tools so that they can interact with the evolving meaning of words and determine their own understanding of the language.<br><br>  We see the DVLF as a paradigm-shifting dictionary in the sphere of traditional French lexicography.
 
 
+<div class="container">
+
+                <%include file="footer.html" />
+</div>
 
 </body>
 
