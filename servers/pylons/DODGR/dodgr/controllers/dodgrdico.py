@@ -48,57 +48,44 @@ class DodgrdicoController(BaseController):
         else:
             c.num_dicos = 0
 
-        # DB connection
-        db = MySQLdb.connect(user='dvlf_readonly', passwd='d00r33d',
-                             db='dvlf', use_unicode=True)
-        cursor = db.cursor()
-        db.set_character_set('utf8')
-        cursor.execute('SET NAMES utf8;')
-        cursor.execute('SET CHARACTER SET utf8;')
-        cursor.execute('SET character_set_connection=utf8;')
+        db = app_globals.db()
 
         # User-submitted definitions
-        cursor.execute("""SELECT content FROM submit
-                          WHERE headword = %s""", word)
-        userdef_rows = cursor.fetchall()
-        c.userdefs = [row[0] for row in userdef_rows]
+        c.userdefs = db.list("""SELECT content FROM submit
+                             WHERE headword = %s""", word)
 
+        # SENTENCES
         # TODO get all this sentence stuff out of here
+
+        # TODO shouldn't we be limiting the # of sentences in the query, not
+        # post-hoc?
         sentence_limit = 20
 
         c.num_sentences = 0
         c.num_corpora = 0
 
-        cursor.execute("""SELECT content FROM corpasentences_utf8
-                          WHERE headword = %s""", word)
-        corpasentence_rows = cursor.fetchall()
-
-        c.corpasentences = [row[0] for row in
-                            corpasentence_rows]
+        c.corpasentences = db.list("""SELECT content FROM corpasentences_utf8
+                                    WHERE headword = %s""", word)
         c.corpasentences = c.corpasentences[:sentence_limit]
         c.num_sentences += len(c.corpasentences)
         if (len(c.corpasentences) > 0):
             c.num_corpora += 1
 
-
-        cursor.execute("""SELECT content, source FROM littresentences_utf8
-                          WHERE headword = %s""", word)
-        littresentence_rows = cursor.fetchall()
-        c.littresentences = [{'content': row[0], 'source': row[1]} for row in
-                             littresentence_rows]
+        # Littre sentences
+        c.littresentences = db.query("""SELECT content, source
+                                       FROM littresentences_utf8
+                                       WHERE headword = %s""", word)
         c.littresentences = c.littresentences[:sentence_limit]
         c.num_sentences += len(c.littresentences)
         if (len(c.littresentences) > 0):
             c.num_corpora += 1
 
-        cursor.execute("""SELECT content, source, link FROM websentences_utf8
-                          WHERE headword = %s""", word)
-        websentence_rows = cursor.fetchall()
-        c.websentences = [{'content': row[0], 'source': row[1],
-                           'link': row[2]} for row in websentence_rows]
+        # Web sentences
+        c.websentences = db.query("""SELECT content, source, link
+                                  FROM websentences_utf8
+                                  WHERE headword = %s""", word)
         c.websentences = c.websentences[:sentence_limit]
         link_pattern = re.compile('(\w+\.)+\w+\/')
-        i = 0
         for i in range(len(c.websentences)):
             link = c.websentences[i]['link']
             if not link_pattern.match(link):
@@ -108,16 +95,17 @@ class DodgrdicoController(BaseController):
             c.num_corpora += 1
 
         # Syonoyms and antonyms
-        cursor.execute("""SELECT synonyms, antonyms FROM nyms
-                          WHERE word = %s""", word)
-        nym_row = cursor.fetchone()
+        nym_rows = db.query("""SELECT synonyms, antonyms FROM nyms
+                            WHERE word = %s""", word)
         c.synonyms = []
         c.antonyms = []
 
-        if nym_row:
-            c.synonyms = json.loads(nym_row[0])
-            c.antonyms = json.loads(nym_row[1])
+        if nym_rows:
+            c.synonyms = json.loads(nym_rows[0]['synonyms'])
+            c.antonyms = json.loads(nym_rows[0]['antonyms'])
 
         c.neighbors = app_globals.stack.index_neighbors(word)
+
+        db.close()
 
         return render('/profile.html')

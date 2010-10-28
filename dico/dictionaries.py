@@ -106,13 +106,14 @@ class EntryBased(object):
 
 
 class MySQLBased(object):
-    """A dictionary stored in MySQL tables"""
+    """A dictionary stored in MySQL tables. Uses the tornado database MySQLdb
+    wrapper."""
 
-    def __init__(self, name, citation, mapper, cursor, loader=None):
+    def __init__(self, name, citation, mapper, db, loader=None):
         self.name = name
         self.citation = citation
         self.mapper = mapper
-        self.cursor = cursor
+        self.db = db
         self.entry_table = self.name + '_entries'
         self.index_table = self.name + '_index'
 
@@ -128,11 +129,9 @@ class MySQLBased(object):
     def __iter__(self):
         """Fetch all the headwords from the index table"""
         index_table = self.name + '_index'
-        self.cursor.execute("""SELECT headword
-                            FROM `""" + self.index_table + """`""")
-        headword_rows = self.cursor.fetchall()
-        for row in headword_rows:
-            yield row[0]
+        for row in self.db.query("""SELECT headword FROM `%s`""" % \
+                                 self.index_table):
+            yield row['headword']
 
     def _build(self, loader):
         """Build the dictionary data tables from the loader data"""
@@ -140,15 +139,15 @@ class MySQLBased(object):
         # Setup the initial tables
         entry_table = self.name + '_entries'
         index_table = self.name + '_index'
-        self.cursor.execute('DROP TABLE IF EXISTS `' + entry_table + '`')
-        self.cursor.execute('DROP TABLE IF EXISTS `' + index_table + '`')
-        self.cursor.execute("""CREATE TABLE `""" + entry_table + """` (
+        self.db.execute('DROP TABLE IF EXISTS `' + entry_table + '`')
+        self.db.execute('DROP TABLE IF EXISTS `' + index_table + '`')
+        self.db.execute("""CREATE TABLE `""" + entry_table + """` (
                             `id` int(11) NOT NULL AUTO_INCREMENT,
                             `entry` mediumtext CHARACTER SET utf8,
                             PRIMARY KEY (`id`))
                             ENGINE=MyISAM
                             DEFAULT CHARSET=utf8;""")
-        self.cursor.execute("""CREATE TABLE `""" + index_table + """` (
+        self.db.execute("""CREATE TABLE `""" + index_table + """` (
                             `id` int(11) NOT NULL AUTO_INCREMENT,
                             `headword` varchar(255) CHARACTER SET utf8,
                             `entry_id` int,
@@ -162,13 +161,13 @@ class MySQLBased(object):
             if 'error' in entry_input and entry_input['error']:
                 continue
 
-            self.cursor.execute("""INSERT INTO `""" + entry_table + """`
-                           (entry) VALUES (%s)""", json.dumps(entry_input))
+            self.db.execute("""INSERT INTO `""" + entry_table + """`
+                            (entry) VALUES (%s)""", json.dumps(entry_input))
             for headword in entry_input['headwords']:
                 citation_form = self.mapper.citation_form(headword[0])
-                self.cursor.execute("""INSERT INTO `""" + index_table + """`
-                               (headword, entry_id) VALUES (%s, %s)""",
-                               (citation_form, entry_id))
+                self.db.execute("""INSERT INTO `""" + index_table + """`
+                                (headword, entry_id) VALUES (%s, %s)""",
+                                (citation_form, entry_id))
             entry_id += 1
 
     def define(self, word):
@@ -176,17 +175,18 @@ class MySQLBased(object):
 
         entry_table = self.name + '_entries'
         index_table = self.name + '_index'
-        self.cursor.execute("""SELECT `""" + entry_table + """`.entry
-                            FROM `""" + entry_table + """`
-                            LEFT JOIN `""" + index_table + """`
-                            ON `""" + index_table + """`.entry_id
-                            = `""" + entry_table + """`.id
-                            WHERE `""" + index_table + """`.headword = %s""",
-                            word)
-        entry_rows = self.cursor.fetchall()
+        entry_rows = self.db.query("""SELECT `""" + entry_table + """`.entry
+                                   AS entry
+                                   FROM `""" + entry_table + """`
+                                   LEFT JOIN `""" + index_table + """`
+                                   ON `""" + index_table + """`.entry_id
+                                   = `""" + entry_table + """`.id
+                                   WHERE `""" + index_table + \
+                                   """`.headword = %s""",
+                                   word)
         entry_list = []
-        for entry_row in entry_rows:
-            entry_dict = json.loads(entry_row[0])
+        for row in entry_rows:
+            entry_dict = json.loads(row['entry'])
             entry_list.append(entries.Entry(prop_dict=entry_dict))
 
         return entry_list

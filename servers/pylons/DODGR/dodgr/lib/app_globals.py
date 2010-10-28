@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """The application's Globals object"""
 import cPickle
-import MySQLdb
+from pylons import config
+import tornado.database
 import dico
 import dico.mappers
 
@@ -20,13 +21,6 @@ class Globals(object):
         'app_globals' variable
 
         """
-        db = MySQLdb.connect(user='dvlf_readonly', passwd='d00r33d',
-                             db='dvlf', use_unicode=True)
-        cursor = db.cursor()
-        db.set_character_set('utf8')
-        cursor.execute('SET NAMES utf8;')
-        cursor.execute('SET CHARACTER SET utf8;')
-        cursor.execute('SET character_set_connection=utf8;')
 
         dicos = [(u'TLFI',
                  u'Le Trésor de la Langue Française Informatisé'),
@@ -56,10 +50,17 @@ class Globals(object):
                  u'(1606)')]
 
         stack_dicos = []
+        db = self.db()
         for name, citation in dicos:
             mapper = dico.mappers.IdolMapper()
-            daf_dico = dico.MySQLBased(name, citation, mapper, cursor)
+            daf_dico = dico.MySQLBased(name, citation, mapper, self.db())
             stack_dicos.append(daf_dico)
 
         self.stack = dico.Stack(dicos=stack_dicos)
-        self.db = db
+
+    def db(self):
+        """Return a database connection"""
+        return tornado.database.Connection("localhost",
+                                           config['mysql.database'],
+                                           user=config['mysql.user'],
+                                           password=config['mysql.password'])
