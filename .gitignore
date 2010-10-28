@@ -3,3 +3,5 @@
 *.html.py
 scratch
 .DS_Store
+development.ini
+production.ini
