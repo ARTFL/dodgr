@@ -78,6 +78,12 @@ class DodgrdicoController(BaseController):
                                        FROM littresentences_utf8
                                        WHERE headword = %s""", word)
         c.littresentences = c.littresentences[:sentence_limit]
+        #m = re.search('(\w)$', word)
+        #last_letter = m.group(1)
+        #trim_word = re.sub('\w$', '', word)
+        #for i in range(len(c.littresentences)):
+            #c.littresentences[i]['content'] = re.sub('(%s)' % trim_word, '<span style="background-color: #EBE4E1"><strong>\\1%s</strong></span>' % last_letter, c.littresentences[i]['content'])
+            #c.littresentences[i]['content'] = re.sub('(</span>)%s' % last_letter, '</span>', c.littresentences[i]['content'])
         c.num_sentences += len(c.littresentences)
         
         if (len(c.littresentences) > 0):
@@ -101,7 +107,10 @@ class DodgrdicoController(BaseController):
         # Syonoyms and antonyms
         nym_rows = db.query("""SELECT synonyms, antonyms, ranksyns FROM newnyms
                             WHERE word = %s""", word)
-
+        
+        c.synonyms = []
+        c.antonyms = []
+        
         if nym_rows:
             antonyms = nym_rows[0]['antonyms']
             if re.search('empty', antonyms):
