@@ -67,6 +67,8 @@ class DodgrdicoController(BaseController):
         c.corpasentences = db.list("""SELECT content FROM corpasentences_utf8
                                     WHERE headword = %s""", word)
         c.corpasentences = c.corpasentences[:sentence_limit]
+        for i in range(len(c.corpasentences)):
+            c.corpasentences[i] = re.sub('(%s)' % word, '<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.corpasentences[i])
         c.num_sentences += len(c.corpasentences)
         if (len(c.corpasentences) > 0):
             c.num_corpora += 1
@@ -77,6 +79,7 @@ class DodgrdicoController(BaseController):
                                        WHERE headword = %s""", word)
         c.littresentences = c.littresentences[:sentence_limit]
         c.num_sentences += len(c.littresentences)
+        
         if (len(c.littresentences) > 0):
             c.num_corpora += 1
 
@@ -90,6 +93,7 @@ class DodgrdicoController(BaseController):
             link = c.websentences[i]['link']
             if not link_pattern.match(link):
                 c.websentences[i]['link'] = None
+            c.websentences[i]['content'] = re.sub('(%s)' % word, '<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.websentences[i]['content'])
         c.num_sentences += len(c.websentences)
         if (len(c.websentences) > 0):
             c.num_corpora += 1
