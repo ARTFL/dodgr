@@ -95,14 +95,28 @@ class DodgrdicoController(BaseController):
             c.num_corpora += 1
 
         # Syonoyms and antonyms
-        nym_rows = db.query("""SELECT synonyms, antonyms FROM nyms
+        nym_rows = db.query("""SELECT synonyms, antonyms, ranksyns FROM newnyms
                             WHERE word = %s""", word)
-        c.synonyms = []
-        c.antonyms = []
 
         if nym_rows:
-            c.synonyms = json.loads(nym_rows[0]['synonyms'])
-            c.antonyms = json.loads(nym_rows[0]['antonyms'])
+            antonyms = nym_rows[0]['antonyms']
+            if re.search('empty', antonyms):
+                c.antonyms = []
+            else:
+                c.antonyms = nym_rows[0]['antonyms'].decode('utf-8').split(',')
+            synonyms = nym_rows[0]['synonyms'].decode('utf-8').split(',')
+            ranksyns = nym_rows[0]['ranksyns'].decode('utf-8').split(',')
+            try:
+                # maybe add a global variable to indicate that there is ranking
+                # involved and display it in the results page
+                c.synonyms = [syns for syns in ranksyns]
+                for syn in synonyms:
+                    if len(c.synonyms) > 39:
+                        break
+                    if syn not in c.synonyms:
+                        c.synonyms.append(syn)
+            except:
+                c.synonyms = synonyms[:40]
 
         c.neighbors = app_globals.stack.index_neighbors(word)
 
