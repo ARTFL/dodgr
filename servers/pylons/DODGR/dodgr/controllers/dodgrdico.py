@@ -66,7 +66,7 @@ class DodgrdicoController(BaseController):
         
         #TODO make highlighting its own function and move out of here
         highlight = re.compile('(?iu)(%s)' % word)
-        trimmed_word = re.sub('(\w)$', '', word)
+        trimmed_word = re.sub('(?iu)(\w)$', '', word)
         highlight_trim = re.compile('(?iu)(%s\w*)' % trimmed_word)
         
         c.corpasentences = db.list("""SELECT content FROM corpasentences_utf8
