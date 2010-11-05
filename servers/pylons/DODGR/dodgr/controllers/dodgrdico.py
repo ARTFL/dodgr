@@ -64,6 +64,7 @@ class DodgrdicoController(BaseController):
         c.num_sentences = 0
         c.num_corpora = 0
         
+        #TODO make highlighting its own function and move out of here
         highlight = re.compile('(?iu)(%s)' % word)
         trimmed_word = re.sub('(\w)$', '', word)
         highlight_trim = re.compile('(?iu)(%s\w*)' % trimmed_word)
@@ -83,12 +84,9 @@ class DodgrdicoController(BaseController):
                                        FROM littresentences_utf8
                                        WHERE headword = %s""", word)
         c.littresentences = c.littresentences[:sentence_limit]
-        #m = re.search('(\w)$', word)
-        #last_letter = m.group(1)
-        #trim_word = re.sub('\w$', '', word)
         #for i in range(len(c.littresentences)):
-            #c.littresentences[i]['content'] = re.sub('(%s)' % trim_word, '<span style="background-color: #EBE4E1"><strong>\\1%s</strong></span>' % last_letter, c.littresentences[i]['content'])
-            #c.littresentences[i]['content'] = re.sub('(</span>)%s' % last_letter, '</span>', c.littresentences[i]['content'])
+            #c.littresentences[i]['content'] = highlight.sub('<span style="background-color: #EBE4E1"><strong>\\1%s</strong></span>' % last_letter, c.littresentences[i]['content'])
+            #c.littresentences[i]['content'] = highlight_trim.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.littresentences[i]['content'])
         c.num_sentences += len(c.littresentences)
         
         if (len(c.littresentences) > 0):
