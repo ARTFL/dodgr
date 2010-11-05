@@ -63,12 +63,17 @@ class DodgrdicoController(BaseController):
 
         c.num_sentences = 0
         c.num_corpora = 0
-
+        
+        highlight = re.compile('(?iu)(%s)' % word)
+        trimmed_word = re.sub('(\w)$', '', word)
+        highlight_trim = re.compile('(?iu)(%s\w*)' % trimmed_word)
+        
         c.corpasentences = db.list("""SELECT content FROM corpasentences_utf8
                                     WHERE headword = %s""", word)
         c.corpasentences = c.corpasentences[:sentence_limit]
         for i in range(len(c.corpasentences)):
-            c.corpasentences[i] = re.sub('(%s)' % word, '<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.corpasentences[i])
+            c.corpasentences[i] = highlight.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.corpasentences[i])
+            c.corpasentences[i] = highlight_trim.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.corpasentences[i])
         c.num_sentences += len(c.corpasentences)
         if (len(c.corpasentences) > 0):
             c.num_corpora += 1
@@ -95,11 +100,13 @@ class DodgrdicoController(BaseController):
                                   WHERE headword = %s""", word)
         c.websentences = c.websentences[:sentence_limit]
         link_pattern = re.compile('(\w+\.)+\w+\/')
+        
         for i in range(len(c.websentences)):
             link = c.websentences[i]['link']
             if not link_pattern.match(link):
                 c.websentences[i]['link'] = None
-            c.websentences[i]['content'] = re.sub('(%s)' % word, '<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.websentences[i]['content'])
+            c.websentences[i]['content'] = highlight.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.websentences[i]['content'])
+            c.websentences[i]['content'] = highlight_trim.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.websentences[i]['content'])
         c.num_sentences += len(c.websentences)
         if (len(c.websentences) > 0):
             c.num_corpora += 1
