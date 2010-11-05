@@ -1,6 +1,6 @@
 <%def name="all_sentences()">
 	% if c.num_sentences > 0:
-		${h.pluralize(['phrase', 'trouveé'],c.num_sentences)} dans
+		${h.pluralize(['phrase', 'trouvée'],c.num_sentences)} dans
 		${h.pluralize(['corpus'], c.num_corpora, plurals=['corpora'])}.
 		% if c.corpasentences:
 			${corpa_sentences(c.corpasentences)}
