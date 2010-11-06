@@ -50,6 +50,8 @@ def stealth_headword_link(word):
            '</a>'
 
 def highlight(text, highlight_word, highlight_trim):
-    text = highlight_word.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', text)
-    text = highlight_trim.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', text)
+    try:
+        text = highlight_word.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span> ', text)
+    except:
+        text = highlight_trim.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', text)
     return text
