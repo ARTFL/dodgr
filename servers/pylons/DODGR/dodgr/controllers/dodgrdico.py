@@ -122,16 +122,16 @@ class DodgrdicoController(BaseController):
                 c.antonyms = nym_rows[0]['antonyms'].decode('utf-8').split(',')
             synonyms = nym_rows[0]['synonyms'].decode('utf-8').split(',')
             ranksyns = nym_rows[0]['ranksyns'].decode('utf-8').split(',')
-            try:
                 # maybe add a global variable to indicate that there is ranking
                 # involved and display it in the results page
+            if len(ranksyns) > 0:
                 c.synonyms = [syns for syns in ranksyns]
                 for syn in synonyms:
                     if len(c.synonyms) > 39:
                         break
                     if syn not in c.synonyms:
                         c.synonyms.append(syn)
-            except:
+            else:
                 c.synonyms = synonyms[:40]
 
         c.neighbors = app_globals.stack.index_neighbors(word)
