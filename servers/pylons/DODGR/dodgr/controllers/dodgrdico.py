@@ -7,6 +7,7 @@ from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to, url_for
 
 from dodgr.lib.base import BaseController, render
+from dodgr.lib.helpers import highlight
 from pylons import app_globals
 
 log = logging.getLogger(__name__)
@@ -64,8 +65,8 @@ class DodgrdicoController(BaseController):
         c.num_sentences = 0
         c.num_corpora = 0
         
-        #TODO make highlighting its own function and move out of here
-        highlight = re.compile('(?iu)(%s)' % word)
+        #TODO make these regex patterns global and get them out of here?
+        highlight_word = re.compile('(?iu)(%s)' % word)
         trimmed_word = re.sub('(?iu)(\w)$', '', word)
         highlight_trim = re.compile('(?iu)(%s\w*)' % trimmed_word)
         
@@ -73,8 +74,7 @@ class DodgrdicoController(BaseController):
                                     WHERE headword = %s""", word)
         c.corpasentences = c.corpasentences[:sentence_limit]
         for i in range(len(c.corpasentences)):
-            c.corpasentences[i] = highlight.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.corpasentences[i])
-            c.corpasentences[i] = highlight_trim.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.corpasentences[i])
+            c.corpasentences[i] = highlight(c.corpasentences[i], highlight_word, highlight_trim)
         c.num_sentences += len(c.corpasentences)
         if (len(c.corpasentences) > 0):
             c.num_corpora += 1
@@ -85,8 +85,7 @@ class DodgrdicoController(BaseController):
                                        WHERE headword = %s""", word)
         c.littresentences = c.littresentences[:sentence_limit]
         #for i in range(len(c.littresentences)):
-            #c.littresentences[i]['content'] = highlight.sub('<span style="background-color: #EBE4E1"><strong>\\1%s</strong></span>' % last_letter, c.littresentences[i]['content'])
-            #c.littresentences[i]['content'] = highlight_trim.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.littresentences[i]['content'])
+            #c.littresentences[i]['content'] = highlight(c.littresentences[i]['content'], highlight_word, highlight_trim)
         c.num_sentences += len(c.littresentences)
         
         if (len(c.littresentences) > 0):
@@ -103,8 +102,7 @@ class DodgrdicoController(BaseController):
             link = c.websentences[i]['link']
             if not link_pattern.match(link):
                 c.websentences[i]['link'] = None
-            c.websentences[i]['content'] = highlight.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.websentences[i]['content'])
-            c.websentences[i]['content'] = highlight_trim.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', c.websentences[i]['content'])
+            c.websentences[i]['content'] = highlight(c.websentences[i]['content'], highlight_word, highlight_trim)
         c.num_sentences += len(c.websentences)
         if (len(c.websentences) > 0):
             c.num_corpora += 1

@@ -48,3 +48,8 @@ def stealth_headword_link(word):
     word_url = url_for(controller='dodgrdico', action='define', word=word)
     return '<a class="stealth_headword" href="' + word_url + '">' + word +\
            '</a>'
+
+def highlight(text, highlight_word, highlight_trim):
+    text = highlight_word.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', text)
+    text = highlight_trim.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', text)
+    return text
