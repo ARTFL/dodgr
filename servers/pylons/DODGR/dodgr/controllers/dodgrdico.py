@@ -85,8 +85,8 @@ class DodgrdicoController(BaseController):
                                        FROM littresentences_utf8
                                        WHERE headword = %s""", word)
         c.littresentences = c.littresentences[:sentence_limit]
-        for i in range(len(c.littresentences)):
-            c.littresentences[i]['content'] = highlight(c.littresentences[i]['content'], highlight_word, highlight_trim)
+        #for i in range(len(c.littresentences)):
+            #c.littresentences[i]['content'] = highlight(c.littresentences[i]['content'], highlight_word, highlight_trim)
         c.num_sentences += len(c.littresentences)
         
         if (len(c.littresentences) > 0):
