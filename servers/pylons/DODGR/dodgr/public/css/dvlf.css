@@ -114,6 +114,8 @@ div.search_bar input {
 
 h2.nyms_header, h2.pron_header, h2.wordwheel_header {
     font-size: 120%;
+    font-weight: bold;
+    color: #670000;
     margin-bottom: 1%;
 }
 
