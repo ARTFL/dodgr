@@ -66,16 +66,15 @@ class DodgrdicoController(BaseController):
         c.num_sentences = 0
         c.num_corpora = 0
         
-        #TODO make these regex patterns global and get them out of here?
-        highlight_word = re.compile('(?iu)(%s\w?) ' % word)
+        #TODO make these regex patterns global?
         trimmed_word = re.sub('(?iu)(\w)$', '', word)
-        highlight_trim = re.compile('(?iu)(%s\w+)' % trimmed_word)
+        pattern = re.compile('(?iu)(%s\w+)' % trimmed_word)
         
         c.corpasentences = db.list("""SELECT content FROM corpasentences_utf8
                                     WHERE headword = %s""", word)
         c.corpasentences = c.corpasentences[:sentence_limit]
         for i in range(len(c.corpasentences)):
-            c.corpasentences[i] = highlight(c.corpasentences[i], highlight_word, highlight_trim)
+            c.corpasentences[i] = highlight(c.corpasentences[i], pattern)
         c.num_sentences += len(c.corpasentences)
         if (len(c.corpasentences) > 0):
             c.num_corpora += 1
@@ -85,8 +84,8 @@ class DodgrdicoController(BaseController):
                                        FROM littresentences_utf8
                                        WHERE headword = %s""", word)
         c.littresentences = c.littresentences[:sentence_limit]
-        #for i in range(len(c.littresentences)):
-            #c.littresentences[i]['content'] = highlight(c.littresentences[i]['content'], highlight_word, highlight_trim)
+        for i in range(len(c.littresentences)):
+            c.littresentences[i]['content'] = highlight(c.littresentences[i]['content'], pattern)
         c.num_sentences += len(c.littresentences)
         
         if (len(c.littresentences) > 0):
@@ -103,7 +102,7 @@ class DodgrdicoController(BaseController):
             link = c.websentences[i]['link']
             if not link_pattern.match(link):
                 c.websentences[i]['link'] = None
-            c.websentences[i]['content'] = highlight(c.websentences[i]['content'], highlight_word, highlight_trim)
+            c.websentences[i]['content'] = highlight(c.websentences[i]['content'], pattern)
         c.num_sentences += len(c.websentences)
         if (len(c.websentences) > 0):
             c.num_corpora += 1
@@ -123,8 +122,7 @@ class DodgrdicoController(BaseController):
                 c.antonyms = nym_rows[0]['antonyms'].decode('utf-8').split(',')
             synonyms = nym_rows[0]['synonyms'].decode('utf-8').split(',')
             ranksyns = nym_rows[0]['ranksyns'].decode('utf-8').split(',')
-            # maybe add a global variable to indicate that there is ranking
-            # involved and display it in the results page
+            # TODO maybe add a global variable to indicate when there is ranking
             if len(ranksyns) > 0:
                 c.synonyms = [syns for syns in ranksyns]
                 for syn in synonyms:
