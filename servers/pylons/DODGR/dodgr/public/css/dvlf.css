@@ -112,7 +112,7 @@ div.search_bar input {
     margin: 2%;
 }
 
-h2.nyms_header, h2.pron_header {
+h2.nyms_header, h2.pron_header, h2.wordwheel_header {
     font-size: 120%;
     margin-bottom: 1%;
 }
