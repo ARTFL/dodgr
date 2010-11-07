@@ -46,7 +46,7 @@
 		% for sentence in sentences:
 			<div class="littre_sentence">
 				<li>
-					${sentence['content']} (${sentence['source']})
+					${sentence['content'] | n} (${sentence['source']})
 				</li>
 			</div>
 	    % endfor
