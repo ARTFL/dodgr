@@ -37,7 +37,7 @@ class Globals(object):
                  u'Dictionnaire de L\'Académie française 5th edition '
                  u'(1798)'),
                  (u'FERAUD1787',
-                 u'Jean-François Féraud: Dictionaire critique de '
+                 u'Féraud: Dictionaire critique de '
                  u'la langue française (1787-1788)'),
                  (u'ACAD1762',
                  u'Dictionnaire de L\'Académie française 4th edition '
@@ -50,13 +50,17 @@ class Globals(object):
                  u'(1606)')]
 
         stack_dicos = []
+        wordwheel_dicos = []
         db = self.db()
         for name, citation in dicos:
             mapper = dico.mappers.IdolMapper()
             daf_dico = dico.MySQLBased(name, citation, mapper, self.db())
             stack_dicos.append(daf_dico)
-
+            if name == u'TLFI' or name == u'Dictionnaire de L\'Académie française 8th edition ':
+                wordwheel_dicos.append(daf_dico)
+            
         self.stack = dico.Stack(dicos=stack_dicos)
+        self.wordwheel = dico.Stack(dicos=wordwheel_dicos)
 
     def db(self):
         """Return a database connection"""

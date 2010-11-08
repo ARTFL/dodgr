@@ -3,7 +3,7 @@ import json
 import bisect
 import MySQLdb
 import entries
-
+import locale
 
 class Simple(object):
     """A very simple dictionary, with only headwords and defintions"""
@@ -224,7 +224,8 @@ class Stack(object):
         for headword in dico:
             self.index.append(headword)
         self.index = list(set(self.index))
-        self.index.sort()
+        locale.setlocale(locale.LC_ALL, "")
+        self.index.sort(cmp=locale.strcoll)
 
     def define(self, word):
         """Return a list of all entries for a word"""

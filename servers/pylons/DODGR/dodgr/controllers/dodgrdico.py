@@ -133,7 +133,7 @@ class DodgrdicoController(BaseController):
             else:
                 c.synonyms = synonyms[:40]
 
-        c.neighbors = app_globals.stack.index_neighbors(word)
+        c.neighbors = app_globals.wordwheel.index_neighbors(word)
 
         db.close()
 
