@@ -4,6 +4,7 @@ import bisect
 import MySQLdb
 import entries
 import locale
+from dodgr.lib.helpers import custom_sorting
 
 class Simple(object):
     """A very simple dictionary, with only headwords and defintions"""
@@ -224,8 +225,10 @@ class Stack(object):
         for headword in dico:
             self.index.append(headword)
         self.index = list(set(self.index))
-        locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
-        self.index.sort(cmp=locale.strcoll)
+        self.index = sorted(self.index, key=custom_sorting)
+        ## this function doesn't work on Macs
+        #locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
+        #self.index.sort(cmp=locale.strcoll)
 
     def define(self, word):
         """Return a list of all entries for a word"""
@@ -258,3 +261,8 @@ class Stack(object):
             stop = word_id + distance
             return self.index[start:word_id] + [word] +\
                    self.index[word_id:stop]
+      
+    
+        
+        
+        

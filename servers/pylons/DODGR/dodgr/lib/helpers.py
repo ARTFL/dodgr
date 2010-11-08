@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Helper functions
 
 Consists of functions to typically be used within templates, but also
@@ -52,3 +53,18 @@ def stealth_headword_link(word):
 def highlight(text, pattern):
     text = pattern.sub('<span style="background-color: #EBE4E1"><strong>\\1</strong></span>', text)
     return text
+    
+## idea taken from http://code.activestate.com/recipes/576507-sort-strings-containing-german-umlauts-in-correct-/
+    ## workaround for OSX
+def custom_sorting(word):
+    word = word.replace(u'é', u'e')
+    word = word.replace(u'è', u'e')
+    word = word.replace(u'ê', u'e')
+    word = word.replace(u'à', u'a')
+    word = word.replace(u'â', u'a')
+    word = word.replace(u'ù', u'u')
+    word = word.replace(u'û', u'u')
+    word = word.replace(u'î', u'i')
+    word = word.replace(u'ô', u'o')
+    word = word.replace(u'ç', u'c')
+    return word
