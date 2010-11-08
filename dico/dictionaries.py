@@ -224,7 +224,7 @@ class Stack(object):
         for headword in dico:
             self.index.append(headword)
         self.index = list(set(self.index))
-        locale.setlocale(locale.LC_ALL, "")
+        locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
         self.index.sort(cmp=locale.strcoll)
 
     def define(self, word):
