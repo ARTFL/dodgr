@@ -67,9 +67,12 @@ class DodgrdicoController(BaseController):
         c.num_corpora = 0
         
         #TODO make these regex patterns global?
-        trimmed_word = re.sub('(?iu)(\w{2})$', '', word)
+        if len(word) > 4:
+            trimmed_word = re.sub('(?iu)(\w{2})$', '', word)
+        else:
+            trimmed_word = re.sub('(?iu)(\w)$', '', word)
         pattern = re.compile('(?iu)(%s\w+)' % trimmed_word)
-        
+            
         c.corpasentences = db.list("""SELECT content FROM corpasentences_utf8
                                     WHERE headword = %s""", word)
         c.corpasentences = c.corpasentences[:sentence_limit]
