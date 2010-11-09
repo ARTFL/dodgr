@@ -67,7 +67,7 @@ class DodgrdicoController(BaseController):
         c.num_corpora = 0
         
         #TODO make these regex patterns global?
-        trimmed_word = re.sub('(?iu)(\w)$', '', word)
+        trimmed_word = re.sub('(?iu)(\w{2})$', '', word)
         pattern = re.compile('(?iu)(%s\w+)' % trimmed_word)
         
         c.corpasentences = db.list("""SELECT content FROM corpasentences_utf8
