@@ -7,7 +7,7 @@ from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to, url_for
 
 from dodgr.lib.base import BaseController, render
-from dodgr.lib.helpers import highlight
+from dodgr.lib.helpers import highlight, highlight_patterns
 from pylons import app_globals
 
 log = logging.getLogger(__name__)
@@ -66,12 +66,7 @@ class DodgrdicoController(BaseController):
         c.num_sentences = 0
         c.num_corpora = 0
         
-        #TODO make these regex patterns global?
-        if len(word) > 4:
-            trimmed_word = re.sub('(?iu)(\w{2})$', '', word)
-        else:
-            trimmed_word = re.sub('(?iu)(\w)$', '', word)
-        pattern = re.compile('(?iu)(%s\w+)' % trimmed_word)
+        pattern = highlight_patterns(word)
             
         c.corpasentences = db.list("""SELECT content FROM corpasentences_utf8
                                     WHERE headword = %s""", word)
