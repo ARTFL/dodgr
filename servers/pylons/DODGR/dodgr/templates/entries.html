@@ -4,7 +4,6 @@
 		${h.pluralize(['dictionnaire'], c.num_dicos)}.
 		% for dico_name, citation, entries in c.dico_entries:
 			${dico_entries(citation, entries)}
-
 		% endfor
 	% else:
 		<div class="empty">
