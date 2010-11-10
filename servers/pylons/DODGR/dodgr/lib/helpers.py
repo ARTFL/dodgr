@@ -49,7 +49,7 @@ def stealth_headword_link(word):
     word_url = url_for(controller='dodgrdico', action='define', word=word)
     return '<a class="stealth_headword" href="' + word_url + '">' + word +\
            '</a>'
-    
+
 
 def highlight_patterns(word):
     if re.search('\w+ir|oir|er|aire|eau|aux|el|al$', word) and len(word) > 4:
@@ -62,7 +62,7 @@ def highlight_patterns(word):
             trimmed_word = re.sub('(?iu)(\w)$', '', word)
         pattern = re.compile('(?iu)(\W+)(%s\w{,3})(\W*)' % trimmed_word)
     return pattern
-    
+
 
 def highlight(word, pattern):
     word = pattern.sub('\\1<span style="background-color: #EBE4E1"><strong>\\2</strong></span>\\3', word)
