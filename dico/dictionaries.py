@@ -194,11 +194,8 @@ class MySQLBased(object):
 
     def get_entry(self, entry_id):
         """Return a specific entry by id"""
-        try:
-            return self._entries[entry_id]
-        except IndexError:
-            return None
-
+        # TODO implement this
+        pass
 
 class Stack(object):
     """Container for a collection of dictionaries"""
