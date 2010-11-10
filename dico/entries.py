@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """entries.py
 Dictionary entry models"""
 
@@ -8,13 +9,14 @@ class Entry(object):
     def __init__(self, prop_dict=None, prop_obj=None):
         """Build a dictionary entry from a dictionary of properties or an
         object with named properties. Headwords should be a list of tuples of
-        (headword string, pos string). Examples is a list of strings. Other 
+        (headword string, pos string). Examples is a list of strings. Other
         properties are strings.
-        
+
         prop stands for property (a reserved keyword)
         """
 
-        self.props = ['headwords', 'content', 'examples', 'prons']
+        self.props = ['headwords', 'content', 'examples', 'prons',
+                      'searched_headword']
 
         if not (prop_dict or prop_obj):
             raise Exception('You must initialize the dico entry with'
@@ -29,6 +31,8 @@ class Entry(object):
         elif prop_obj:
             for prop in self.props:
                 setattr(self, prop, getattr(prob_obj, prop))
+
+        self.is_truncated = False
 
     def __len__(self):
         """Length of an entry is defined as the length of its content"""
@@ -55,10 +59,34 @@ class Entry(object):
             entry += 'Examples:\n' + '\n'.join(self.examples) + '\n'
         if self.content:
             entry += 'Content:\n' + self.content
-            
+
         return entry
 
     def __str__(self):
         """String representation for a dico entry"""
 
         return self.__unicode__().encode('utf-8')
+
+
+class TruncatedEntry(Entry):
+    """An entry whose content is limited to a certain length"""
+
+    def __init__(self, prop_dict=None, prop_obj=None, length=500,
+                 full_entry_url=None):
+        """Perform the superclass init, then truncate content to length"""
+        super(TruncatedEntry, self).__init__(prop_dict=prop_dict,
+                                             prop_obj=prop_obj)
+
+        self.full_entry_url = full_entry_url + self.searched_headword
+        self.length = length
+        self.truncate()
+        self.is_truncated = True
+
+    def truncate(self):
+        """Truncate the entry to at most length characters"""
+
+        if len(self.content) > self.length:
+            content = self.content
+            truncated = u' '.join(content[:self.length+1].split(u' ')[0:-1])\
+                        + u'…'
+            self.content = truncated

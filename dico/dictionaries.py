@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Dictionary models"""
 import json
 import bisect
@@ -110,13 +111,16 @@ class MySQLBased(object):
     """A dictionary stored in MySQL tables. Uses the tornado database MySQLdb
     wrapper."""
 
-    def __init__(self, name, citation, mapper, db, loader=None):
+    def __init__(self, name, citation, mapper, db, loader=None,
+                 truncate=False, full_entry_url=None):
         self.name = name
         self.citation = citation
         self.mapper = mapper
         self.db = db
         self.entry_table = self.name + '_entries'
         self.index_table = self.name + '_index'
+        self.truncate = truncate
+        self.full_entry_url = full_entry_url
 
         if loader:
             self._build(loader)
@@ -188,8 +192,14 @@ class MySQLBased(object):
         entry_list = []
         for row in entry_rows:
             entry_dict = json.loads(row['entry'])
-            entry_list.append(entries.Entry(prop_dict=entry_dict))
-
+            entry_dict['searched_headword'] = word
+            if self.truncate:
+                entry_list.append(entries.TruncatedEntry(
+                                      prop_dict=entry_dict,
+                                      length=self.truncate,
+                                      full_entry_url=self.full_entry_url))
+            else:
+                entry_list.append(entries.Entry(prop_dict=entry_dict))
         return entry_list
 
     def get_entry(self, entry_id):

@@ -22,9 +22,7 @@ class Globals(object):
 
         """
 
-        dicos = [(u'TLFI',
-                 u'Le Trésor de la Langue Française Informatisé'),
-                 (u'ACAD1932',
+        dicos = [(u'ACAD1932',
                  u'Dictionnaire de L\'Académie française 8th edition '
                  u'(1932-1935)'),
                  (u'LITTRE1872',
@@ -52,13 +50,21 @@ class Globals(object):
         stack_dicos = []
         wordwheel_dicos = []
         db = self.db()
+        mapper = dico.mappers.IdolMapper()
+        tlfi_url = 'http://www.cnrtl.fr/definition/'
+        tlfi_dico = dico.MySQLBased('TLFI',
+                                    u'Le Trésor de la Langue Française ' +
+                                    u'Informatisé', mapper, self.db(),
+                                    truncate=500, full_entry_url=tlfi_url)
+        stack_dicos.append(tlfi_dico)
+        wordwheel_dicos.append(tlfi_dico)
+
         for name, citation in dicos:
-            mapper = dico.mappers.IdolMapper()
             daf_dico = dico.MySQLBased(name, citation, mapper, self.db())
             stack_dicos.append(daf_dico)
-            if name == u'TLFI' or name == u'Dictionnaire de L\'Académie française 8th edition ':
+            if name == u'ACAD1932':
                 wordwheel_dicos.append(daf_dico)
-            
+
         self.stack = dico.Stack(dicos=stack_dicos)
         self.wordwheel = dico.Stack(dicos=wordwheel_dicos)
 
