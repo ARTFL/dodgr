@@ -47,7 +47,7 @@ def stealth_headword_link(word):
     """Return a "stealth" link for the word"""
 
     word_url = url_for(controller='dodgrdico', action='define', word=word)
-    return '<a class="stealth_headword" href="' + word_url + '">' + word +\
+    return '<a class="stealth_headword" href="' + word_url + '" target="_blank">' + word +\
            '</a>'
 
 
