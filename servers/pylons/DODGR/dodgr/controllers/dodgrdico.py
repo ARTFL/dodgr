@@ -71,8 +71,7 @@ class DodgrdicoController(BaseController):
         c.corpasentences = db.list("""SELECT content FROM corpasentences_utf8
                                     WHERE headword = %s""", word)
         c.corpasentences = c.corpasentences[:sentence_limit]
-        for i in range(len(c.corpasentences)):
-            c.corpasentences[i] = highlight(c.corpasentences[i], pattern)
+        c.corpasentences = [highlight(c.corpasentences[i], pattern) for i in range(len(c.corpasentences))]
         c.num_sentences += len(c.corpasentences)
         if (len(c.corpasentences) > 0):
             c.num_corpora += 1
