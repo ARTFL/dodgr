@@ -55,7 +55,7 @@ class Globals(object):
         tlfi_dico = dico.MySQLBased('TLFI',
                                     u'Le Trésor de la Langue Française ' +
                                     u'Informatisé', mapper, self.db(),
-                                    truncate=500, full_entry_url=tlfi_url)
+                                    truncate=1000, full_entry_url=tlfi_url)
         stack_dicos.append(tlfi_dico)
         wordwheel_dicos.append(tlfi_dico)
 

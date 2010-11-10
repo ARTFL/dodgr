@@ -88,5 +88,5 @@ class TruncatedEntry(Entry):
         if len(self.content) > self.length:
             content = self.content
             truncated = u' '.join(content[:self.length+1].split(u' ')[0:-1])\
-                        + u'…'
+                        + u' […]'
             self.content = truncated

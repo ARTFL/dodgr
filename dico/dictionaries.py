@@ -190,14 +190,17 @@ class MySQLBased(object):
                                    """`.headword = %s""",
                                    word)
         entry_list = []
+        truncated_entries = 1
         for row in entry_rows:
             entry_dict = json.loads(row['entry'])
             entry_dict['searched_headword'] = word
             if self.truncate:
-                entry_list.append(entries.TruncatedEntry(
-                                      prop_dict=entry_dict,
-                                      length=self.truncate,
-                                      full_entry_url=self.full_entry_url))
+                if truncated_entries:
+                    truncated_entries = 0
+                    entry_list.append(entries.TruncatedEntry(
+                                        prop_dict=entry_dict,
+                                        length=self.truncate,
+                                        full_entry_url=self.full_entry_url))
             else:
                 entry_list.append(entries.Entry(prop_dict=entry_dict))
         return entry_list
