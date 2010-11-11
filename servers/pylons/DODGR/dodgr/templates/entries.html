@@ -27,7 +27,9 @@
 			<div class="dico_entry">
 			${single_entry(entry)}
 			% if entry.is_truncated:
-				&nbsp;&nbsp;&nbsp;<a href="${entry.full_entry_url}" target="_blank">Définition complète</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="${entry.full_entry_url}" target="_blank">Définition complète</a>
+			<br>
+			<br>
 			% endif
 			</div>
 	    % endfor
