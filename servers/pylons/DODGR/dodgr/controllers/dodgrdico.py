@@ -114,6 +114,8 @@ class DodgrdicoController(BaseController):
             c.synonyms = (ranksyns + [syn for syn in synonyms if syn not in ranksyns])[:39]
             if not re.match('empty', nym_rows[0]['antonyms']):
                 c.antonyms = nym_rows[0]['antonyms'].decode('utf-8').split(',')
+            else:
+                c.antonyms = []
         else:
             c.synonyms = []
             c.antonyms = []
