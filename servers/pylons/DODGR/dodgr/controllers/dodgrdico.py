@@ -104,31 +104,19 @@ class DodgrdicoController(BaseController):
         if (len(c.websentences) > 0):
             c.num_corpora += 1
 
-        # Syonoyms and antonyms
+        # Synonyms and antonyms
         nym_rows = db.query("""SELECT synonyms, antonyms, ranksyns FROM newnyms
                             WHERE word = %s""", word)
         
-        c.synonyms = []
-        c.antonyms = []
-        
         if nym_rows:
-            antonyms = nym_rows[0]['antonyms']
-            if re.search('empty', antonyms):
-                c.antonyms = []
-            else:
-                c.antonyms = nym_rows[0]['antonyms'].decode('utf-8').split(',')
-            synonyms = nym_rows[0]['synonyms'].decode('utf-8').split(',')
+            synonyms = nym_rows[0]['synonyms'].decode('utf-8').split(',')[:39]
             ranksyns = nym_rows[0]['ranksyns'].decode('utf-8').split(',')
-            # TODO maybe add a global variable to indicate when there is ranking
-            if len(ranksyns) > 0:
-                c.synonyms = [syns for syns in ranksyns]
-                for syn in synonyms:
-                    if len(c.synonyms) > 39:
-                        break
-                    if syn not in c.synonyms:
-                        c.synonyms.append(syn)
-            else:
-                c.synonyms = synonyms[:40]
+            c.synonyms = (ranksyns + [syn for syn in synonyms if syn not in ranksyns])[:39]
+            if not re.match('empty', nym_rows[0]['antonyms']):
+                c.antonyms = nym_rows[0]['antonyms'].decode('utf-8').split(',')
+        else:
+            c.synonyms = []
+            c.antonyms = []
 
         c.neighbors = app_globals.wordwheel.index_neighbors(word)
 
