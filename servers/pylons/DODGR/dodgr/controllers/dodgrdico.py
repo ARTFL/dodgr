@@ -105,13 +105,13 @@ class DodgrdicoController(BaseController):
             c.num_corpora += 1
 
         # Synonyms and antonyms
-        nym_rows = db.query("""SELECT synonyms, antonyms, ranksyns FROM newnyms
+        nym_rows = db.query("""SELECT synonyms, antonyms, ranksyns FROM nyms
                             WHERE word = %s""", word)
         
         if nym_rows:
-            synonyms = nym_rows[0]['synonyms'].decode('utf-8').split(',')[:39]
+            synonyms = nym_rows[0]['synonyms'].decode('utf-8').split(',')[:40]
             ranksyns = nym_rows[0]['ranksyns'].decode('utf-8').split(',')
-            c.synonyms = (ranksyns + [syn for syn in synonyms if syn not in ranksyns])[:39]
+            c.synonyms = (ranksyns + [syn for syn in synonyms if syn not in ranksyns])[:40]
             if not re.match('empty', nym_rows[0]['antonyms']):
                 c.antonyms = nym_rows[0]['antonyms'].decode('utf-8').split(',')
             else:
