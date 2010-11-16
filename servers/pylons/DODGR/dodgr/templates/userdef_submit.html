@@ -3,19 +3,19 @@
 
 <%def name="title()">ARTFL :: Dictionnaire vivant de la langue française :: Ajouter une définition</%def>
 
-<p>Enter your word and definition or use example;  then fill out the reCAPTCHA and press "Submit"</p>
+<p><b>Entrez votre mot, votre définition ou votre example. Puis appuyez sur "Soumettre".</p>
 
-<p>Please limit your submission to 250 characters per field.</p>
+<p>Veuillez limiter votre contribution à 250 mots par champ.</b></p>
 
 <form action="${url('/soumissions/submit')}" method="post">
-	<label for="headword">Word:</label><br>
+	<label for="headword">Terme:</label><br>
 	<input type="text" name="headword" />
 	<br />
-	<label for="definition">Definition:</label><br>
+	<label for="definition">Définition:</label><br>
 	<textarea name="definition" /></textarea>
 
 	${c.recaptcha | n}
 
-	<input type="submit" />
-	<input type="reset" />
+	<input type="submit" value="Soumettre" />
+	<input type="reset" value="Réinitialiser" />
 </form>
