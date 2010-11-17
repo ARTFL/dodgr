@@ -27,6 +27,10 @@ class DodgrdicoController(BaseController):
 
         return render('/home.html')
 
+    def apropos(self):
+
+        return render('/apropos.html')
+
     def lookup(self):
         """This action handles incoming search requests."""
 
