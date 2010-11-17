@@ -7,7 +7,8 @@ from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to, url_for
 
 from dodgr.lib.base import BaseController, render
-from dodgr.lib.helpers import highlight, highlight_patterns
+from dodgr.lib.helpers import highlight_patterns
+from sentences import get_sentences
 from pylons import app_globals
 
 log = logging.getLogger(__name__)
@@ -57,52 +58,22 @@ class DodgrdicoController(BaseController):
                              WHERE headword = %s""", word)
 
         # SENTENCES
-        # TODO get all this sentence stuff out of here
-
         # TODO shouldn't we be limiting the # of sentences in the query, not
         # post-hoc?
+        
         sentence_limit = 20
-
+        pattern = highlight_patterns(word)
+        
+        c.corpasentences = get_sentences('corpa', word, pattern, db, sentence_limit)
+        c.websentences = get_sentences('web', word, pattern, db, sentence_limit)
+        c.littresentences = get_sentences('littre', word, pattern, db, sentence_limit)
+        
         c.num_sentences = 0
         c.num_corpora = 0
-        
-        pattern = highlight_patterns(word)
-            
-        c.corpasentences = db.list("""SELECT content FROM corpasentences_utf8
-                                    WHERE headword = %s""", word)
-        c.corpasentences = c.corpasentences[:sentence_limit]
-        c.corpasentences = [highlight(c.corpasentences[i], pattern) for i in range(len(c.corpasentences))]
-        c.num_sentences += len(c.corpasentences)
-        if (len(c.corpasentences) > 0):
+        for sentence_db in [c.corpasentences, c.websentences, c.littresentences]:
             c.num_corpora += 1
+            c.num_sentences += len(sentence_db)
 
-        # Littre sentences
-        c.littresentences = db.query("""SELECT content, source
-                                       FROM littresentences_utf8
-                                       WHERE headword = %s""", word)
-        c.littresentences = c.littresentences[:sentence_limit]
-        for i in range(len(c.littresentences)):
-            c.littresentences[i]['content'] = highlight(c.littresentences[i]['content'], pattern)
-        c.num_sentences += len(c.littresentences)
-        
-        if (len(c.littresentences) > 0):
-            c.num_corpora += 1
-
-        # Web sentences
-        c.websentences = db.query("""SELECT content, source, link
-                                  FROM websentences_utf8
-                                  WHERE headword = %s""", word)
-        c.websentences = c.websentences[:sentence_limit]
-        link_pattern = re.compile('(\w+\.)+\w+\/')
-        
-        for i in range(len(c.websentences)):
-            link = c.websentences[i]['link']
-            if not link_pattern.match(link):
-                c.websentences[i]['link'] = None
-            c.websentences[i]['content'] = highlight(c.websentences[i]['content'], pattern)
-        c.num_sentences += len(c.websentences)
-        if (len(c.websentences) > 0):
-            c.num_corpora += 1
 
         # Synonyms and antonyms
         nym_rows = db.query("""SELECT synonyms, antonyms, ranksyns FROM nyms
