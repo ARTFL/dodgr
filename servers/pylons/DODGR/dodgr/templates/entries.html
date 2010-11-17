@@ -1,6 +1,6 @@
 <%def name="all_dico_entries()">
 	% if c.dico_entries:
-		${h.pluralize(['définition', 'trouvée'], c.num_entries)} dans
+		${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
 		${h.pluralize(['dictionnaire'], c.num_dicos)}.
 		% for dico_name, citation, entries in c.dico_entries:
 			${dico_entries(citation, entries)}
