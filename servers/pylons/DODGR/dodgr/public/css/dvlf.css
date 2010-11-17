@@ -47,6 +47,12 @@ body {
     width: 100%;
 }
 
+div.home {
+	font-size: 230%;
+    font-family: 'Copperplate Gothic Bold';
+    color: #670000;
+}
+
 div.headword {
     font-size: 130%;
     font-family: 'Copperplate Gothic Bold';
