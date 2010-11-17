@@ -29,7 +29,7 @@ def make_map():
     map.connect('/soumissions/submit', controller='usersub', action='submit')
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
-    map.connect('/apropos', controller='dodgrdico', action='apropos')
+    map.connect('apropos', '/apropos', controller='dodgrdico', action='apropos')
 
     # STATIC ROUTES
 
