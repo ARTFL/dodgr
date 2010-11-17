@@ -71,8 +71,9 @@ class DodgrdicoController(BaseController):
         c.num_sentences = 0
         c.num_corpora = 0
         for sentence_db in [c.corpasentences, c.websentences, c.littresentences]:
-            c.num_corpora += 1
-            c.num_sentences += len(sentence_db)
+            if len(sentence_db) > 0:
+                c.num_corpora += 1
+                c.num_sentences += len(sentence_db)
 
 
         # Synonyms and antonyms
