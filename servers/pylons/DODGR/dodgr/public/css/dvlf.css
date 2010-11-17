@@ -96,6 +96,14 @@ div.entry_count {
     font-size: 90%;
 }
 
+div.search_bar_home {
+	margin: .4%;
+}
+
+div.search_bar_home input {
+	margin: 0;
+}
+
 div.search_bar {
     margin: .4%;
     float: right;
