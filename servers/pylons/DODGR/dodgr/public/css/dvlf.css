@@ -48,7 +48,7 @@ body {
 }
 
 div.home {
-	font-size: 230%;
+	font-size: 250%;
     font-family: 'Copperplate Gothic Bold';
     color: #670000;
 }
@@ -97,11 +97,12 @@ div.entry_count {
 }
 
 div.search_bar_home {
-	margin: .4%;
+	margin: 0;
 }
 
 div.search_bar_home input {
-	margin: 0;
+	margin:01;
+	font-size: 30px;
 }
 
 div.search_bar {
