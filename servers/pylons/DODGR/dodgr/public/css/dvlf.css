@@ -47,6 +47,12 @@ body {
     width: 100%;
 }
 
+div.home {
+	font-size: 250%;
+    font-family: 'Copperplate Gothic Bold';
+    color: #670000;
+}
+
 div.headword {
     font-size: 130%;
     font-family: 'Copperplate Gothic Bold';
@@ -88,6 +94,15 @@ div.entry_count {
     text-align: center;
     font-family: sans-serif;
     font-size: 90%;
+}
+
+div.search_bar_home {
+	margin: 0;
+}
+
+div.search_bar_home input {
+	margin:01;
+	font-size: 30px;
 }
 
 div.search_bar {
