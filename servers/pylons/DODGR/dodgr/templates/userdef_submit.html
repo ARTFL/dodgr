@@ -8,8 +8,8 @@
 <p>Veuillez limiter votre contribution à 250 mots par champ.</b></p>
 
 <form action="${url('/soumissions/submit')}" method="post">
-	<label for="headword">Terme:</label><br>
-	<input type="text" name="headword" />
+	<label for="headword">Terme: </label><br>
+	<input type="text" name="headword" value="${c.word}"/>
 	<br />
 	<label for="definition">Définition:</label><br>
 	<textarea name="definition" /></textarea>

@@ -13,11 +13,16 @@ log = logging.getLogger(__name__)
 
 class UsersubController(BaseController):
 
-    def index(self):
+    def index(self, word=None):
         """Default action: render the template that allows a user to submit a
         definition"""
+        c.word = word
         c.recaptcha = displayhtml(config['recaptcha.public_key'])
         return render('/userdef_submit.html')
+        
+    #def from_search(self, word=None):
+        #if word
+        #c.word = word
 
     def submit(self):
         """Handle the submission of a definition"""
