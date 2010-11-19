@@ -19,10 +19,6 @@ class UsersubController(BaseController):
         c.word = word
         c.recaptcha = displayhtml(config['recaptcha.public_key'])
         return render('/userdef_submit.html')
-        
-    #def from_search(self, word=None):
-        #if word
-        #c.word = word
 
     def submit(self):
         """Handle the submission of a definition"""
