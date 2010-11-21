@@ -6,6 +6,8 @@ import MySQLdb
 import entries
 import locale
 from dodgr.lib.helpers import custom_sorting
+from difflib import get_close_matches
+
 
 class Simple(object):
     """A very simple dictionary, with only headwords and defintions"""
@@ -271,6 +273,11 @@ class Stack(object):
             stop = word_id + distance
             return self.index[start:word_id] + [word] +\
                    self.index[word_id:stop]
+                   
+                   
+    def fuzzy_matching(self, word):
+        matches = get_close_matches(word, self.index)
+        return matches
       
     
         

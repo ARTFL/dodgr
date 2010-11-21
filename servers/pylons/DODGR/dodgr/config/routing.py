@@ -26,7 +26,7 @@ def make_map():
     map.connect('define', '/mot/{word}', controller='dodgrdico',
                 action='define')
     map.connect('contribute', '/soumissions/', controller='usersub', action='index')
-    map.connect('/soumissions/{word}', controller='usersub', action='index')
+    map.connect('/soumissions/new/{word}', controller='usersub', action='index')
     map.connect('/soumissions/submit', controller='usersub', action='submit')
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
