@@ -7,7 +7,7 @@ from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to, url_for
 
 from dodgr.lib.base import BaseController, render
-from dodgr.lib.helpers import highlight_patterns
+from dodgr.lib.helpers import highlight_patterns, stealth_headword_link
 from sentences import get_sentences
 from pylons import app_globals
 
@@ -54,6 +54,8 @@ class DodgrdicoController(BaseController):
                         c.prons += entry.prons
         else:
             c.num_dicos = 0
+            c.matches = app_globals.stack.fuzzy_matching(word)
+            c.matches = ' OR '.join([stealth_headword_link(word) for word in c.matches])
 
         db = app_globals.db()
 
