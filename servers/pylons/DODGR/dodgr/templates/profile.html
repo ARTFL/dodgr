@@ -22,40 +22,44 @@
 
 	${entries.all_dico_entries()}
 
-	${sentences.all_sentences()}
+	% if c.dico_entries:
+        ${sentences.all_sentences()}
+    % endif
 
 </div>
 
 <div class="span-6 last">
-	% if c.prons:
-		<div class="main_pron_container">
-			<h2 class="pron_header">Prononciation</h2>
-			<!-- # TODO find a better way to get uniq'ed prons-->
-			% for pron in set(c.prons):
-				<div class="pron">
-					${pron | n}
-				</div>
-			% endfor
-		</div>
-	% endif
-	% if c.synonyms:
-	<div class="nyms_container">
-		<h2 class="nyms_header">Synonymes</h2>
-		${', '.join([h.stealth_headword_link(word) for word in
-		             c.synonyms]) | n}
-	</div>
-	% endif
-	% if c.antonyms:
-	<div class="nyms_container">
-		<h2 class="nyms_header">Antonymes</h2>
-		${', '.join([h.stealth_headword_link(word) for word in
-		             c.antonyms]) | n}
-	</div>
-	% endif
-	<div class="word_reference_trigger">
-		Activer WordReference
-	</div>
-	<div id="word_reference_container"></div>
+    % if c.dico_entries:
+        % if c.prons:
+            <div class="main_pron_container">
+                <h2 class="pron_header">Prononciation</h2>
+                <!-- # TODO find a better way to get uniq'ed prons-->
+                % for pron in set(c.prons):
+                    <div class="pron">
+                        ${pron | n}
+                    </div>
+                % endfor
+            </div>
+        % endif
+        % if c.synonyms:
+        <div class="nyms_container">
+            <h2 class="nyms_header">Synonymes</h2>
+            ${', '.join([h.stealth_headword_link(word) for word in
+                        c.synonyms]) | n}
+        </div>
+        % endif
+        % if c.antonyms:
+        <div class="nyms_container">
+            <h2 class="nyms_header">Antonymes</h2>
+            ${', '.join([h.stealth_headword_link(word) for word in
+                        c.antonyms]) | n}
+        </div>
+        % endif
+        <div class="word_reference_trigger">
+            Activer WordReference
+        </div>
+        <div id="word_reference_container"></div>
+    % endif
 </div>
 
 

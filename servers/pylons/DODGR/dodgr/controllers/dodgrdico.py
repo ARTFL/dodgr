@@ -55,7 +55,7 @@ class DodgrdicoController(BaseController):
         else:
             c.num_dicos = 0
             c.matches = app_globals.stack.fuzzy_matching(word)
-            c.matches = ' OR '.join([stealth_headword_link(word) for word in c.matches])
+            c.matches = [stealth_headword_link(word) for word in c.matches]
 
         db = app_globals.db()
 
