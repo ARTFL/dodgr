@@ -1,12 +1,15 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import re
 from pylons import app_globals
-from dodgr.lib.helpers import highlight
+from dodgr.lib.helpers import highlight, highlight_patterns
 
-def get_sentences(sentence_db, word, pattern, db, limit):
+def get_sentences(sentence_db, word, db, limit=20):
     """Return a list of all sentences in each database"""
+    
+    #TODO set the number of sentences before query?
+    
+    pattern = highlight_patterns(word)
     
     if sentence_db == 'corpa':
         corpasentences = db.list("""SELECT content FROM corpasentences_utf8

@@ -7,7 +7,7 @@ from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to, url_for
 
 from dodgr.lib.base import BaseController, render
-from dodgr.lib.helpers import highlight_patterns, stealth_headword_link
+from dodgr.lib.helpers import stealth_headword_link
 from sentences import get_sentences
 from pylons import app_globals
 
@@ -64,15 +64,10 @@ class DodgrdicoController(BaseController):
                              WHERE headword = %s""", word)
 
         # SENTENCES
-        # TODO shouldn't we be limiting the # of sentences in the query, not
-        # post-hoc?
         
-        sentence_limit = 20
-        pattern = highlight_patterns(word)
-        
-        c.corpasentences = get_sentences('corpa', word, pattern, db, sentence_limit)
-        c.websentences = get_sentences('web', word, pattern, db, sentence_limit)
-        c.littresentences = get_sentences('littre', word, pattern, db, sentence_limit)
+        c.corpasentences = get_sentences('corpa', word, db)
+        c.websentences = get_sentences('web', word, db)
+        c.littresentences = get_sentences('littre', word, db)
         
         c.num_sentences = 0
         c.num_corpora = 0
