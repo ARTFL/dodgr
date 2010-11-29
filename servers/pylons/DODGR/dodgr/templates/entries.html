@@ -1,17 +1,33 @@
 <%def name="all_dico_entries()">
-	% if c.dico_entries:
+	% if c.num_dicos > 2:
+        % if len(c.lem) > 0:
+            <b>${c.word}</b> est une forme fléchie de <b>${c.lem | n}</b>.<br>
+        % endif
 		${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
 		${h.pluralize(['dictionnaire'], c.num_dicos)}.
 		% for dico_name, citation, entries in c.dico_entries:
 			${dico_entries(citation, entries)}
 		% endfor
-	% else:
-		<div class="empty">
-		Voulez-vous dire: <b>"${c.matches[0] | n}"</b> ou <b>"${c.matches[1] | n}"</b> ou <b>"${c.matches[2] | n}"</b>
-		<br><br>
-		<b>Aucune entrée ne correspond à votre recherche.  Vous pouvez ajouter la définition de ce mot à notre base de données <a href="/soumissions/new/${c.word}">ici</a>.</b>
+    % else:
+        <div class="empty">
+        % if len(c.lem) > 0:
+            <b>${c.word}</b> est une forme fléchie de <b>${c.lem | n}</b>.
+            <br>Sinon, vouliez-vous dire:
+        % else:
+            Voulez-vous dire
+        % endif
+		<b>"${c.matches[0] | n}"</b> ou <b>"${c.matches[1] | n}"</b> ou <b>"${c.matches[2] | n}"</b> ?
 		<br>
-		</div>
+		% if c.dico_entries:
+            </div>
+            % for dico_name, citation, entries in c.dico_entries:
+                ${dico_entries(citation, entries)}
+            % endfor
+        % else:    
+            <b>Aucune entrée ne correspond à votre recherche.  Vous pouvez ajouter la définition de ce mot à notre base de données <a href="/soumissions/new/${c.word}">ici</a>.</b>
+            <br>
+            </div>
+        % endif
 	% endif
 
 	% if len(c.userdefs) > 0:
