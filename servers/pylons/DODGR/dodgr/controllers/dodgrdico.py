@@ -43,6 +43,14 @@ class DodgrdicoController(BaseController):
         the word defined in the route"""
         word = word.rstrip()
         c.dico_entries = app_globals.stack.define(word)
+        if not c.dico_entries:
+            try:
+                word = app_globals.word2lem[word]
+                c.dico_entries = app_globals.stack.define(word)
+            except:
+                c.num_dicos = 0
+                c.matches = app_globals.stack.fuzzy_matching(word)
+                c.matches = [stealth_headword_link(term) for term in c.matches]
         c.prons = []
         c.num_entries = 0
         if c.dico_entries:
@@ -52,10 +60,6 @@ class DodgrdicoController(BaseController):
                     c.num_entries += 1
                     if entry.prons:
                         c.prons += entry.prons
-        else:
-            c.num_dicos = 0
-            c.matches = app_globals.stack.fuzzy_matching(word)
-            c.matches = [stealth_headword_link(term) for term in c.matches]
 
         db = app_globals.db()
 

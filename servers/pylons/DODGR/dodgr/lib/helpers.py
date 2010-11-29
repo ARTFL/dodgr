@@ -10,6 +10,7 @@ available to Controllers. This module is available to templates as 'h'.
 import tidylib
 import re
 from pylons.controllers.util import url_for
+from pylons import app_globals
 
 
 def sanitize_html(html):
@@ -51,22 +52,14 @@ def stealth_headword_link(word):
            '</a>'
 
 
-def highlight_patterns(word):
-    if re.search('\w+ir|oir|er|aire|eau|aux|el|al$', word) and len(word) > 4:
-        trimmed_word = re.sub('ir|oir|er|aire|eau|aux|el|al$', '', word)
-        pattern = re.compile('(?iu)(\W+)(%s\w{,7})(\W*)' % trimmed_word)
-    else:
-        if len(word) > 4:
-            trimmed_word = re.sub('(?iu)(\w{2})$', '', word)
-        else:
-            trimmed_word = re.sub('(?iu)(\w)$', '', word)
-        pattern = re.compile('(?iu)(\W+)(%s\w{,3})(\W*)' % trimmed_word)
-    return pattern
-
-
-def highlight(word, pattern):
-    word = pattern.sub('\\1<span style="background-color: #EBE4E1"><strong>\\2</strong></span>\\3', word)
-    return word
+def highlight(text, word):
+    try:
+        lem2words = app_globals.lem2words[word]
+        for term in lem2words:
+            text = re.sub('(?iu)(\W+|\A)(%s)(\W+|\Z)' % term, '\\1<span style="background-color: #EBE4E1"><strong>\\2</strong></span>\\3', text)
+    except:
+        text = re.sub('(?iu)(\W+|\A)(%s)(\W+|\Z)' % word, '\\1<span style="background-color: #EBE4E1"><strong>\\2</strong></span>\\3', text)
+    return text
 
 
 ## idea taken from http://code.activestate.com/recipes/576507-sort-strings-containing-german-umlauts-in-correct-/

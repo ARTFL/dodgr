@@ -67,6 +67,11 @@ class Globals(object):
 
         self.stack = dico.Stack(dicos=stack_dicos)
         self.wordwheel = dico.Stack(dicos=wordwheel_dicos)
+        
+        lem2words = open(config['lem2words'])
+        self.lem2words = cPickle.load(lem2words)
+        word2lem = open(config['word2lem'])
+        self.word2lem = cPickle.load(word2lem)
 
     def db(self):
         """Return a database connection"""
