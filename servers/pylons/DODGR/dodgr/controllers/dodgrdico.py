@@ -43,33 +43,38 @@ class DodgrdicoController(BaseController):
         the word defined in the route"""
         word = word.rstrip()
         c.dico_entries = app_globals.stack.define(word)
+        c.prons = []
+        c.num_entries = 0
         c.lem = u''
         if not c.dico_entries:
             try:
-                word = app_globals.word2lem[word]
+                lem = app_globals.word2lem[word]
                 c.lem = stealth_headword_link(app_globals.word2lem[word])
-                c.dico_entries = app_globals.stack.define(word)
+                c.dico_entries = app_globals.stack.define(lem)
+                if c.dico_entries:
+                    word = lem
             except:
                 pass
-            c.num_dicos = 0
-            c.matches = app_globals.stack.fuzzy_matching(word)
-            c.matches = [stealth_headword_link(term) for term in c.matches]
-        c.prons = []
-        c.num_entries = 0
         if c.dico_entries:
             c.num_dicos = len(c.dico_entries)
             if c.num_dicos < 3:
                 try:
                     c.lem = stealth_headword_link(app_globals.word2lem[word])
+                    if app_globals.word2lem[word] == word:
+                        c.lem = u''
                 except:
                     pass
                 c.matches = app_globals.stack.fuzzy_matching(word)
-                c.matches = [stealth_headword_link(term) for term in c.matches]
+                c.matches = [stealth_headword_link(term) for term in c.matches if term != word][:3]
             for dico_name, citation, entries in c.dico_entries:
                 for entry in entries:
                     c.num_entries += 1
                     if entry.prons:
                         c.prons += entry.prons
+        else:
+            c.num_dicos = 0
+            c.matches = app_globals.stack.fuzzy_matching(word)
+            c.matches = [stealth_headword_link(term) for term in c.matches if term != word][:3]
                         
         
             

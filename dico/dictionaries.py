@@ -276,7 +276,7 @@ class Stack(object):
                    
                    
     def fuzzy_matching(self, word):
-        matches = get_close_matches(word, self.index)
+        matches = get_close_matches(word, self.index, 4)
         return matches
       
     

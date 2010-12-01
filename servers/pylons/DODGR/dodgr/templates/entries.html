@@ -1,7 +1,7 @@
 <%def name="all_dico_entries()">
 	% if c.num_dicos > 2:
         % if len(c.lem) > 0:
-            <b>${c.word}</b> est une forme fléchie de <b>${c.lem | n}</b>.<br>
+            <b>${c.word}</b> est aussi une forme fléchie de <b>${c.lem | n}</b>.<br>
         % endif
 		${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
 		${h.pluralize(['dictionnaire'], c.num_dicos)}.
