@@ -5,8 +5,10 @@
         % endif
 		${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
 		${h.pluralize(['dictionnaire'], c.num_dicos)}.
+		<% count = 0 %>
 		% for dico_name, citation, entries in c.dico_entries:
-			${dico_entries(citation, entries)}
+			${dico_entries(count, citation, entries)}
+			<% count += len(entries) %>
 		% endfor
     % else:
         <div class="empty">
@@ -20,8 +22,12 @@
 		<br>
 		% if c.dico_entries:
             </div>
+            ${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
+            ${h.pluralize(['dictionnaire'], c.num_dicos)}.
+            <% count = 0 %>
             % for dico_name, citation, entries in c.dico_entries:
-                ${dico_entries(citation, entries)}
+                ${dico_entries(count, citation, entries)}
+                <% count += len(entries) %>
             % endfor
         % else:    
             <b>Aucune entrée ne correspond à votre recherche.  Vous pouvez ajouter la définition de ce mot à notre base de données <a href="/soumissions/new/${c.word}">ici</a>.</b>
@@ -35,27 +41,28 @@
 	% endif
 </%def>
 
-<%def name="dico_entries(citation, entries)">
+<%def name="dico_entries(count, citation, entries)">
 	<div class="block_header" style="display: block">
 		<div class='triangle'>▽</div>
 		<div class="dictionary_name">${citation}</div>
 		<div class="entry_count">${len(entries)}</div>
 	</div>
 	<div class="dico_entries_container">
-		% for entry in entries:
+		% for position, entry in enumerate(entries):
 			<div class="dico_entry">
-			${single_entry(entry)}
+			${single_entry(entry, count + position)}
 			% if entry.is_truncated:
-				&nbsp;&nbsp;&nbsp;&nbsp;<a href="${entry.full_entry_url}" target="_blank">Voyez la définition complète au CNRTL</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="${entry.full_entry_url}" target="_blank">Voir la définition complète au CNRTL</a>
 			<br>
 			<br>
 			% endif
+            
 			</div>
 	    % endfor
 	</div>
 </%def>
 
-<%def name="single_entry(entry)">
+<%def name="single_entry(entry, count)">
 <!--
 	<div class="headword_container">
 		% for headword in entry.headwords:
@@ -88,9 +95,35 @@
 	% endif
 -->
 	<div class="entry_container">
-		<div class="content">${h.sanitize_html(entry.content) | n}</div>
+		<div class="content">
+		% if entry.is_truncated or len(entry.content) < 400:
+            ${h.sanitize_html(entry.content) | n}</div>
+        % else:
+            <script language="javascript">                                                                                                                                                                                                                                                 
+            function toggle${count}() {                                                                                                                                                                                                                                                            
+            var ele = document.getElementById("truncated${count}");                                                                                                                                                                                                                               
+            var ele2 = document.getElementById("full${count}");                                                                                                                                                                                                                                  
+            var text = document.getElementById("displayText${count}");                                                                                                                                                                                                                             
+            if(ele.style.display == "block") {                                                                                                                                                                                                                                             
+            ele.style.display = "none";                                                                                                                                                                                                                                                    
+            ele2.style.display = "block";                                                                                                                                                                                                                                                  
+            text.innerHTML = "Cacher";                                                                                                                                                                                                                                                       
+            }                                                                                                                                                                                                                                                                              
+            else {                                                                                                                                                                                                                                                                         
+            ele.style.display = "block";                                                                                                                                                                                                                                                   
+            ele2.style.display = "none";                                                                                                                                                                                                                                                   
+            text.innerHTML = "Voir la définition complète";                                                                                                                                                                                                                                                     
+            }                                                                                                                                                                                                                                                                              
+            }                                                                                                                                                                                                                                                                    
+            </script>            
+            <div id="truncated${count}" style="display: block;">${h.sanitize_html(entry.content[:300] + u' [...]') | n}</div>
+            <div id="full${count}" style="display: none;">${h.sanitize_html(entry.content) | n}</div>
+            <a href="javascript:toggle${count}();" id="displayText${count}">Voir la définition complète</a>
+            </div>
+        % endif
 	</div>
 </%def>
+
 
 <%def name="all_user_defs(userdefs)">
 	<div class="block_header" style="display: block">
