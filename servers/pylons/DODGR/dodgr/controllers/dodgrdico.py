@@ -103,9 +103,9 @@ class DodgrdicoController(BaseController):
                             WHERE word = %s""", word)
         
         if nym_rows:
-            synonyms = nym_rows[0]['synonyms'].decode('utf-8').split(',')[:40]
+            synonyms = nym_rows[0]['synonyms'].decode('utf-8').split(',')
             ranksyns = nym_rows[0]['ranksyns'].decode('utf-8').split(',')
-            c.synonyms = (ranksyns + [syn for syn in synonyms if syn not in ranksyns])[:40]
+            c.synonyms = (ranksyns + [syn for syn in synonyms if syn not in ranksyns])
             if not re.match('empty', nym_rows[0]['antonyms']):
                 c.antonyms = nym_rows[0]['antonyms'].decode('utf-8').split(',')
             else:
