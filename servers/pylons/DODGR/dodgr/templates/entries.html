@@ -11,17 +11,14 @@
 			<% count += len(entries) %>
 		% endfor
     % else:
-        <div class="empty">
         % if len(c.lem) > 0:
             <b>${c.word}</b> est une forme fléchie de <b>${c.lem | n}</b>.
             <br>Sinon, vouliez-vous dire:
         % else:
             Voulez-vous dire
         % endif
-		<b>"${c.matches[0] | n}"</b> ou <b>"${c.matches[1] | n}"</b> ou <b>"${c.matches[2] | n}"</b> ?
-		<br>
+        ${' ou '.join(['<b>' + match + '</b>' for match in c.matches]) | n} ? <br>
 		% if c.dico_entries:
-            </div>
             ${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
             ${h.pluralize(['dictionnaire'], c.num_dicos)}.
             <% count = 0 %>
@@ -29,7 +26,8 @@
                 ${dico_entries(count, citation, entries)}
                 <% count += len(entries) %>
             % endfor
-        % else:    
+        % else:
+            <div class="empty">
             <b>Aucune entrée ne correspond à votre recherche.  Vous pouvez ajouter la définition de ce mot à notre base de données <a href="/soumissions/new/${c.word}">ici</a>.</b>
             <br>
             </div>
