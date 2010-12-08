@@ -95,7 +95,7 @@
 	<div class="entry_container">
 		<div class="content">
 		% if entry.is_truncated or len(entry.content) < 400:
-            ${h.sanitize_html(entry.content) | n}</div>
+            <li>${h.sanitize_html(entry.content) | n}</div>
         % else:
             <script language="javascript">                                                                                                                                                                                                                                                 
             function toggle${count}() {                                                                                                                                                                                                                                                            
@@ -114,8 +114,8 @@
             }                                                                                                                                                                                                                                                                              
             }                                                                                                                                                                                                                                                                    
             </script>            
-            <div id="truncated${count}" style="display: block;">${h.sanitize_html(entry.content[:300] + u' [...]') | n}</div>
-            <div id="full${count}" style="display: none;">${h.sanitize_html(entry.content) | n}</div>
+            <div id="truncated${count}" style="display: block;"><li>${h.sanitize_html(entry.content[:300] + u' [...]') | n}</div>
+            <div id="full${count}" style="display: none;"><li>${h.sanitize_html(entry.content) | n}</div>
             <a href="javascript:toggle${count}();" id="displayText${count}">Voir la définition complète</a>
             </div>
         % endif
