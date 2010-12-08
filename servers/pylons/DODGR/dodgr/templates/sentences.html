@@ -28,7 +28,7 @@
 		% for sentence in sentences:
 			<div class="corpa_sentences_container">
 				<li>
-					${sentence | n}
+					${h.highlight(sentence, c.word) | n}
 				</li>
 			</div>
 	    % endfor
@@ -47,7 +47,7 @@
 		% for sentence in sentences:
 			<div class="littre_sentence">
 				<li>
-					${sentence['content'] | n} (${sentence['source']})
+					${h.highlight(sentence['content'], c.word) | n} (${sentence['source']})
 				</li>
 			</div>
 	    % endfor
@@ -65,7 +65,7 @@
 		<ul class="citations">
 		% for sentence in sentences:
 			<div class="web_sentence">
-				<li>${sentence['content'] | n}
+				<li>${h.highlight(sentence['content'], c.word) | n}
 				% if sentence['link']:
 					(<a href="http://${sentence['link']}" target="_blank">
 						${sentence['source']})

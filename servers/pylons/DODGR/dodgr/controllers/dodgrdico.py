@@ -77,7 +77,7 @@ class DodgrdicoController(BaseController):
             c.matches = [stealth_headword_link(term) for term in c.matches if term != word][:3]
                         
         
-            
+        c.word = word
         db = app_globals.db()
 
         # User-submitted definitions

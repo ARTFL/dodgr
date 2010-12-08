@@ -13,7 +13,6 @@ def get_sentences(sentence_db, word, db, limit=20):
         corpasentences = db.list("""SELECT content FROM corpasentences_utf8
                                     WHERE headword = %s""", word)
         corpasentences = corpasentences[:limit]
-        corpasentences = [highlight(corpasentences[i], word) for i in range(len(corpasentences))]
         return corpasentences
         
     elif sentence_db == 'littre':
@@ -21,8 +20,6 @@ def get_sentences(sentence_db, word, db, limit=20):
                                     FROM littresentences_utf8
                                     WHERE headword = %s""", word)
         littresentences = littresentences[:limit]
-        for i in range(len(littresentences)):
-            littresentences[i]['content'] = highlight(littresentences[i]['content'], word)
         return littresentences
         
     elif sentence_db == 'web':
@@ -35,7 +32,6 @@ def get_sentences(sentence_db, word, db, limit=20):
             link = websentences[i]['link']
             if not link_pattern.match(link):
                 websentences[i]['link'] = None
-            websentences[i]['content'] = highlight(websentences[i]['content'], word)
         return websentences
         
        
