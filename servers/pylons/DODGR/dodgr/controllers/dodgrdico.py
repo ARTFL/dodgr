@@ -77,7 +77,6 @@ class DodgrdicoController(BaseController):
             c.matches = [stealth_headword_link(term) for term in c.matches if term != word][:3]
                         
         
-        c.word = word
         db = app_globals.db()
 
         # User-submitted definitions
@@ -89,6 +88,7 @@ class DodgrdicoController(BaseController):
         c.corpasentences = get_sentences('corpa', word, db)
         c.websentences = get_sentences('web', word, db)
         c.littresentences = get_sentences('littre', word, db)
+        c.word_to_highlight = word
         
         c.num_sentences = 0
         c.num_corpora = 0
