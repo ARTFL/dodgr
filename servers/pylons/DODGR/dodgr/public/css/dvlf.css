@@ -152,6 +152,7 @@ a.stealth_headword:hover {
 
 a.visible_headword {
     text-decoration: underline;
+    font-size: 120%;
     font-weight: bold;
     color: #670000;
 }
