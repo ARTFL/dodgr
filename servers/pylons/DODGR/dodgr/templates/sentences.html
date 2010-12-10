@@ -67,7 +67,7 @@
 			<div class="web_sentence">
 				<li>${h.highlight(sentence['content'], c.word_to_highlight) | n}
 				% if sentence['link']:
-					(<a href="http://${sentence['link']}" target="_blank">
+					(<a class="web_link" href="http://${sentence['link']}" target="_blank">
 						${sentence['source']})
 					</a>
 				% else:

@@ -157,6 +157,17 @@ a.visible_headword {
     color: #670000;
 }
 
+.word_highlight {
+    font-size: 120%;
+    font-weight: bold;
+    color: #670000;
+}
+
+.web_link {
+    text-decoration: underline;
+    color: #28550D;
+}
+
 ul.citations {
     list-style-type: none;
     list-style-position: inside;

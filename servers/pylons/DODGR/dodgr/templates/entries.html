@@ -116,7 +116,7 @@
             </script>            
             <div id="truncated${count}" style="display: block;"><li>${h.sanitize_html(entry.content[:300] + u' [...]') | n}</div>
             <div id="full${count}" style="display: none;"><li>${h.sanitize_html(entry.content) | n}</div>
-            <a href="javascript:toggle${count}();" id="displayText${count}">Voir la définition complète</a>
+            <a class="expand_entry" href="javascript:toggle${count}();" id="displayText${count}">Voir la définition complète</span></a>
             </div>
         % endif
 	</div>

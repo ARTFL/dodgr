@@ -60,9 +60,9 @@ def highlight(text, word):
     try:
         lem2words = app_globals.lem2words[word]
         for term in lem2words:
-            text = re.sub('(?iu)(\W+|\A)(%s)(\W+|\Z)' % term, '\\1<span style="background-color: #EBE4E1"><strong>\\2</strong></span>\\3', text)
+            text = re.sub('(?iu)(\W+|\A)(%s)(\W+|\Z)' % term, '\\1<span class="word_highlight">\\2</span>\\3', text)
     except:
-        text = re.sub('(?iu)(\W+|\A)(%s)(\W+|\Z)' % word, '\\1<span style="background-color: #EBE4E1"><strong>\\2</strong></span>\\3', text)
+        text = re.sub('(?iu)(\W+|\A)(%s)(\W+|\Z)' % word, '\\1<span class="word_highlight">\\2</span>\\3', text)
     return text
 
 
