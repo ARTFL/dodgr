@@ -17,7 +17,7 @@
         % else:
             Voulez-vous dire
         % endif
-        ${' ou '.join(['<b>' + match + '</b>' for match in c.matches]) | n} ? <br>
+        ${' ou '.join([match for match in c.matches]) | n} ? <br>
 		% if c.dico_entries:
             ${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
             ${h.pluralize(['dictionnaire'], c.num_dicos)}.

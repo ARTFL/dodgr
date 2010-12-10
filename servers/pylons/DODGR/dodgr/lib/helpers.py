@@ -51,6 +51,10 @@ def stealth_headword_link(word):
     return '<a class="stealth_headword" href="' + word_url + '">' + word +\
            '</a>'
 
+def headword_link(word):
+    word_url = url_for(controller='dodgrdico', action='define', word=word)
+    return '<a class="visible_headword" href="' + word_url + '">' + word +\
+           '</a>'
 
 def highlight(text, word):
     try:

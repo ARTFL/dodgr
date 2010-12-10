@@ -7,7 +7,7 @@ from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to, url_for
 
 from dodgr.lib.base import BaseController, render
-from dodgr.lib.helpers import stealth_headword_link
+from dodgr.lib.helpers import stealth_headword_link, headword_link
 from sentences import get_sentences
 from pylons import app_globals
 
@@ -65,7 +65,7 @@ class DodgrdicoController(BaseController):
                 except:
                     pass
                 c.matches = app_globals.stack.fuzzy_matching(word)
-                c.matches = [stealth_headword_link(term) for term in c.matches if term != word][:3]
+                c.matches = [headword_link(term) for term in c.matches if term != word][:3]
             for dico_name, citation, entries in c.dico_entries:
                 for entry in entries:
                     c.num_entries += 1
@@ -74,7 +74,7 @@ class DodgrdicoController(BaseController):
         else:
             c.num_dicos = 0
             c.matches = app_globals.stack.fuzzy_matching(word)
-            c.matches = [stealth_headword_link(term) for term in c.matches if term != word][:3]
+            c.matches = [headword_link(term) for term in c.matches if term != word][:3]
                         
         
         db = app_globals.db()

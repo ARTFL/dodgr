@@ -150,6 +150,12 @@ a.stealth_headword:hover {
     color: #670000;
 }
 
+a.visible_headword {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #670000;
+}
+
 ul.citations {
     list-style-type: none;
     list-style-position: inside;
