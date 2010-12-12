@@ -104,19 +104,17 @@
             var text = document.getElementById("displayText${count}");                                                                                                                                                                                                                             
             if(ele.style.display == "block") {                                                                                                                                                                                                                                             
             ele.style.display = "none";                                                                                                                                                                                                                                                    
-            ele2.style.display = "block";                                                                                                                                                                                                                                                  
-            text.innerHTML = "Cacher";                                                                                                                                                                                                                                                       
+            ele2.style.display = "block";                                                                                                                                                                                                                                                       
             }                                                                                                                                                                                                                                                                              
             else {                                                                                                                                                                                                                                                                         
             ele.style.display = "block";                                                                                                                                                                                                                                                   
-            ele2.style.display = "none";                                                                                                                                                                                                                                                   
-            text.innerHTML = "Voir la définition complète";                                                                                                                                                                                                                                                     
+            ele2.style.display = "none";                                                                                                                                                                                                                                                     
             }                                                                                                                                                                                                                                                                              
             }                                                                                                                                                                                                                                                                    
-            </script>            
-            <div id="truncated${count}" style="display: block;"><li>${h.sanitize_html(entry.content[:300] + u' [...]') | n}</div>
-            <div id="full${count}" style="display: none;"><li>${h.sanitize_html(entry.content) | n}</div>
-            <a class="expand_entry" href="javascript:toggle${count}();" id="displayText${count}">Voir la définition complète</span></a>
+            </script>
+            
+            <div id="truncated${count}" style="display: block;"><li><a href="javascript:toggle${count}();" id="displayText${count}"><img src="${url('/img/gtk-zoom-in.png')}" height="10" width="10"></a>${h.sanitize_html(entry.content[:300] + u' [...]') | n}</div>
+            <div id="full${count}" style="display: none;"><li><a href="javascript:toggle${count}();" id="displayText${count}"><img src="${url('/img/gtk-zoom-out.png')}" height="10" width="10"></a>${h.sanitize_html(entry.content) | n}</div>
             </div>
         % endif
 	</div>
