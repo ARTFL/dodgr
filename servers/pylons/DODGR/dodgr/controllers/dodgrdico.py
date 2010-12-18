@@ -85,9 +85,9 @@ class DodgrdicoController(BaseController):
 
         # SENTENCES
         
-        c.corpasentences = get_sentences('corpa', word, db)
-        c.websentences = get_sentences('web', word, db)
-        c.littresentences = get_sentences('littre', word, db)
+        c.corpasentences = get_sentences('corpasentences_utf8', word, db)
+        c.websentences = get_sentences('websentences_utf8', word, db)
+        c.littresentences = get_sentences('littresentences_utf8', word, db)
         c.word_to_highlight = word
         
         c.num_sentences = 0

@@ -28,7 +28,9 @@
 		% for sentence in sentences:
 			<div class="corpa_sentences_container">
 				<li>
-					${h.highlight(sentence, c.word_to_highlight) | n}
+					<a href="/corpa/${c.word}${sentence}+"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+					<a href="/corpa/${c.word}${sentence}-"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+					${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n}
 				</li>
 			</div>
 	    % endfor
@@ -47,7 +49,9 @@
 		% for sentence in sentences:
 			<div class="littre_sentence">
 				<li>
-					${h.highlight(sentence['content'], c.word_to_highlight) | n} (${sentence['source']})
+                    <a href="/littre/${c.word}${sentence}+"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                    <a href="/littre/${c.word}${sentence}-"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+					${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n} (${sentences[sentence]['source']})
 				</li>
 			</div>
 	    % endfor
@@ -65,13 +69,16 @@
 		<ul class="citations">
 		% for sentence in sentences:
 			<div class="web_sentence">
-				<li>${h.highlight(sentence['content'], c.word_to_highlight) | n}
-				% if sentence['link']:
-					(<a class="web_link" href="http://${sentence['link']}" target="_blank">
-						${sentence['source']})
+				<li>
+				<a href="/web/${c.word}${sentence}+"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                <a href="/web/${c.word}${sentence}-"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+				${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n}
+				% if sentences[sentence]['link']:
+					(<a class="web_link" href="http://${sentences[sentence]['link']}" target="_blank">
+						${sentences[sentence]['source']})
 					</a>
 				% else:
-					(${sentence['source']})
+					(${sentences[sentence]['source']})
 				% endif
 				</li>
 			</div>
