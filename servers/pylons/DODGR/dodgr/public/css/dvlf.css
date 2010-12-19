@@ -64,7 +64,8 @@ div.block_header {
     font-size: 110%;
     font-family: 'Copperplate Gothic Bold';
     color: #000;
-    background: #eee;
+    background-image: url(/img/gray-gradient5.png);
+    background-repeat: repeat-x;
     padding: 0px;
     margin: 0px;
     margin-top: 4px;
@@ -121,6 +122,25 @@ div.search_bar input {
 }
 
 .main_pron_container, .nyms_container {
+    background-image: url(/img/gray-gradient6.png);
+    background-repeat: repeat-x;
+    padding: 4px;
+    margin: 0px;
+    margin-top: 4px;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    overflow: auto;
+}
+
+.wordwheel_container {
+    background-image: url(/img/gray-gradient4.png);
+    background-repeat: repeat-x;
+    padding: 4px;
+    margin: 0px;
+    margin-top: 4px;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    overflow: auto;
 }
 
 .entry_pron_container, .entry_container, .example_container {
