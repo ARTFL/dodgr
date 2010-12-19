@@ -13,28 +13,22 @@ log = logging.getLogger(__name__)
 
 class UservoteController(BaseController):
     
-    def corpa(self, example):
-        table = 'corpasentences_utf8'
-        self.getdata(table, example)
-    
-    def littre(self, example):
-        table = 'littresentences_utf8'
-        self.getdata(table, example)
+      
+    def index(self):
+        table = request.params['table']
+        example = request.params['example']
+        action = request.params['action']
+        self.getdata(table, example,action)
         
-    def web(self, example):
-        table = 'websentences_utf8'
-        self.getdata(table, example)
-        
-    def getdata(self, table, example):
+    def getdata(self, table, example,action):
         db = app_globals.db()
-        m = re.search('(\D+)(\d+)(\D+)', example)
+        m = re.search('(\D+)(\d+)', example)
         word = m.group(1)
         num = int(m.group(2))
-        action = m.group(3)
-        corpasentences = get_sentences(table, word, db)
-        sentence = corpasentences[num]['content']
-        word = corpasentences[num]['word']
-        if action == '+':
+        sentences = get_sentences(table, word, db)
+        sentence = sentences[num]['content']
+        word = sentences[num]['word']
+        if action == 'add':
             self.increment(table, sentence, word)
         else:
             self.decrement(table, sentence, word)

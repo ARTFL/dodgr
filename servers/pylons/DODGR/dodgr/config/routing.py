@@ -31,9 +31,6 @@ def make_map():
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
     map.connect('apropos', '/apropos', controller='dodgrdico', action='apropos')
-    map.connect('/corpa/{example}', controller='uservote', action='corpa')
-    map.connect('/littre/{example}', controller='uservote', action='littre')
-    map.connect('/web/{example}', controller='uservote', action='web')
     
     # STATIC ROUTES
 
