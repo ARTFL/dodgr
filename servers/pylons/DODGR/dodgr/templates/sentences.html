@@ -28,8 +28,8 @@
 		% for sentence in sentences:
 			<div class="corpa_sentences_container">
 				<li>
-					<a href="/uservote/index?table=corpasentences_utf8&example=${c.word}${sentence}&action=add"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
-					<a href="/uservote/index?table=corpasentences_utf8&example=${c.word}${sentence}&action=subtract"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+					<a href="/uservote/index?table=corpasentences_utf8&word=${c.word}&example=${sentence}&action=add"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+					<a href="/uservote/index?table=corpasentences_utf8&word=${c.word}&example=${sentence}&action=subtract"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 					${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n}
 				</li>
 			</div>
@@ -49,8 +49,8 @@
 		% for sentence in sentences:
 			<div class="littre_sentence">
 				<li>
-                    <a href="/uservote/index?table=littresentences_utf8&example=${c.word}${sentence}&action=add"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
-                    <a href="/uservote/index?table=littresentences_utf8&example=${c.word}${sentence}&action=subtract"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+                    <a href="/uservote/index?table=littresentences_utf8&word=${c.word}&example=${sentence}&action=add"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                    <a href="/uservote/index?table=littresentences_utf8&word=${c.word}&example=${sentence}&action=subtract"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 					${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n} (${sentences[sentence]['source']})
 				</li>
 			</div>
@@ -70,8 +70,8 @@
 		% for sentence in sentences:
 			<div class="web_sentence">
 				<li>
-				<a href="/uservote/index?table=websentences_utf8&example=${c.word}${sentence}&action=add"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
-                <a href="/uservote/index?table=websentences_utf8&example=${c.word}${sentence}&action=subtract"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+				<a href="/uservote/index?table=websentences_utf8&word=${c.word}&example=${sentence}&action=add"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                <a href="/uservote/index?table=websentences_utf8&word=${c.word}&example=${sentence}&action=subtract"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 				${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n}
 				% if sentences[sentence]['link']:
 					(<a class="web_link" href="http://${sentences[sentence]['link']}" target="_blank">

@@ -16,15 +16,10 @@ class UservoteController(BaseController):
       
     def index(self):
         table = request.params['table']
-        example = request.params['example']
+        word = request.params['word']
+        num = int(request.params['example'])
         action = request.params['action']
-        self.getdata(table, example,action)
-        
-    def getdata(self, table, example,action):
         db = app_globals.db()
-        m = re.search('(\D+)(\d+)', example)
-        word = m.group(1)
-        num = int(m.group(2))
         sentences = get_sentences(table, word, db)
         sentence = sentences[num]['content']
         word = sentences[num]['word']
