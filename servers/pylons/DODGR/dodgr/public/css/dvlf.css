@@ -188,6 +188,11 @@ a.visible_headword {
     color: #28550D;
 }
 
+.vote {
+    font-size: 130%;
+    font-weight: bold;
+}
+
 ul.citations {
     list-style-type: none;
     list-style-position: inside;

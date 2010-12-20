@@ -19,6 +19,7 @@ def get_sentences(sentence_db, word, db, limit=20):
             sentences[count] = {}
             sentences[count]['content'] = sentence['content']
             sentences[count]['word'] = word
+            sentences[count]['score'] = sentence['score']
             count += 1
             if count == limit:
                 break
@@ -35,6 +36,7 @@ def get_sentences(sentence_db, word, db, limit=20):
             sentences[count]['content'] = sentence['content']
             sentences[count]['source'] = sentence['source']
             sentences[count]['word'] = word
+            sentences[count]['score'] = sentence['score']
             count += 1
             if count == limit:
                 break
@@ -56,6 +58,7 @@ def get_sentences(sentence_db, word, db, limit=20):
             else:
                 sentences[count]['link'] = None
             sentences[count]['word'] = word
+            sentences[count]['score'] = sentence['score']
             count += 1
             if count == limit:
                 break

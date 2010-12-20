@@ -25,11 +25,22 @@
 	</div>
 	<div class="corpa_sentences_container">
 		<ul class="citations">
+		<script type="text/javascript">
+            function votecorpa(table, word, example, action, score){
+            $.ajax({
+                type: "GET",
+                url: '${h.url_for(controller="uservote", action="index")}',
+                data:{table:table, word:word, example:example, action:action},
+            });
+            $('.countcorpa' + example).fadeOut(200,function(){ $(this).html('<span class="voted">' + score + '</span>').fadeIn(200); });
+        }
+        </script>
 		% for sentence in sentences:
 			<div class="corpa_sentences_container">
 				<li>
-					<a href="/uservote/index?table=corpasentences_utf8&word=${c.word}&example=${sentence}&action=add"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
-					<a href="/uservote/index?table=corpasentences_utf8&word=${c.word}&example=${sentence}&action=subtract"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${c.word}', '${sentence}', 'add', ${int(sentences[sentence]['score']) + 1});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a> 
+                    <span class="vote"><span class="countcorpa${sentence}">${sentences[sentence]['score']}</span></span>
+					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${c.word}', '${sentence}', 'subtract', ${int(sentences[sentence]['score']) - 1});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 					${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n}
 				</li>
 			</div>
@@ -46,11 +57,22 @@
 	</div>
 	<div class="littre_sentences_container">
 		<ul class="citations">
+		<script type="text/javascript">
+        function votelittre(table, word, example, action, score){
+            $.ajax({
+                type: "GET",
+                url: '${h.url_for(controller="uservote", action="index")}',
+                data:{table:table, word:word, example:example, action:action},
+            });
+            $('.countlittre' + example).fadeOut(200,function(){ $(this).html('<span class="voted">' + score + '</span>').fadeIn(200); });
+        }
+        </script>
 		% for sentence in sentences:
 			<div class="littre_sentence">
 				<li>
-                    <a href="/uservote/index?table=littresentences_utf8&word=${c.word}&example=${sentence}&action=add"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
-                    <a href="/uservote/index?table=littresentences_utf8&word=${c.word}&example=${sentence}&action=subtract"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${c.word}', '${sentence}', 'add', ${int(sentences[sentence]['score']) + 1});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                    <span class="vote"><span class="countlittre${sentence}">${sentences[sentence]['score']}</span></span>
+                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${c.word}', '${sentence}', 'subtract', ${int(sentences[sentence]['score']) - 1});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 					${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n} (${sentences[sentence]['source']})
 				</li>
 			</div>
@@ -67,11 +89,22 @@
 	</div>
 	<div class="web_sentences_container">
 		<ul class="citations">
+		<script type="text/javascript">
+        function voteweb(table, word, example, action, score){
+            $.ajax({
+                type: "GET",
+                url: '${h.url_for(controller="uservote", action="index")}',
+                data:{table:table, word:word, example:example, action:action},
+            });
+            $('.countweb' + example).fadeOut(200,function(){ $(this).html('<span class="voted">' + score + '</span>').fadeIn(200); });
+        }
+        </script>
 		% for sentence in sentences:
 			<div class="web_sentence">
 				<li>
-				<a href="/uservote/index?table=websentences_utf8&word=${c.word}&example=${sentence}&action=add"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
-                <a href="/uservote/index?table=websentences_utf8&word=${c.word}&example=${sentence}&action=subtract"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+				<a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${c.word}', '${sentence}', 'add', ${int(sentences[sentence]['score']) + 1});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                <span class="vote"><span class="countweb${sentence}">${sentences[sentence]['score']}</span></span>
+                <a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${c.word}', '${sentence}', 'subtract', ${int(sentences[sentence]['score']) - 1});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 				${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n}
 				% if sentences[sentence]['link']:
 					(<a class="web_link" href="http://${sentences[sentence]['link']}" target="_blank">
@@ -85,4 +118,8 @@
 	    % endfor
 		</ul>
 	</div>
+</%def>
+
+
+<%def name="vote(table, word, example, action)">
 </%def>
