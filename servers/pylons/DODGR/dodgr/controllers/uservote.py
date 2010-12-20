@@ -19,19 +19,22 @@ class UservoteController(BaseController):
         word = request.params['word']
         num = int(request.params['example'])
         action = request.params['action']
+        score = int(request.params['score'])
         db = app_globals.db()
         sentences = get_sentences(table, word, db)
         sentence = sentences[num]['content']
         word = sentences[num]['word']
         if action == 'add':
-            self.increment(table, sentence, word)
+            score = score + 1
+            self.increment(table, sentence, word, score)
         else:
-            self.decrement(table, sentence, word)
+            score = score - 1
+            self.decrement(table, sentence, word, score)
             
         return redirect_to(url_for(controller='dodgrdico', action='define',
                             word=word))
         
-    def increment(self,table, sentence, word):
+    def increment(self,table, sentence, word, score):
         db = MySQLdb.connect(user='dvlf2', passwd='d00v33d',
                              db='dvlf', use_unicode=True)
         cursor = db.cursor()
@@ -40,9 +43,9 @@ class UservoteController(BaseController):
         cursor.execute('SET CHARACTER SET utf8;')
         cursor.execute('SET character_set_connection=utf8;')
         
-        cursor.execute('''UPDATE %s SET score = score + 1 WHERE headword = "%s" AND content = "%s"''' % (table, word, sentence))
+        cursor.execute('''UPDATE %s SET score = %d WHERE headword = "%s" AND content = "%s"''' % (table, score, word, sentence))
                         
-    def decrement(self,table, sentence, word):
+    def decrement(self,table, sentence, word, score):
         db = MySQLdb.connect(user='dvlf2', passwd='d00v33d',
                              db='dvlf', use_unicode=True)
         cursor = db.cursor()
@@ -51,5 +54,5 @@ class UservoteController(BaseController):
         cursor.execute('SET CHARACTER SET utf8;')
         cursor.execute('SET character_set_connection=utf8;')
         
-        cursor.execute('''UPDATE %s SET score = score - 1 WHERE headword = "%s" AND content = "%s"''' % (table, word, sentence))
+        cursor.execute('''UPDATE %s SET score = %d WHERE headword = "%s" AND content = "%s"''' % (table, score, word, sentence))
                         
