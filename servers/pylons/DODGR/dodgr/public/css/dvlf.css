@@ -177,7 +177,7 @@ a.visible_headword {
     color: #670000;
 }
 
-.word_highlight {
+.word_highlight, .incentive {
     font-size: 120%;
     font-weight: bold;
     color: #670000;
@@ -190,11 +190,6 @@ a.visible_headword {
 
 .vote {
     font-size: 130%;
-    font-weight: bold;
-}
-
-.bigger {
-    font-size: 120%;
     font-weight: bold;
 }
 
