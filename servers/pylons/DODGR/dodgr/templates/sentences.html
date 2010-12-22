@@ -91,7 +91,9 @@
                 success: function(num) {
                     $('.countlittre' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
                     if (action == 'add') {
-                        $('#littrelinkadd' + id).attr('onclick', '');
+                        var add = "alert('Vous avez déjà voté pour cette phrase')";
+                        var newaddclick = new Function(add);
+                        $('#littrelinkadd' + id).attr('onclick', '').click(newaddclick);
                         if (tracker == 'nosub') {
                             var sub = "votelittre('littresentences_utf8', " + id + ", 'subtract', " + num + ", 'add');";
                             var newsubclick = new Function(sub);
@@ -99,7 +101,9 @@
                         }
                     }
                     else {
-                        $('#littrelinksub' + id).attr('onclick', '');
+                        var sub = "alert('Vous avez déjà voté pour cette phrase')";
+                        var newsubclick = new Function(sub);
+                        $('#littrelinksub' + id).attr('onclick', '').click(newsubclick);
                         if (tracker == 'noadd') {
                             var add = "votelittre('littresentences_utf8', " + id + ", 'add', " + num + ", 'sub');";
                             var newaddclick = new Function(add);
@@ -142,7 +146,9 @@
                 success: function(num) {
                     $('.countweb' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
                     if (action == 'add') {
-                        $('#weblinkadd' + id).attr('onclick', '');
+                        var add = "alert('Vous avez déjà voté pour cette phrase')";
+                        var newaddclick = new Function(add);
+                        $('#weblinkadd' + id).attr('onclick', '').click(newaddclick);
                         if (tracker == 'nosub') {
                             var sub = "voteweb('websentences_utf8', " + id + ", 'subtract', " + num + ", 'add');";
                             var newsubclick = new Function(sub);
@@ -150,7 +156,9 @@
                         }
                     }
                     else {
-                        $('#weblinksub' + id).attr('onclick', '');
+                        var sub = "alert('Vous avez déjà voté pour cette phrase')";
+                        var newsubclick = new Function(sub);
+                        $('#weblinksub' + id).attr('onclick', '').click(newsubclick);
                         if (tracker == 'noadd') {
                             var add = "voteweb('websentences_utf8', " + id + ", 'add', " + num + ", 'sub');";
                             var newaddclick = new Function(add);
