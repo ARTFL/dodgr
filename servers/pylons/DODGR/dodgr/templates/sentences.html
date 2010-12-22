@@ -1,6 +1,6 @@
 <%def name="all_sentences()">
 	% if c.num_sentences > 0:
-        <div class="bigger">Vous aimez une phrase ? Faites compter votre opinion, votez pour elle !</div>
+        <div class="bigger">Vous aimez une phrase ? Faites valoir votre opinion, votez pour elle !</div>
 		${h.pluralize([u'phrase', u'trouvée'],c.num_sentences)} dans
 		${c.num_corpora} corpus.
 		% if c.corpasentences:
@@ -27,11 +27,11 @@
     <div class="corpa_sentences_container">
 		<ul class="citations">
 		<script type="text/javascript">
-            function votecorpa(table, word, id, action, score){
+            function votecorpa(table, id, action, score){
             $.ajax({
                 type: "GET",
                 url: '${h.url_for(controller="uservote", action="index")}',
-                data:{table:table, word:word, id:id, action:action, score:score},
+                data:{table:table, id:id, action:action, score:score},
                 dataType: "text",
                 success: function(num) {
                     $('.countcorpa' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
@@ -42,9 +42,9 @@
 		% for sentence in sentences:
 			<div class="corpa_sentences_container">
 				<li>
-					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${c.word}', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a> 
+					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a> 
                     <span class="vote"><span class="countcorpa${sentence['id']}">${sentence['score']}</span></span>
-					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${c.word}', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 					${h.highlight(sentence['content'], c.word_to_highlight) | n}
 				</li>
 			</div>
@@ -62,11 +62,11 @@
 	<div class="littre_sentences_container">
 		<ul class="citations">
 		<script type="text/javascript">
-        function votelittre(table, word, id, action, score, newscore){
+        function votelittre(table, id, action, score, newscore){
             $.ajax({
                 type: "GET",
                 url: '${h.url_for(controller="uservote", action="index")}',
-                data:{table:table, word:word, id:id, action:action, score:score},
+                data:{table:table, id:id, action:action, score:score},
                 dataType: "text",
                 success: function(num) {
                     $('.countlittre' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
@@ -77,9 +77,9 @@
 		% for sentence in sentences:
 			<div class="littre_sentence">
 				<li>
-                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${c.word}', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
                     <span class="vote"><span class="countlittre${sentence['id']}">${sentence['score']}</span></span>
-                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${c.word}', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 					${h.highlight(sentence['content'], c.word_to_highlight) | n} (${sentence['source']})
 				</li>
 			</div>
@@ -97,11 +97,11 @@
 	<div class="web_sentences_container">
 		<ul class="citations">
 		<script type="text/javascript">
-        function voteweb(table, word, id, action, score){
+        function voteweb(table, id, action, score){
             $.ajax({
                 type: "GET",
                 url: '${h.url_for(controller="uservote", action="index")}',
-                data:{table:table, word:word, id:id, action:action, score:score},
+                data:{table:table, id:id, action:action, score:score},
                 dataType: "text",
                 success: function(num) {
                     $('.countweb' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
@@ -112,9 +112,9 @@
 		% for sentence in sentences:
 			<div class="web_sentence">
 				<li>
-				<a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${c.word}', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+				<a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
                 <span class="vote"><span class="countweb${sentence['id']}">${sentence['score']}</span></span>
-                <a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${c.word}', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+                <a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 				${h.highlight(sentence['content'], c.word_to_highlight) | n}
 				% if sentence['link']:
 					(<a class="web_link" href="http://${sentence['link']}" target="_blank">
