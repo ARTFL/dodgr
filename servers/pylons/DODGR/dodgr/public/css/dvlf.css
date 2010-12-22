@@ -193,6 +193,11 @@ a.visible_headword {
     font-weight: bold;
 }
 
+.bigger {
+    font-size: 120%;
+    font-weight: bold;
+}
+
 ul.citations {
     list-style-type: none;
     list-style-position: inside;
