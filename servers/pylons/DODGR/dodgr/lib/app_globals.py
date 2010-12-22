@@ -62,8 +62,6 @@ class Globals(object):
         for name, citation in dicos:
             daf_dico = dico.MySQLBased(name, citation, mapper, self.db())
             stack_dicos.append(daf_dico)
-            if name == u'ACAD1932':
-                wordwheel_dicos.append(daf_dico)
 
         self.stack = dico.Stack(dicos=stack_dicos)
         self.wordwheel = dico.Stack(dicos=wordwheel_dicos)
