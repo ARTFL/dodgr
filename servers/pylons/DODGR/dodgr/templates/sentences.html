@@ -19,29 +19,32 @@
 
 <%def name="corpa_sentences(sentences)">
 	<div class="block_header">
-		<div class='triangle'>▽</div>
-		<div class="corpus_name">CorpaText</div>
-		<div class="entry_count">${len(sentences)}</div>
-	</div>
-	<div class="corpa_sentences_container">
+        <div class='triangle'>▽</div>
+        <div class="corpus_name">CorpaText</div>
+        <div class="entry_count">${len(c.corpasentences)}</div>
+    </div>
+    <div class="corpa_sentences_container">
 		<ul class="citations">
 		<script type="text/javascript">
-            function votecorpa(table, word, example, action, score, newscore){
+            function votecorpa(table, word, id, action, score){
             $.ajax({
                 type: "GET",
                 url: '${h.url_for(controller="uservote", action="index")}',
-                data:{table:table, word:word, example:example, action:action, score:score},
+                data:{table:table, word:word, id:id, action:action, score:score},
+                dataType: "text",
+                success: function(num) {
+                    $('.countcorpa' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
+                }
             });
-            $('.countcorpa' + example).fadeOut(200,function(){ $(this).html('<span class="voted">' + newscore + '</span>').fadeIn(200); });
         }
         </script>
 		% for sentence in sentences:
 			<div class="corpa_sentences_container">
 				<li>
-					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${c.word}', '${sentence}', 'add', ${sentences[sentence]['score']}, ${int(sentences[sentence]['score']) + 1});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a> 
-                    <span class="vote"><span class="countcorpa${sentence}">${sentences[sentence]['score']}</span></span>
-					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${c.word}', '${sentence}', 'subtract', ${sentences[sentence]['score']}, ${int(sentences[sentence]['score']) - 1});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
-					${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n}
+					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${c.word}', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a> 
+                    <span class="vote"><span class="countcorpa${sentence['id']}">${sentence['score']}</span></span>
+					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${c.word}', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+					${h.highlight(sentence['content'], c.word_to_highlight) | n}
 				</li>
 			</div>
 	    % endfor
@@ -58,22 +61,25 @@
 	<div class="littre_sentences_container">
 		<ul class="citations">
 		<script type="text/javascript">
-        function votelittre(table, word, example, action, score, newscore){
+        function votelittre(table, word, id, action, score, newscore){
             $.ajax({
                 type: "GET",
                 url: '${h.url_for(controller="uservote", action="index")}',
-                data:{table:table, word:word, example:example, action:action, score:score},
+                data:{table:table, word:word, id:id, action:action, score:score},
+                dataType: "text",
+                success: function(num) {
+                    $('.countlittre' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
+                }
             });
-            $('.countlittre' + example).fadeOut(200,function(){ $(this).html('<span class="voted">' + newscore + '</span>').fadeIn(200); });
         }
         </script>
 		% for sentence in sentences:
 			<div class="littre_sentence">
 				<li>
-                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${c.word}', '${sentence}', 'add', ${sentences[sentence]['score']}, ${int(sentences[sentence]['score']) + 1});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
-                    <span class="vote"><span class="countlittre${sentence}">${sentences[sentence]['score']}</span></span>
-                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${c.word}', '${sentence}', 'subtract', ${sentences[sentence]['score']}, ${int(sentences[sentence]['score']) - 1});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
-					${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n} (${sentences[sentence]['source']})
+                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${c.word}', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                    <span class="vote"><span class="countlittre${sentence['id']}">${sentence['score']}</span></span>
+                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${c.word}', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+					${h.highlight(sentence['content'], c.word_to_highlight) | n} (${sentence['source']})
 				</li>
 			</div>
 	    % endfor
@@ -90,36 +96,35 @@
 	<div class="web_sentences_container">
 		<ul class="citations">
 		<script type="text/javascript">
-        function voteweb(table, word, example, action, score, newscore){
+        function voteweb(table, word, id, action, score){
             $.ajax({
                 type: "GET",
                 url: '${h.url_for(controller="uservote", action="index")}',
-                data:{table:table, word:word, example:example, action:action, score:score},
+                data:{table:table, word:word, id:id, action:action, score:score},
+                dataType: "text",
+                success: function(num) {
+                    $('.countweb' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
+                }
             });
-            $('.countweb' + example).fadeOut(200,function(){ $(this).html('<span class="voted">' + newscore + '</span>').fadeIn(200); });
         }
         </script>
 		% for sentence in sentences:
 			<div class="web_sentence">
 				<li>
-				<a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${c.word}', '${sentence}', 'add', ${sentences[sentence]['score']}, ${int(sentences[sentence]['score']) + 1});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
-                <span class="vote"><span class="countweb${sentence}">${sentences[sentence]['score']}</span></span>
-                <a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${c.word}', '${sentence}', 'subtract', ${sentences[sentence]['score']}, ${int(sentences[sentence]['score']) - 1});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
-				${h.highlight(sentences[sentence]['content'], c.word_to_highlight) | n}
-				% if sentences[sentence]['link']:
-					(<a class="web_link" href="http://${sentences[sentence]['link']}" target="_blank">
-                    ${sentences[sentence]['source']})
+				<a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${c.word}', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                <span class="vote"><span class="countweb${sentence['id']}">${sentence['score']}</span></span>
+                <a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${c.word}', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+				${h.highlight(sentence['content'], c.word_to_highlight) | n}
+				% if sentence['link']:
+					(<a class="web_link" href="http://${sentence['link']}" target="_blank">
+                    ${sentence['source']})
 					</a>
 				% else:
-					(${sentences[sentence]['source']})
+					(${sentence['source']})
 				% endif
 				</li>
 			</div>
 	    % endfor
 		</ul>
 	</div>
-</%def>
-
-
-<%def name="vote(table, word, example, action)">
 </%def>
