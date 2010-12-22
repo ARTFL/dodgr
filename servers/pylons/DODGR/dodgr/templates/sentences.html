@@ -27,7 +27,7 @@
     <div class="corpa_sentences_container">
 		<ul class="citations">
 		<script type="text/javascript">
-            function votecorpa(table, id, action, score){
+            function votecorpa(table, id, action, score, tracker){
             $.ajax({
                 type: "GET",
                 url: '${h.url_for(controller="uservote", action="index")}',
@@ -35,6 +35,26 @@
                 dataType: "text",
                 success: function(num) {
                     $('.countcorpa' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
+                    if (action == 'add') {
+                        var add = "alert('Vous avez déjà voté pour cette phrase')";
+                        var newaddclick = new Function(add);
+                        $('#corpalinkadd' + id).attr('onclick', '').click(newaddclick);
+                        if (tracker == 'nosub') {
+                            var sub = "votecorpa('corpasentences_utf8', " + id + ", 'subtract', " + num + ", 'add');";
+                            var newsubclick = new Function(sub);
+                            $('#corpalinksub' + id).attr('onclick', '').click(newsubclick);
+                        }
+                    }
+                    else {
+                        var sub = "alert('Vous avez déjà voté pour cette phrase')";
+                        var newsubclick = new Function(sub);
+                        $('#corpalinksub' + id).attr('onclick', '').click(newsubclick);
+                        if (tracker == 'noadd') {
+                            var add = "votecorpa('corpasentences_utf8', " + id + ", 'add', " + num + ", 'sub');";
+                            var newaddclick = new Function(add);
+                            $('#corpalinkadd' + id).attr('onclick', '').click(newaddclick);
+                        }
+                    }
                 }
             });
         }
@@ -42,9 +62,9 @@
 		% for sentence in sentences:
 			<div class="corpa_sentences_container">
 				<li>
-					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a> 
+					<a href="javascript:void(0);" id="corpalinkadd${sentence['id']}" onclick="votecorpa('corpasentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a> 
                     <span class="vote"><span class="countcorpa${sentence['id']}">${sentence['score']}</span></span>
-					<a href="javascript:void(0);" OnClick="votecorpa('corpasentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+					<a href="javascript:void(0);" id="corpalinksub${sentence['id']}" onclick="votecorpa('corpasentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 					${h.highlight(sentence['content'], c.word_to_highlight) | n}
 				</li>
 			</div>
@@ -62,7 +82,7 @@
 	<div class="littre_sentences_container">
 		<ul class="citations">
 		<script type="text/javascript">
-        function votelittre(table, id, action, score, newscore){
+        function votelittre(table, id, action, score, tracker){
             $.ajax({
                 type: "GET",
                 url: '${h.url_for(controller="uservote", action="index")}',
@@ -70,6 +90,22 @@
                 dataType: "text",
                 success: function(num) {
                     $('.countlittre' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
+                    if (action == 'add') {
+                        $('#littrelinkadd' + id).attr('onclick', '');
+                        if (tracker == 'nosub') {
+                            var sub = "votelittre('littresentences_utf8', " + id + ", 'subtract', " + num + ", 'add');";
+                            var newsubclick = new Function(sub);
+                            $('#littrelinksub' + id).attr('onclick', '').click(newsubclick);
+                        }
+                    }
+                    else {
+                        $('#littrelinksub' + id).attr('onclick', '');
+                        if (tracker == 'noadd') {
+                            var add = "votelittre('littresentences_utf8', " + id + ", 'add', " + num + ", 'sub');";
+                            var newaddclick = new Function(add);
+                            $('#littrelinkadd' + id).attr('onclick', '').click(newaddclick);
+                        }
+                    }
                 }
             });
         }
@@ -77,9 +113,9 @@
 		% for sentence in sentences:
 			<div class="littre_sentence">
 				<li>
-                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                    <a href="javascript:void(0);" id="littrelinkadd${sentence['id']}" onclick="votelittre('littresentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
                     <span class="vote"><span class="countlittre${sentence['id']}">${sentence['score']}</span></span>
-                    <a href="javascript:void(0);" OnClick="votelittre('littresentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+                    <a href="javascript:void(0);" id="littrelinksub${sentence['id']}" onclick="votelittre('littresentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 					${h.highlight(sentence['content'], c.word_to_highlight) | n} (${sentence['source']})
 				</li>
 			</div>
@@ -97,7 +133,7 @@
 	<div class="web_sentences_container">
 		<ul class="citations">
 		<script type="text/javascript">
-        function voteweb(table, id, action, score){
+        function voteweb(table, id, action, score, tracker){
             $.ajax({
                 type: "GET",
                 url: '${h.url_for(controller="uservote", action="index")}',
@@ -105,6 +141,22 @@
                 dataType: "text",
                 success: function(num) {
                     $('.countweb' + id).fadeOut(200,function(){ $(this).html('<span class="voted">' + num + '</span>').fadeIn(200); });
+                    if (action == 'add') {
+                        $('#weblinkadd' + id).attr('onclick', '');
+                        if (tracker == 'nosub') {
+                            var sub = "voteweb('websentences_utf8', " + id + ", 'subtract', " + num + ", 'add');";
+                            var newsubclick = new Function(sub);
+                            $('#weblinksub' + id).attr('onclick', '').click(newsubclick);
+                        }
+                    }
+                    else {
+                        $('#weblinksub' + id).attr('onclick', '');
+                        if (tracker == 'noadd') {
+                            var add = "voteweb('websentences_utf8', " + id + ", 'add', " + num + ", 'sub');";
+                            var newaddclick = new Function(add);
+                            $('#weblinkadd' + id).attr('onclick', '').click(newaddclick);
+                        }
+                    }
                 }
             });
         }
@@ -112,9 +164,9 @@
 		% for sentence in sentences:
 			<div class="web_sentence">
 				<li>
-				<a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${sentence['id']}', 'add', ${sentence['score']});"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+				<a href="javascript:void(0);" id="weblinkadd${sentence['id']}" onclick="voteweb('websentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
                 <span class="vote"><span class="countweb${sentence['id']}">${sentence['score']}</span></span>
-                <a href="javascript:void(0);" OnClick="voteweb('websentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']});"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+                <a href="javascript:void(0);" id="weblinksub${sentence['id']}" onclick="voteweb('websentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
 				${h.highlight(sentence['content'], c.word_to_highlight) | n}
 				% if sentence['link']:
 					(<a class="web_link" href="http://${sentence['link']}" target="_blank">
