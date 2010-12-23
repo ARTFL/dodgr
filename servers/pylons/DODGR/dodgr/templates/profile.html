@@ -42,35 +42,36 @@
             </div>
         % endif
         % if c.synonyms:
+            <script language="javascript">                                                                                                                                                                                                                                                 
+                function toggle() {                                                                                                                                                                                                                                                            
+                    var ele = document.getElementById("truncated");                                                                                                                                                                                                                               
+                    var ele2 = document.getElementById("full");                                                                                                                                                                                                                                  
+                    var text = document.getElementById("displayText");                                                                                                                                                                                                                             
+                    if(ele.style.display == "block") {                                                                                                                                                                                                                                             
+                        ele.style.display = "none";                                                                                                                                                                                                                                                    
+                        ele2.style.display = "block";                                                                                                                                                                                                                                                  
+                        text.innerHTML = "Cacher";                                                                                                                                                                                                                                                       
+                    }                                                                                                                                                                                                                                                                              
+                    else {                                                                                                                                                                                                                                                                         
+                        ele.style.display = "block";                                                                                                                                                                                                                                                   
+                        ele2.style.display = "none";                                                                                                                                                                                                                                                   
+                        text.innerHTML = "Voir le reste des synonymes";                                                                                                                                                                                                                                                     
+                    }                                                                                                                                                                                                                                                                              
+                }                                                                                                                                                                                                                                                                    
+            </script>
             <div id='truncated' class="nyms_container" style="display: block;">
             <h2 class="nyms_header">Synonymes</h2>
             ${', '.join([h.stealth_headword_link(word) for word in
                         c.synonyms[:30]]) | n}
             % if len(c.synonyms) > 30:
-                ...</div>
-                <script language="javascript">                                                                                                                                                                                                                                                 
-                function toggle() {                                                                                                                                                                                                                                                            
-                var ele = document.getElementById("truncated");                                                                                                                                                                                                                               
-                var ele2 = document.getElementById("full");                                                                                                                                                                                                                                  
-                var text = document.getElementById("displayText");                                                                                                                                                                                                                             
-                if(ele.style.display == "block") {                                                                                                                                                                                                                                             
-                ele.style.display = "none";                                                                                                                                                                                                                                                    
-                ele2.style.display = "block";                                                                                                                                                                                                                                                  
-                text.innerHTML = "Cacher";                                                                                                                                                                                                                                                       
-                }                                                                                                                                                                                                                                                                              
-                else {                                                                                                                                                                                                                                                                         
-                ele.style.display = "block";                                                                                                                                                                                                                                                   
-                ele2.style.display = "none";                                                                                                                                                                                                                                                   
-                text.innerHTML = "Voir le reste des synonymes";                                                                                                                                                                                                                                                     
-                }                                                                                                                                                                                                                                                                              
-                }                                                                                                                                                                                                                                                                    
-                </script>
+                ...<br><a href="javascript:toggle();" class="web_link" id="displayText">Voir le reste des synonymes</a>
+                </div>
                 <div id="full" class="nyms_container" style="display: none;">
                 <h2 class="nyms_header">Synonymes</h2>
                 ${', '.join([h.stealth_headword_link(word) for word in
                             c.synonyms]) | n}
+                <br><a href="javascript:toggle();" class="web_link" id="displayText">Cacher</a>
                 </div>
-                <a href="javascript:toggle();" id="displayText">Voir le reste des synonymes</a>
             % else: 
                 </div>
             % endif
@@ -83,7 +84,7 @@
         </div>
         % endif
         <div class="word_reference_trigger">
-            Activer WordReference
+            <span class="web_link">Activer WordReference</span>
         </div>
         <div id="word_reference_container"></div>
     % endif

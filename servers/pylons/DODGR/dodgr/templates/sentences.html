@@ -60,11 +60,11 @@
         }
         </script>
 		% for sentence in sentences:
-			<div class="corpa_sentences_container">
+			<div class="corpa_sentences">
 				<li>
-					<a href="javascript:void(0);" id="corpalinkadd${sentence['id']}" onclick="votecorpa('corpasentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a> 
+					<a href="javascript:void(0);" id="corpalinkadd${sentence['id']}" onclick="votecorpa('corpasentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/vote_up.png')}" height="16" width="12"></a> 
                     <span class="vote"><span class="countcorpa${sentence['id']}">${sentence['score']}</span></span>
-					<a href="javascript:void(0);" id="corpalinksub${sentence['id']}" onclick="votecorpa('corpasentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+					<a href="javascript:void(0);" id="corpalinksub${sentence['id']}" onclick="votecorpa('corpasentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/vote_down.png')}" height="16" width="12"></a>
 					${h.highlight(sentence['content'], c.word_to_highlight) | n}
 				</li>
 			</div>
@@ -117,9 +117,9 @@
 		% for sentence in sentences:
 			<div class="littre_sentence">
 				<li>
-                    <a href="javascript:void(0);" id="littrelinkadd${sentence['id']}" onclick="votelittre('littresentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+                    <a href="javascript:void(0);" id="littrelinkadd${sentence['id']}" onclick="votelittre('littresentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/vote_up.png')}" height="16" width="12"></a>
                     <span class="vote"><span class="countlittre${sentence['id']}">${sentence['score']}</span></span>
-                    <a href="javascript:void(0);" id="littrelinksub${sentence['id']}" onclick="votelittre('littresentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+                    <a href="javascript:void(0);" id="littrelinksub${sentence['id']}" onclick="votelittre('littresentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/vote_down.png')}" height="16" width="12"></a>
 					${h.highlight(sentence['content'], c.word_to_highlight) | n} (${sentence['source']})
 				</li>
 			</div>
@@ -172,9 +172,9 @@
 		% for sentence in sentences:
 			<div class="web_sentence">
 				<li>
-				<a href="javascript:void(0);" id="weblinkadd${sentence['id']}" onclick="voteweb('websentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/gtk-zoom-in.png')}" height="12" width="12"></a>
+				<a href="javascript:void(0);" id="weblinkadd${sentence['id']}" onclick="voteweb('websentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/vote_up.png')}" height="16" width="12"></a>
                 <span class="vote"><span class="countweb${sentence['id']}">${sentence['score']}</span></span>
-                <a href="javascript:void(0);" id="weblinksub${sentence['id']}" onclick="voteweb('websentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/gtk-zoom-out.png')}" height="12" width="12"></a>
+                <a href="javascript:void(0);" id="weblinksub${sentence['id']}" onclick="voteweb('websentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/vote_down.png')}" height="16" width="12"></a>
 				${h.highlight(sentence['content'], c.word_to_highlight) | n}
 				% if sentence['link']:
 					(<a class="web_link" href="http://${sentence['link']}" target="_blank">

@@ -64,7 +64,7 @@ div.block_header {
     font-size: 110%;
     font-family: 'Copperplate Gothic Bold';
     color: #000;
-    background-image: url(/img/gray-gradient5.png);
+    background-image: url(/img/roundbox.png);
     background-repeat: repeat-x;
     padding: 0px;
     margin: 0px;
@@ -116,13 +116,15 @@ div.search_bar input {
     margin: 0;
 }
 
-.dico_entries_container {
+.dico_entries_container, .corpa_sentences_container, .web_sentences_container, .littre_sentences_container {
+    background-image: url(/img/entry_container_gradient.png);
+    background-repeat: repeat-y;
     border: 1px solid #aaa;
     display: block;
 }
 
 .main_pron_container, .nyms_container {
-    background-image: url(/img/gray-gradient6.png);
+    background-image: url(/img/small_container_gradient.png);
     background-repeat: repeat-x;
     padding: 4px;
     margin: 0px;
@@ -133,7 +135,7 @@ div.search_bar input {
 }
 
 .wordwheel_container {
-    background-image: url(/img/gray-gradient4.png);
+    background-image: url(/img/wordwheel_container_gradient.png);
     background-repeat: repeat-x;
     padding: 4px;
     margin: 0px;
@@ -185,7 +187,7 @@ a.visible_headword {
 
 .web_link {
     text-decoration: underline;
-    color: #28550D;
+    color: #69AE2E;
 }
 
 .vote {

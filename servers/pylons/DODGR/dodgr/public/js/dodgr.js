@@ -12,7 +12,7 @@ $(document).ready(function() {
         } else {
             triangle.html('▽');
         }
-		$(this).next().toggle();
+		$(this).next().toggle(400);
 		return false;
 	});
 
@@ -31,10 +31,10 @@ $(document).ready(function() {
 	$('.word_reference_trigger').click(function() {
 	    if ($('#word_reference_container').html() == '') {
             $('#word_reference_container').html('<iframe width="320" height="600" src="http://mini.wordreference.com/mini/index.aspx?dict=fren&w=' + $('#main_headword_input').val() + '&u=1" name="WRmini"></iframe>');
-            $('.word_reference_trigger').html('Supprimer WordReference');
+            $('.word_reference_trigger').html('<span class="web_link">Supprimer WordReference</span>');
         } else {
             $('#word_reference_container').html('');
-            $('.word_reference_trigger').html('Activer WordReference');
+            $('.word_reference_trigger').html('<span class="web_link">Activer WordReference</span>');
         }
     });
 
