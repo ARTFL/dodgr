@@ -12,9 +12,23 @@ $(document).ready(function() {
         } else {
             triangle.html('▽');
         }
-		$(this).next().toggle(400);
+		$(this).next().slideToggle(400);
 		return false;
 	});
+    
+    $("#toggle_nyms").click(function() {
+        var str = $("#toggle_nyms").text()
+        
+        if (str == 'Voir le reste des synonymes') {
+            var newstr = 'Cacher';
+        } else {
+            var newstr = 'Voir le reste des synonymes';
+        }
+        $("#toggle_nyms").text(newstr);
+        $("#remainder").slideToggle(400);
+        return false;
+    });
+    
 
 	// Change the headword into a form on mouseover
     $('#main_headword_container').mouseover(function() {

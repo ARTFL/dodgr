@@ -42,38 +42,19 @@
             </div>
         % endif
         % if c.synonyms:
-            <script language="javascript">                                                                                                                                                                                                                                                 
-                function toggle() {                                                                                                                                                                                                                                                            
-                    var ele = document.getElementById("truncated");                                                                                                                                                                                                                               
-                    var ele2 = document.getElementById("full");                                                                                                                                                                                                                                  
-                    var text = document.getElementById("displayText");                                                                                                                                                                                                                             
-                    if(ele.style.display == "block") {                                                                                                                                                                                                                                             
-                        ele.style.display = "none";                                                                                                                                                                                                                                                    
-                        ele2.style.display = "block";                                                                                                                                                                                                                                                  
-                        text.innerHTML = "Cacher";                                                                                                                                                                                                                                                       
-                    }                                                                                                                                                                                                                                                                              
-                    else {                                                                                                                                                                                                                                                                         
-                        ele.style.display = "block";                                                                                                                                                                                                                                                   
-                        ele2.style.display = "none";                                                                                                                                                                                                                                                   
-                        text.innerHTML = "Voir le reste des synonymes";                                                                                                                                                                                                                                                     
-                    }                                                                                                                                                                                                                                                                              
-                }                                                                                                                                                                                                                                                                    
-            </script>
-            <div id='truncated' class="nyms_container" style="display: block;">
+            <div class="nyms_container">
             <h2 class="nyms_header">Synonymes</h2>
-            ${', '.join([h.stealth_headword_link(word) for word in
-                        c.synonyms[:30]]) | n}
             % if len(c.synonyms) > 30:
-                ...<br><a href="javascript:toggle();" class="web_link" id="displayText">Voir le reste des synonymes</a>
-                </div>
-                <div id="full" class="nyms_container" style="display: none;">
-                <h2 class="nyms_header">Synonymes</h2>
+                <div id="truncated">${', '.join([h.stealth_headword_link(word) for word in
+                        c.synonyms[:30]]) | n}</div>
+                <div id="remainder" style="display:none;">${', '.join([h.stealth_headword_link(word) for word in
+                            c.synonyms][30:]) | n}</div>
+                ..<br><a class="web_link" id="toggle_nyms">Voir le reste des synonymes</a>
+            </div>
+            % else:
                 ${', '.join([h.stealth_headword_link(word) for word in
-                            c.synonyms]) | n}
-                <br><a href="javascript:toggle();" class="web_link" id="displayText">Cacher</a>
-                </div>
-            % else: 
-                </div>
+                        c.synonyms[:30]]) | n}
+            </div>
             % endif
         % endif
         % if c.antonyms:
