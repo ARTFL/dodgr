@@ -25,10 +25,24 @@ $(document).ready(function() {
             var newstr = 'Voir le reste des synonymes';
         }
         $("#toggle_nyms").text(newstr);
-        $("#remainder").slideToggle(400);
+        $("#remainder").slideToggle(200);
+        $("#ellipsis").toggle(200);
         return false;
     });
     
+    $("#toggle_anto").click(function() {
+        var str = $("#toggle_anto").text()
+        
+        if (str == 'Voir le reste des antonymes') {
+            var newstr = 'Cacher';
+        } else {
+            var newstr = 'Voir le reste des antonymes';
+        }
+        $("#toggle_anto").text(newstr);
+        $("#remainder_anto").slideToggle(200);
+        $("#ellipsis_anto").toggle(200);
+        return false;
+    });
 
 	// Change the headword into a form on mouseover
     $('#main_headword_container').mouseover(function() {

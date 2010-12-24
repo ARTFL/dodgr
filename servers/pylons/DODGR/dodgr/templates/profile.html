@@ -45,24 +45,35 @@
             <div class="nyms_container">
             <h2 class="nyms_header">Synonymes</h2>
             % if len(c.synonyms) > 30:
-                <div id="truncated">${', '.join([h.stealth_headword_link(word) for word in
-                        c.synonyms[:30]]) | n}</div>
-                <div id="remainder" style="display:none;">${', '.join([h.stealth_headword_link(word) for word in
-                            c.synonyms][30:]) | n}</div>
-                ..<br><a class="web_link" id="toggle_nyms">Voir le reste des synonymes</a>
+                <span id="truncated">${', '.join([h.stealth_headword_link(word) for word in
+                        c.synonyms[:30]]) | n}</span>
+                <span id="ellipsis">...</span>
+                <span id="remainder" style="display:none;">${', '.join([h.stealth_headword_link(word) for word in
+                            c.synonyms][30:]) | n}</span>
+                <br><a class="web_link" id="toggle_nyms">Voir le reste des synonymes</a>
             </div>
             % else:
                 ${', '.join([h.stealth_headword_link(word) for word in
-                        c.synonyms[:30]]) | n}
+                        c.synonyms]) | n}
             </div>
             % endif
         % endif
         % if c.antonyms:
         <div class="nyms_container">
             <h2 class="nyms_header">Antonymes</h2>
-            ${', '.join([h.stealth_headword_link(word) for word in
+            % if len(c.antonyms) > 30:
+                <span id="truncated">${', '.join([h.stealth_headword_link(word) for word in
+                        c.antonyms[:30]]) | n}</span>
+                <span id="ellipsis_anto">...</span>
+                <span id="remainder_anto" style="display:none;">${', '.join([h.stealth_headword_link(word) for word in
+                            c.antonyms][30:]) | n}</span>
+                <br><a class="web_link" id="toggle_anto">Voir le reste des antonymes</a>
+            </div>
+            % else:
+                ${', '.join([h.stealth_headword_link(word) for word in
                         c.antonyms]) | n}
-        </div>
+            </div>
+            % endif
         % endif
         <div class="word_reference_trigger">
             <span class="web_link">Activer WordReference</span>
