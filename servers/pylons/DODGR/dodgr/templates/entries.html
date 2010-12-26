@@ -47,6 +47,9 @@
 	</div>
 	<div class="dico_entries_container">
 		% for position, entry in enumerate(entries):
+            % if position != 0:
+                <hr>
+            % endif
 			<div class="dico_entry">
 			${single_entry(entry, count + position, citation)}
 			% if entry.is_truncated:
@@ -95,10 +98,10 @@
 	<div class="entry_container">
 		<div class="content">
 		% if entry.is_truncated or len(entry.content) < 400:
-            <li>${h.sanitize_html(entry.content) | n}</div>
+            ${h.sanitize_html(entry.content) | n}</div>
         % else:
-            <div id="truncated${count}"><li><a href="javascript:void(0);" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"><img src="${url('/img/gtk-zoom-in.png')}" height="10" width="10"></a>${h.sanitize_html(entry.content[:300]) | n}</div>
-            <div id="full${count}" style="display: none;"><li><a href="javascript:void(0);" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"><img src="${url('/img/gtk-zoom-out.png')}" height="10" width="10"></a>${h.sanitize_html(entry.content) | n}</div>
+            <div id="truncated${count}"><a href="javascript:void(0);" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"><img src="${url('/img/gtk-zoom-in.png')}" height="10" width="10"></a> ${h.sanitize_html(entry.content[:300]) | n}</div>
+            <div id="full${count}" style="display: none;"><a href="javascript:void(0);" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"><img src="${url('/img/gtk-zoom-out.png')}" height="10" width="10"></a> ${h.sanitize_html(entry.content) | n}</div>
             </div>
         % endif
 	</div>
