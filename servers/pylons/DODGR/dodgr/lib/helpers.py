@@ -14,7 +14,7 @@ from pylons import app_globals
 
 
 def sanitize_html(html):
-    document, errors = tidylib.tidy_document(html,
+    document, errors = tidylib.tidy_fragment(html,
                                 options={'numeric-entities': 1})
     return document
 
