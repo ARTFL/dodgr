@@ -43,6 +43,7 @@ $(document).ready(function() {
         $("#ellipsis_anto").toggle(200);
         return false;
     });
+    
 
 	// Change the headword into a form on mouseover
     $('#main_headword_container').mouseover(function() {
@@ -74,4 +75,10 @@ $(document).ready(function() {
     });
 
 });
+
+function expand(truncated, rest) {
+                $("#" + truncated).toggle();
+                $("#" + rest).toggle();
+                return false;
+}
 

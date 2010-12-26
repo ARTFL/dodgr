@@ -1,7 +1,7 @@
 <%def name="all_dico_entries()">
 	% if c.num_dicos > 2:
         % if len(c.lem) > 0:
-            <b>${c.word}</b> est aussi une forme fléchie de <b>${c.lem | n}</b>.<br>
+            <b>${c.word}</b> est une forme fléchie de <b>${c.lem | n}</b>.<br>
         % endif
 		${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
 		${h.pluralize(['dictionnaire'], c.num_dicos)}.
@@ -48,7 +48,7 @@
 	<div class="dico_entries_container">
 		% for position, entry in enumerate(entries):
 			<div class="dico_entry">
-			${single_entry(entry, count + position)}
+			${single_entry(entry, count + position, citation)}
 			% if entry.is_truncated:
 				&nbsp;&nbsp;&nbsp;&nbsp;<a href="${entry.full_entry_url}" class="web_link" target="_blank">Voir la définition complète au CNRTL</a>
 			<br>
@@ -60,7 +60,7 @@
 	</div>
 </%def>
 
-<%def name="single_entry(entry, count)">
+<%def name="single_entry(entry, count, citation)">
 <!--
 	<div class="headword_container">
 		% for headword in entry.headwords:
@@ -97,24 +97,9 @@
 		% if entry.is_truncated or len(entry.content) < 400:
             <li>${h.sanitize_html(entry.content) | n}</div>
         % else:
-            <script language="javascript">                                                                                                                                                                                                                                                 
-            function toggle${count}() {                                                                                                                                                                                                                                                            
-            var ele = document.getElementById("truncated${count}");                                                                                                                                                                                                                               
-            var ele2 = document.getElementById("full${count}");                                                                                                                                                                                                                                  
-            var text = document.getElementById("displayText${count}");                                                                                                                                                                                                                             
-            if(ele.style.display == "block") {                                                                                                                                                                                                                                             
-            ele.style.display = "none";                                                                                                                                                                                                                                                    
-            ele2.style.display = "block";                                                                                                                                                                                                                                                       
-            }                                                                                                                                                                                                                                                                              
-            else {                                                                                                                                                                                                                                                                         
-            ele.style.display = "block";                                                                                                                                                                                                                                                   
-            ele2.style.display = "none";                                                                                                                                                                                                                                                     
-            }                                                                                                                                                                                                                                                                              
-            }                                                                                                                                                                                                                                                                    
-            </script>
-            
-            <div id="truncated${count}" style="display: block;"><li><a href="javascript:toggle${count}();" id="displayText${count}"><img src="${url('/img/gtk-zoom-in.png')}" height="10" width="10"></a>${h.sanitize_html(entry.content[:300] + u' [...]') | n}</div>
-            <div id="full${count}" style="display: none;"><li><a href="javascript:toggle${count}();" id="displayText${count}"><img src="${url('/img/gtk-zoom-out.png')}" height="10" width="10"></a>${h.sanitize_html(entry.content) | n}</div>
+            <a href="javascript:void(0);" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"><img src="${url('/img/gtk-zoom-in.png')}" height="10" width="10"></a>
+            <div id="truncated${count}"><li>${h.sanitize_html(entry.content[:300]) | n}</div>
+            <div id="full${count}" style="display: none;"><li>${h.sanitize_html(entry.content) | n}</div>
             </div>
         % endif
 	</div>
