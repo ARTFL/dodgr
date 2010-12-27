@@ -1,0 +1,1 @@
+from lemma import get_lemma, get_forms

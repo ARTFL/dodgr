@@ -1,12 +1,12 @@
 # /usr/bin/env python2.6
 # -*- coding: utf-8 -*-
 """The application's Globals object"""
-import cPickle
+
 from pylons import config
 import tornado.database
 import dico
 import dico.mappers
-
+from lemmas import get_lemma, get_forms
 
 class Globals(object):
 
@@ -66,10 +66,8 @@ class Globals(object):
         self.stack = dico.Stack(dicos=stack_dicos)
         self.wordwheel = dico.Stack(dicos=wordwheel_dicos)
         
-        lem2words = open(config['lem2words'])
-        self.lem2words = cPickle.load(lem2words)
-        word2lem = open(config['word2lem'])
-        self.word2lem = cPickle.load(word2lem)
+        self.lem2words = get_forms(self.db())
+        self.word2lem = get_lemma(self.db())
 
     def db(self):
         """Return a database connection"""
