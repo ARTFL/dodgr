@@ -44,10 +44,9 @@
         % if c.synonyms:
             <div class="nyms_container">
             <h2 class="nyms_header">Synonymes</h2>
-            % if len(c.synonyms) > 30:
+            % if len(c.synonyms) > 35:
                 <span id="truncated">${', '.join([h.stealth_headword_link(word) for word in
-                        c.synonyms[:30]]) | n}</span>
-                <span id="ellipsis">...</span>
+                        c.synonyms[:30]]) | n},</span>
                 <span id="remainder" style="display:none;">${', '.join([h.stealth_headword_link(word) for word in
                             c.synonyms][30:]) | n}</span>
                 <br><a class="web_link" id="toggle_nyms">Voir le reste des synonymes</a>
@@ -61,9 +60,9 @@
         % if c.antonyms:
         <div class="nyms_container">
             <h2 class="nyms_header">Antonymes</h2>
-            % if len(c.antonyms) > 30:
+            % if len(c.antonyms) > 35:
                 <span id="truncated">${', '.join([h.stealth_headword_link(word) for word in
-                        c.antonyms[:30]]) | n}</span>
+                        c.antonyms[:30]]) | n},</span>
                 <span id="ellipsis_anto">...</span>
                 <span id="remainder_anto" style="display:none;">${', '.join([h.stealth_headword_link(word) for word in
                             c.antonyms][30:]) | n}</span>

@@ -25,8 +25,8 @@ $(document).ready(function() {
             var newstr = 'Voir le reste des synonymes';
         }
         $("#toggle_nyms").text(newstr);
-        $("#remainder").slideToggle(200);
-        $("#ellipsis").toggle(200);
+        $("#remainder").toggle();
+        $("#ellipsis").toggle();
         return false;
     });
     
@@ -39,8 +39,8 @@ $(document).ready(function() {
             var newstr = 'Voir le reste des antonymes';
         }
         $("#toggle_anto").text(newstr);
-        $("#remainder_anto").slideToggle(200);
-        $("#ellipsis_anto").toggle(200);
+        $("#remainder_anto").toggle();
+        $("#ellipsis_anto").toggle();
         return false;
     });
     
