@@ -149,11 +149,23 @@ div.search_bar input {
     margin: 2%;
 }
 
-h2.nyms_header, h2.pron_header, h2.wordwheel_header {
+h2.nyms_header, h2.pron_header, h2.wordwheel_header, h2.chart_header {
     font-size: 140%;
     font-weight: bold;
     color: #670000;
     margin-bottom: 1%;
+}
+
+
+.googlegraph_container {
+    background-image: url(/img/small_container_gradient.png);
+    background-repeat: repeat-x;
+    padding: 4px;
+    margin: 0px;
+    margin-top: 4px;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    overflow: auto;
 }
 
 .word_reference_trigger {
