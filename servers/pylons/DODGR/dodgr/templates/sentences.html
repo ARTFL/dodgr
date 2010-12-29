@@ -1,5 +1,6 @@
 <%def name="all_sentences()">
 	% if c.num_sentences > 0:
+		<br>
         <div class="incentive">Vous aimez une phrase ? Faites valoir votre opinion, votez pour elle !</div>
 		${h.pluralize([u'phrase', u'trouvée'],c.num_sentences)} dans
 		${c.num_corpora} corpus.
