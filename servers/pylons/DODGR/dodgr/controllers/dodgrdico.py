@@ -10,6 +10,7 @@ from dodgr.lib.base import BaseController, render
 from dodgr.lib.helpers import stealth_headword_link, headword_link
 from sentences import get_sentences
 from pylons import app_globals
+from frequencies import get_freqs
 
 log = logging.getLogger(__name__)
 
@@ -115,6 +116,11 @@ class DodgrdicoController(BaseController):
             c.antonyms = []
 
         c.neighbors = app_globals.wordwheel.index_neighbors(word)
+        
+        try:
+            c.wordfreqs = get_freqs(word, db)
+        except:
+            c.wordfreqs = []
 
         db.close()
 

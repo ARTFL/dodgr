@@ -47,6 +47,7 @@
             % if len(c.synonyms) > 35:
                 <span id="truncated">${', '.join([h.stealth_headword_link(word) for word in
                         c.synonyms[:30]]) | n},</span>
+                <span id="ellipsis">...</span>
                 <span id="remainder" style="display:none;">${', '.join([h.stealth_headword_link(word) for word in
                             c.synonyms][30:]) | n}</span>
                 <br><a class="web_link" id="toggle_nyms">Voir le reste des synonymes</a>
@@ -73,6 +74,43 @@
                         c.antonyms]) | n}
             </div>
             % endif
+        % endif
+        % if c.wordfreqs:
+            % for value in c.wordfreqs:
+                % if c.wordfreqs[value] > 0:
+                    <script type="text/javascript">                                                                                                                                                                                                                                            
+                    // Load the Visualization API and the piechart package.                                                                                                                                                                                                                  
+                    google.load('visualization', '1', {'packages':['corechart']});                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                                
+                    // Set a callback to run when the Google Visualization API is loaded.                                                                                                                                                                                                    
+                    google.setOnLoadCallback(drawChart);                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                
+                    // Callback that creates and populates a data table,                                                                                                                                                                                                                     
+                    // instantiates the pie chart, passes in the data and                                                                                                                                                                                                                    
+                    // draws it.                                                                                                                                                                                                                                                             
+                    function drawChart() {                                                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                                                
+                    // Create our data table.                                                                                                                                                                                                                                                
+                        var data = new google.visualization.DataTable();                                                                                                                                                                                                                       
+                        data.addColumn('string', 'Temps');                                                                                                                                                                                                                                     
+                        data.addColumn('number', 'Fréquence');
+                        % for year in sorted(c.wordfreqs):
+                            % if c.wordfreqs[year] > 0:
+                                data.addRow(['${year}', ${c.wordfreqs[year]}]);
+                            % endif
+                        % endfor
+                                                                                                                                                                                                                                                                
+                        // Instantiate and draw our chart, passing in some options.                                                                                                                                                                                                            
+                        var chart = new google.visualization.ColumnChart(document.getElementById('chart'));                                                                                                                                                                                  
+                        chart.draw(data, {width: 224, height: 220, is3D: true, vAxis: {minValue: 1}, legend: 'none', pointSize: '0', title: 'Occurences de "${c.word}" pour un million de mots'});                                                                                                               
+                    }                                                                                                                                                                                                                                                                        
+                    </script>
+                    <div class="googlegraph_container">
+                    <h2 class="chart_header">Usage à travers le temps</h2>
+                    <div id="chart"></div></div>
+                    <% break %>
+                % endif
+            % endfor
         % endif
         <div class="word_reference_trigger">
             <span class="web_link">Activer WordReference</span>
