@@ -5,6 +5,7 @@ import bisect
 import MySQLdb
 import entries
 import locale
+import copy
 from dodgr.lib.helpers import custom_sorting
 from difflib import get_close_matches
 
@@ -266,13 +267,15 @@ class Stack(object):
             stop = word_id + distance + 1
             return self.index[start:stop]
         else:
-            word_id = bisect.bisect_left(self.index, word)
+            index = copy.copy(self.index)
+            index.append(word)
+            index = sorted(index, key=custom_sorting)
+            word_id = index.index(word)
             start = word_id - distance
             if start < 0:
                 start = 0
             stop = word_id + distance
-            return self.index[start:word_id] + [word] +\
-                   self.index[word_id:stop]
+            return index[start:stop]
                    
                    
     def fuzzy_matching(self, word):
