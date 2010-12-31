@@ -29,9 +29,14 @@ def get_sentences(sentence_db, word, db, limit=20):
                                 FROM websentences_utf8
                                 WHERE headword = %s ORDER BY score DESC""", word)[:limit]
         link_pattern = re.compile('(\w+\.)+\w+\/')
-        for sentence in websentences:
-            if not link_pattern.match(sentence['link']):
-                sentence['link'] = None
+        erc_pattern = re.compile('erc\.lib')
+        for i in range(len(websentences)):
+            link = websentences[i]['link']
+            if not link_pattern.match(link):
+                websentences[i]['link'] = None
+            #remove sentences with old French, reintroduce when we have a Virtual Normalizer
+            if erc_pattern.search(link):
+                websentences[i]['link'] = 'skip'
         return websentences
         
     
