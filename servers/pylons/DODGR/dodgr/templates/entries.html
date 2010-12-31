@@ -115,7 +115,10 @@
 		<div class="entry_count">${len(userdefs)}</div>
 	</div>
 	<div class="dico_entries_container">
-		% for userdef in userdefs:
+		% for position, userdef in enumerate(userdefs):
+            % if position != 0:
+                <hr>
+            % endif
 			<div class="dico_entry">
 			${user_def(userdef)}
 			</div>
@@ -125,6 +128,6 @@
 
 <%def name="user_def(content)">
 	<div class="entry_container">
-		<div class="content">${h.sanitize_html(content) | n}</div>
+		<div class="content">${c.word.upper()}: ${h.sanitize_html(content) | n}</div>
 	</div>
 </%def>
