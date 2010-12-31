@@ -207,6 +207,11 @@ a.visible_headword {
     font-weight: bold;
 }
 
+.graph_title {
+    font-size: 80%;
+    font-weight: bold;
+}
+
 ul.citations {
     list-style-type: none;
     list-style-position: inside;

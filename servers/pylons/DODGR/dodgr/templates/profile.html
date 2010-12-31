@@ -108,11 +108,12 @@
                                                                                                                                                                                                                                                                 
                         // Instantiate and draw our chart, passing in some options.                                                                                                                                                                                                            
                         var chart = new google.visualization.LineChart(document.getElementById('chart'));                                                                                                                                                                                  
-                        chart.draw(data, {width: 224, height: 220, is3D: true, vAxis: {minValue: 1}, colors:['#476B21'], legend: 'none', pointSize: '2', title: 'Occurences de "${c.word}" pour un million de mots'});                                                                                                               
+                        chart.draw(data, {width: 224, height: 220, colors:['#476B21'], legend: 'none', chartArea:{left:32,top:15,width:188,height:"75%"}, pointSize: '2'});                                                                                                               
                     }                                                                                                                                                                                                                                                                        
                     </script>
                     <div class="googlegraph_container">
                     <h2 class="chart_header">Usage à travers le temps</h2>
+                    <span class="graph_title">Occurrences du mot "${c.word}" pour un million de mots</span>
                     <div id="chart"></div></div>
                     <% break %>
                 % endif
