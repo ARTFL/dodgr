@@ -58,7 +58,7 @@ def headword_link(word):
 
 def highlight(text, word):
     try:
-        lem2words = app_globals.lem2words[word]
+        lem2words = set(app_globals.lem2words[word])
         for term in lem2words:
             text = re.sub('(?iu)(\W+|\A)(%s)(\W+|\Z)' % term, '\\1<span class="word_highlight">\\2</span>\\3', text)
     except:
