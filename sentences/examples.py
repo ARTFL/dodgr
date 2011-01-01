@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import re
-import itertools
-import MySQLdb
-from tornado.database import Row
-from operator import itemgetter
-from pylons import config
-
 
 def get_sentences(sentence_db, word, db, limit=20):
     """Return a list of all sentences in each database"""
