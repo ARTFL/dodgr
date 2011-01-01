@@ -11,6 +11,7 @@ from dodgr.lib.helpers import stealth_headword_link, headword_link
 from sentences import get_sentences
 from pylons import app_globals
 from frequencies import get_freqs
+from helpers import compile_patterns
 
 log = logging.getLogger(__name__)
 
@@ -97,6 +98,9 @@ class DodgrdicoController(BaseController):
             if len(sentence_db) > 0:
                 c.num_corpora += 1
                 c.num_sentences += len(sentence_db)
+                
+        if c.num_corpora > 0:
+            c.patterns = compile_patterns(c.word)
 
 
         # Synonyms and antonyms

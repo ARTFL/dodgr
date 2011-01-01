@@ -48,21 +48,25 @@ def stealth_headword_link(word):
     """Return a "stealth" link for the word"""
 
     word_url = url_for(controller='dodgrdico', action='define', word=word)
-    return '<a class="stealth_headword" href="' + word_url + '">' + word +\
-           '</a>'
+    return '<a class="stealth_headword" href="%s">%s</a>' % (word_url, word)
 
 def headword_link(word):
     word_url = url_for(controller='dodgrdico', action='define', word=word)
-    return '<a class="visible_headword" href="' + word_url + '">' + word +\
-           '</a>'
+    return '<a class="visible_headword" href="%s">%s</a>' % (word_url, word)
 
-def highlight(text, word):
+def compile_patterns(word):
+    patterns = set([])
     try:
         lem2words = set(app_globals.lem2words[word])
         for term in lem2words:
-            text = re.sub('(?iu)(\W+|\A)(%s)(\W+|\Z)' % term, '\\1<span class="word_highlight">\\2</span>\\3', text)
+            patterns.add(re.compile('(?iu)(\W+|\A)(%s)(\W+|\Z)' % term))
     except:
-        text = re.sub('(?iu)(\W+|\A)(%s)(\W+|\Z)' % word, '\\1<span class="word_highlight">\\2</span>\\3', text)
+        patterns.add(re.compile('(?iu)(\W+|\A)(%s)(\W+|\Z)' % word))
+    return patterns
+
+def highlight(text, word, patterns):
+    for pattern in patterns:
+        text = pattern.sub('\\1<span class="word_highlight">\\2</span>\\3', text)
     return text
 
 
