@@ -1,7 +1,4 @@
 import logging
-import re
-import json
-import MySQLdb
 
 from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to, url_for
@@ -111,7 +108,7 @@ class DodgrdicoController(BaseController):
             synonyms = nym_rows[0]['synonyms'].decode('utf-8').rstrip('\n').split(',')
             ranksyns = nym_rows[0]['ranksyns'].decode('utf-8').rstrip('\n').split(',')
             c.synonyms = (ranksyns + [syn for syn in synonyms if syn not in ranksyns])
-            if not re.match('empty', nym_rows[0]['antonyms']):
+            if not nym_rows[0]['antonyms'].startswith('empty'):
                 c.antonyms = nym_rows[0]['antonyms'].decode('utf-8').rstrip('\n').split(',')
             else:
                 c.antonyms = []

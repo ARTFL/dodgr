@@ -56,12 +56,14 @@ def headword_link(word):
 
 def compile_patterns(word):
     patterns = set([])
+    #optimization according to http://wiki.python.org/moin/PythonSpeed/PerformanceTips
+    add = patterns.add
     try:
         lem2words = set(app_globals.lem2words[word])
         for term in lem2words:
-            patterns.add(re.compile('(?iu)(\W+|\A)(%s)(\W+|\Z)' % term))
+            add(re.compile('(?iu)(\W+|\A)(%s)(\W+|\Z)' % term))
     except:
-        patterns.add(re.compile('(?iu)(\W+|\A)(%s)(\W+|\Z)' % word))
+        add(re.compile('(?iu)(\W+|\A)(%s)(\W+|\Z)' % word))
     return patterns
 
 def highlight(text, word, patterns):
