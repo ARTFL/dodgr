@@ -30,7 +30,7 @@ def get_sentences(sentence_db, word, db, limit=20):
                                 WHERE headword = %s ORDER BY score DESC""", word)[:limit]
         link_pattern = re.compile('(\w+\.)+\w+\/')
         erc_pattern = re.compile('erc\.lib')
-        for i in range(len(websentences)):
+        for i in xrange(len(websentences)):
             link = websentences[i]['link']
             if not link_pattern.match(link):
                 websentences[i]['link'] = None
