@@ -171,23 +171,21 @@
         }
         </script>
 		% for sentence in sentences:
-            % if sentence['link'] != 'skip':
-                <div class="web_sentence">
-                    <li>
-                    <a href="javascript:void(0);" id="weblinkadd${sentence['id']}" onclick="voteweb('websentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/vote_up.png')}" height="16" width="12"></a>
-                    <span class="vote"><span class="countweb${sentence['id']}">${sentence['score']}</span></span>
-                    <a href="javascript:void(0);" id="weblinksub${sentence['id']}" onclick="voteweb('websentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/vote_down.png')}" height="16" width="12"></a>
-                    ${h.highlight(sentence['content'], c.word_to_highlight, c.patterns) | n}
-                    % if sentence['link']:
-                        (<a class="web_link" href="http://${sentence['link']}" target="_blank">
-                        ${sentence['source']})
-                        </a>
-                    % else:
-                        (${sentence['source']})
-                    % endif
-                    </li>
-                </div>
-			% endif
+            <div class="web_sentence">
+                <li>
+                <a href="javascript:void(0);" id="weblinkadd${sentence['id']}" onclick="voteweb('websentences_utf8', '${sentence['id']}', 'add', ${sentence['score']}, 'nosub');"><img src="${url('/img/vote_up.png')}" height="16" width="12"></a>
+                <span class="vote"><span class="countweb${sentence['id']}">${sentence['score']}</span></span>
+                <a href="javascript:void(0);" id="weblinksub${sentence['id']}" onclick="voteweb('websentences_utf8', '${sentence['id']}', 'subtract', ${sentence['score']}, 'noadd');"><img src="${url('/img/vote_down.png')}" height="16" width="12"></a>
+                ${h.highlight(sentence['content'], c.word_to_highlight, c.patterns) | n}
+                % if sentence['link']:
+                    (<a class="web_link" href="http://${sentence['link']}" target="_blank">
+                    ${sentence['source']})
+                    </a>
+                % else:
+                    (${sentence['source']})
+                % endif
+                </li>
+            </div>
 	    % endfor
 		</ul>
 	</div>
