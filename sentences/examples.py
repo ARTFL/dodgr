@@ -14,14 +14,14 @@ def get_sentences(sentence_db, word, db, limit=20):
     elif sentence_db == 'littresentences_utf8':
         littresentences = db.query("""SELECT id, content, source, score
                                     FROM littresentences_utf8
-                                    WHERE headword = %s ORDER BY score DESC LIMIT %d""", % (word, limit))
+                                    WHERE headword = %s ORDER BY score DESC LIMIT %d""", (word, limit))
         return littresentences
         
     elif sentence_db == 'websentences_utf8':
 
         websentences = db.query("""SELECT id, content, source, link, score
                                 FROM websentences_utf8
-                                WHERE headword = %s ORDER BY score DESC LIMIT %d""", % (word, limit))
+                                WHERE headword = %s ORDER BY score DESC LIMIT %d""", (word, limit))
         link_pattern = re.compile('(\w+\.)+\w+\/')
         for i in xrange(len(websentences)):
             link = websentences[i]['link']
