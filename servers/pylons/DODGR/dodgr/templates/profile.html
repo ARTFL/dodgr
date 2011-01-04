@@ -75,7 +75,7 @@
             </div>
             % endif
         % endif
-        % if c.wordfreqs:
+        % if c.wordfreqs and max(c.wordfreqs.itervalues()) > 0:
             <script type="text/javascript">                                                                                                                                                                                                                                            
             // Load the Visualization API and the piechart package.                                                                                                                                                                                                                  
             google.load('visualization', '1', {'packages':['corechart']});                                                                                                                                                                                                           
