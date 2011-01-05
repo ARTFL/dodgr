@@ -6,8 +6,10 @@
 		${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
 		${h.pluralize(['dictionnaire'], c.num_dicos)}.
 		<% count = 0 %>
+		<% dicos = 0 %>
 		% for dico_name, citation, entries in c.dico_entries:
-			${dico_entries(count, citation, entries)}
+            <% dicos += 1 %>
+			${dico_entries(count, citation, entries, dicos)}
 			<% count += len(entries) %>
 		% endfor
     % else:
@@ -22,8 +24,9 @@
             ${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
             ${h.pluralize(['dictionnaire'], c.num_dicos)}.
             <% count = 0 %>
+            <% dicos = 0 %>
             % for dico_name, citation, entries in c.dico_entries:
-                ${dico_entries(count, citation, entries)}
+                ${dico_entries(count, citation, entries, dicos)}
                 <% count += len(entries) %>
             % endfor
         % else:
@@ -39,13 +42,21 @@
 	% endif
 </%def>
 
-<%def name="dico_entries(count, citation, entries)">
+<%def name="dico_entries(count, citation, entries, dicos)">
 	<div class="block_header" style="display: block">
-		<div class='triangle'>▽</div>
-		<div class="dictionary_name">${citation}</div>
-		<div class="entry_count">${len(entries)}</div>
-	</div>
-	<div class="dico_entries_container">
+	% if dicos <= 2:
+        <div class='triangle'>▽</div>
+        <div class="dictionary_name">${citation}</div>
+        <div class="entry_count">${len(entries)}</div>
+        </div>
+        <div class="dico_entries_container">
+    % else:
+        <div class='triangle'>▶</div>
+        <div class="dictionary_name">${citation}</div>
+        <div class="entry_count">${len(entries)}</div>
+        </div>
+        <div class="dico_entries_container" style="display: none">
+    % endif
 		% for position, entry in enumerate(entries):
             % if position != 0:
                 <hr>
