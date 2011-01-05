@@ -79,8 +79,11 @@ class DodgrdicoController(BaseController):
         db = app_globals.db()
 
         # User-submitted definitions
-        c.userdefs = db.list("""SELECT content FROM submit
+        try:
+            c.userdefs = db.list("""SELECT content FROM submit
                              WHERE headword = %s""", word)
+        except:
+            c.userdefs = []
 
         # SENTENCES
         
