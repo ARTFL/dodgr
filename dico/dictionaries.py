@@ -7,7 +7,7 @@ import entries
 import locale
 import copy
 from dodgr.lib.helpers import custom_sorting
-from difflib import get_close_matches
+from Levenshtein import ratio
 
 
 class Simple(object):
@@ -276,11 +276,12 @@ class Stack(object):
                 start = 0
             stop = word_id + distance
             return index[start:stop]
-                   
-                   
+    
+        
     def fuzzy_matching(self, word):
-        matches = get_close_matches(word, self.index, 4)
-        return matches
+        results = dict((term, ratio(word, term)) for term in set(self.index))
+        return [result for result in sorted(results, key=results.get, reverse=True)][:4]
+        
       
     
         
