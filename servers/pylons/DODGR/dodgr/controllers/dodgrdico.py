@@ -64,7 +64,7 @@ class DodgrdicoController(BaseController):
                 except:
                     pass
                 c.matches = app_globals.stack.fuzzy_matching(word)
-                c.matches = [headword_link(term) for term in c.matches if term != word][:3]
+                c.matches = [headword_link(term) for term in c.matches if term != word.lower()][:3]
             for dico_name, citation, entries in c.dico_entries:
                 for entry in entries:
                     c.num_entries += 1

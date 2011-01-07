@@ -7,7 +7,7 @@
 <%def name="title()">ARTFL :: Dictionnaire vivant de la langue française :: ${c.word}</%def>
 
 <div id="index_alpha" class="span-3">
-	${wordwheel.wheel(c.neighbors, headword=c.word)}
+	${wordwheel.wheel(c.neighbors, headword=c.word.lower())}
 </div>
 
 <div class="span-15">
