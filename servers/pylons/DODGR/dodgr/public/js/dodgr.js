@@ -1,7 +1,27 @@
 var currentHeadword;
 
 $(document).ready(function() {
-
+    
+//  This effect is jerky on firefox, maybe enable
+//  when its javascript engine improves
+//  Not tested on IE
+    if (($.browser.webkit) || ($.browser.opera)) {
+        $("#main_body").fadeIn(300);
+        $("a.stealth_headword").click(function(event){
+            event.preventDefault();
+            linkLocation = this.href;
+            $("#main_body").fadeOut(50, redirectPage);
+        });
+        function redirectPage() {
+            window.location = linkLocation;
+        }
+    } else {
+        $(".container").show()
+    }
+    
+    $('.googlegraph_container').hide().fadeIn(1000);
+    
+    
     // Toggle the visibility of the dictionary for each section after the
     // header is clicked.
 	$('.block_header').click(function() {

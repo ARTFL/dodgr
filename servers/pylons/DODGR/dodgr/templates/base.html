@@ -27,14 +27,14 @@
 
     <body>
 
-		<div class="container">
+		<div id="main_container" class="container">
 
 			<%include file="compact_header.html" />
-
+            
+            <div id="main_body" style="display: none">
 			${self.body()}
-
 			<%include file="footer.html" />
-
+            </div>
 		</div>
     </body>
 </html>
