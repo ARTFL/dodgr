@@ -16,7 +16,7 @@ $(document).ready(function() {
             window.location = linkLocation;
         }
     } else {
-        $(".container").show()
+        $("#main_body").show()
     }
     
     $('.googlegraph_container').hide().fadeIn(1000);
