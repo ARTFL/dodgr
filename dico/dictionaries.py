@@ -7,7 +7,7 @@ import entries
 import locale
 import copy
 from dodgr.lib.helpers import custom_sorting
-from difflib import get_close_matches
+from Levenshtein import distance
 
 
 class Simple(object):
@@ -259,8 +259,8 @@ class Stack(object):
     # that EntryBased dicos also expose
     def index_neighbors(self, word, distance=20):
         """Fetch all the neighboring headwords from the index table"""
-        if word in self.index:
-            word_id = self.index.index(word)
+        if word.lower() in self.index:
+            word_id = self.index.index(word.lower())
             start = word_id - distance
             if start < 0:
                 start = 0
@@ -268,19 +268,20 @@ class Stack(object):
             return self.index[start:stop]
         else:
             index = copy.copy(self.index)
-            index.append(word)
+            index.append(word.lower())
             index = sorted(index, key=custom_sorting)
-            word_id = index.index(word)
+            word_id = index.index(word.lower())
             start = word_id - distance
             if start < 0:
                 start = 0
             stop = word_id + distance
             return index[start:stop]
-                   
-                   
+    
+        
     def fuzzy_matching(self, word):
-        matches = get_close_matches(word, self.index, 4)
-        return matches
+        results = dict((term, distance(word, term)) for term in set(self.index))
+        return [result for result in sorted(results, key=results.get)][:4]
+        
       
     
         
