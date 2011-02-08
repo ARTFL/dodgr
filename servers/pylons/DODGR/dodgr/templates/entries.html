@@ -9,8 +9,8 @@
 		<% dicos = 0 %>
 		% for dico_name, citation, entries in c.dico_entries:
             <% dicos += 1 %>
-			${dico_entries(count, citation, entries, dicos)}
-			<% count += len(entries) %>
+            ${dico_entries(dico_name, count, citation, entries, dicos)}
+            <% count += len(entries['content']) %>
 		% endfor
     % else:
         % if len(c.lem) > 0:
@@ -26,8 +26,8 @@
             <% count = 0 %>
             <% dicos = 0 %>
             % for dico_name, citation, entries in c.dico_entries:
-                ${dico_entries(count, citation, entries, dicos)}
-                <% count += len(entries) %>
+                ${dico_entries(dico_name, count, citation, entries, dicos)}
+                <% count += len(entries['content']) %>
             % endfor
         % else:
             <div class="empty">
@@ -42,77 +42,50 @@
 	% endif
 </%def>
 
-<%def name="dico_entries(count, citation, entries, dicos)">
+<%def name="dico_entries(dico_name, count, citation, entries, dicos)">
 	<div class="block_header" style="display: block">
 	% if dicos <= 2:
         <div class='triangle'>▽</div>
         <div class="dictionary_name">${citation}</div>
-        <div class="entry_count">${len(entries)}</div>
+        <div class="entry_count">${len(entries['content'])}</div>
         </div>
         <div class="dico_entries_container">
     % else:
         <div class='triangle'>▶</div>
         <div class="dictionary_name">${citation}</div>
-        <div class="entry_count">${len(entries)}</div>
+        <div class="entry_count">${len(entries['content'])}</div>
         </div>
         <div class="dico_entries_container" style="display: none">
     % endif
-		% for position, entry in enumerate(entries):
-            % if position != 0:
-                <hr>
-            % endif
-			<div class="dico_entry">
-			${single_entry(entry, count + position, citation)}
-			% if entry.is_truncated:
-				&nbsp;&nbsp;&nbsp;&nbsp;<a href="${entry.full_entry_url}" class="web_link" target="_blank">Voir la définition complète au CNRTL</a>
-			<br>
-			<br>
-			% endif
-            
-			</div>
-	    % endfor
+    % for position, entry in enumerate(entries['content']):
+        % if position != 0:
+            <hr>
+        % endif
+        <div class="dico_entry">
+        % if dico_name == 'tlfi':
+            ${single_entry(dico_name, entry, count + position, citation, entries['url'])}
+        % else:
+            ${single_entry(dico_name, entry, count + position, citation)}
+        % endif
+        </div>
+    % endfor
 	</div>
 </%def>
 
-<%def name="single_entry(entry, count, citation)">
-<!--
-	<div class="headword_container">
-		% for headword in entry.headwords:
-			<div class="headword">
-				${headword[0] | n}
-				% if headword[1]:
-			 		${headword[1] | n}
-				% endif
-			</div>
-
-		% endfor
-	</div>
-
-	% if entry.prons:
-		<div class="pron_container">
-			% for pron in entry.prons:
-				<div class="pron">${h.sanitize_html(pron) | n}</div>
-			% endfor
-		</div>
-	% endif
-
-
-	% if entry.examples:
-		<div class="example_container">
-			<h2>Examples</h2>
-			% for example in entry.examples:
-				<div class="example">${h.sanitize_html(example) | n}</div>
-			% endfor
-		</div>
-	% endif
--->
+<%def name="single_entry(dico_name, entry, count, citation, url=None)">
 	<div class="entry_container">
 		<div class="content">
-		% if entry.is_truncated or len(entry.content) < 400:
-            ${h.sanitize_html(entry.content) | n}</div>
+		<li>
+		% if dico_name == 'tlfi':
+            ${h.sanitize_html(h.truncate(entry, dico_name)) | n}<span class="expand_entry"> [...]</span></div>
+            <a class="web_link" href="${url}" target="_blank">Voir la définition complète au CNRTL</a>
+        % elif len(entry) < 400:
+            ${h.sanitize_html(entry) | n}</div>
         % else:
-            <div id="truncated${count}"><a href="javascript:void(0);" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"><img src="${url('/img/gtk-zoom-in.png')}" height="10" width="10"></a> ${h.sanitize_html(entry.content[:300]) | n}</div>
-            <div id="full${count}" style="display: none;"><a href="javascript:void(0);" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"><img src="${url('/img/gtk-zoom-out.png')}" height="10" width="10"></a> ${h.sanitize_html(entry.content) | n}</div>
+            <span id="truncated${count}">${h.sanitize_html(h.truncate(entry)) | n}
+            <a href="javascript:void(0);" class="expand_entry" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"> [...]</a></span>
+            <span id="full${count}" style="display: none;">${h.sanitize_html(entry) | n}
+            <a href="javascript:void(0);" class="expand_entry" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"><br>Cliquer pour réduire</a></span>
             </div>
         % endif
 	</div>
@@ -139,6 +112,6 @@
 
 <%def name="user_def(content)">
 	<div class="entry_container">
-		<div class="content">${c.word.upper()}: ${h.sanitize_html(content) | n}</div>
+		<div class="content"><li>${c.word.upper()}: ${h.sanitize_html(content) | n}</div>
 	</div>
 </%def>

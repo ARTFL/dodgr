@@ -70,21 +70,12 @@ def highlight(text, word, patterns):
     for pattern in patterns:
         text = pattern.sub('\\1<span class="word_highlight">\\2</span>\\3', text)
     return text
-
-
-## idea taken from http://code.activestate.com/recipes/576507-sort-strings-containing-german-umlauts-in-correct-/
-## workaround for OSX
-def custom_sorting(word):
-    word = word.replace(u'é', u'e')
-    word = word.replace(u'è', u'e')
-    word = word.replace(u'ê', u'e')
-    word = word.replace(u'ë', u'e')
-    word = word.replace(u'à', u'a')
-    word = word.replace(u'â', u'a')
-    word = word.replace(u'ù', u'u')
-    word = word.replace(u'û', u'u')
-    word = word.replace(u'î', u'i')
-    word = word.replace(u'ï', u'i')
-    word = word.replace(u'ô', u'o')
-    word = word.replace(u'ç', u'c')
-    return word
+    
+def truncate(content, dico_name=None):
+    """Truncate entries to at most length characters"""
+    if dico_name:
+        length = 800
+    else:
+        length = 300
+    truncated = u' '.join(content[:length].split(u' ')[0:-1])
+    return truncated

@@ -130,7 +130,6 @@ div.search_bar input {
     margin: 0px;
     margin-top: 4px;
     border: 1px solid #aaa;
-    cursor: pointer;
     overflow: auto;
 }
 
@@ -141,7 +140,6 @@ div.search_bar input {
     margin: 0px;
     margin-top: 4px;
     border: 1px solid #aaa;
-    cursor: pointer;
     overflow: auto;
 }
 
@@ -149,7 +147,7 @@ div.search_bar input {
     margin: 2%;
 }
 
-h2.nyms_header, h2.pron_header, h2.wordwheel_header, h2.chart_header {
+h2.nyms_header, h2.pron_header, h2.wordwheel_header, h2.chart_header, h2.word_of_the_day_header {
     font-size: 140%;
     font-weight: bold;
     color: #670000;
@@ -157,14 +155,13 @@ h2.nyms_header, h2.pron_header, h2.wordwheel_header, h2.chart_header {
 }
 
 
-.googlegraph_container {
+.googlegraph_container, .word_of_the_day_container {
     background-image: url(/img/small_container_gradient.png);
     background-repeat: repeat-x;
     padding: 4px;
     margin: 0px;
     margin-top: 4px;
     border: 1px solid #aaa;
-    cursor: pointer;
     overflow: auto;
 }
 
@@ -199,6 +196,13 @@ a.visible_headword {
 
 .web_link {
     text-decoration: underline;
+    cursor: pointer;
+    color: #69AE2E;
+}
+
+.expand_entry {
+    text-decoration: none;
+    font-weight: bold;
     color: #69AE2E;
 }
 
@@ -235,3 +239,4 @@ ol#wordwheel li.headword {
     font-weight: bold;
     font-style: italic;
 }
+

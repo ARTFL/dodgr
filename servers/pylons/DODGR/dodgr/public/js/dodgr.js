@@ -2,6 +2,7 @@ var currentHeadword;
 
 $(document).ready(function() {
     
+   
 //  This effect is jerky on firefox, maybe enable
 //  when its javascript engine improves
 //  Not tested on IE

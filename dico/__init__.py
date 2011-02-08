@@ -1,2 +1,2 @@
-from dictionaries import Simple, EntryBased, MySQLBased, Stack
+from dictionaries import Stack
 import mappers

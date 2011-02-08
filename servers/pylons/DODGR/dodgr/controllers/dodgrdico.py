@@ -52,7 +52,7 @@ class DodgrdicoController(BaseController):
                 c.dico_entries = app_globals.stack.define(lem)
                 if c.dico_entries:
                     word = lem
-            except:
+            except KeyError:
                 pass
         if c.dico_entries:
             c.num_dicos = len(c.dico_entries)
@@ -61,15 +61,16 @@ class DodgrdicoController(BaseController):
                     c.lem = stealth_headword_link(app_globals.word2lem[word])
                     if app_globals.word2lem[word] == word:
                         c.lem = u''
-                except:
+                except KeyError:
                     pass
                 c.matches = app_globals.stack.fuzzy_matching(word)
                 c.matches = [headword_link(term) for term in c.matches if term != word.lower()][:3]
             for dico_name, citation, entries in c.dico_entries:
-                for entry in entries:
-                    c.num_entries += 1
-                    if entry.prons:
-                        c.prons += entry.prons
+                if dico_name == 'tlfi':
+                    if len(entries['prons']) > 0:
+                        c.prons += entries['prons']
+                c.num_entries += len(entries['content'])
+                
         else:
             c.num_dicos = 0
             c.matches = app_globals.stack.fuzzy_matching(word)
@@ -119,7 +120,8 @@ class DodgrdicoController(BaseController):
             c.synonyms = []
             c.antonyms = []
 
-        c.neighbors = app_globals.wordwheel.index_neighbors(word)
+        c.neighbors = app_globals.stack.index_neighbors(word)
+        
         
         try:
             c.wordfreqs = get_freqs(word, db)
