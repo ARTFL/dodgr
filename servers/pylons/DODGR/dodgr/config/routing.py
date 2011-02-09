@@ -35,7 +35,7 @@ def make_map():
     # STATIC ROUTES
 
     map.connect('jquery',
-        'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
+        'http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js',
          _static=True)
 
     # Redirect the trailing-slash version to no slash, which should be the
