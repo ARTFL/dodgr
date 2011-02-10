@@ -40,7 +40,7 @@ class DodgrdicoController(BaseController):
     def define(self, word):
         """Load up the test dictionary and serve the definition, if any, for
         the word defined in the route"""
-        word = word.rstrip()
+        word = word.rstrip().lower()
         c.dico_entries = app_globals.stack.define(word)
         c.prons = []
         c.num_entries = 0
