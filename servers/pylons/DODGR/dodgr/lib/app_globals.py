@@ -5,7 +5,9 @@
 from pylons import config
 import tornado.database
 import dico
+from database import SQL
 from lemmas import get_lemma, get_forms
+import sqlite3
 
 class Globals(object):
 
@@ -50,13 +52,18 @@ class Globals(object):
                  u'(1606)')]
 
         stack_dicos = []
-        db = self.db()
+        #db = self.db()
         tlfi_url = 'http://www.cnrtl.fr/definition/'
-
-        self.stack = dico.Stack(self.db(), dicos=dicos, full_entry_url=tlfi_url)
         
-        self.lem2words = get_forms(self.db())
-        self.word2lem = get_lemma(self.db())
+        self.backend = 'PostgreSQL'
+        
+        self.newdb = SQL(backend=self.backend)
+
+        self.stack = dico.Stack(self.newdb, self.backend, dicos=dicos, full_entry_url=tlfi_url)
+        
+        self.lem2words = get_forms(self.newdb)#, tornado.database.Row)
+        self.word2lem = get_lemma(self.newdb)#, tornado.database.Row)
+        #self.newdb.close()
 
     def db(self):
         """Return a database connection"""

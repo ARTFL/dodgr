@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-def get_freqs(word, db):
-    freqs = db.query("""SELECT year, score FROM word_frequencies WHERE word = %s""", word)
+import itertools
+
+def get_freqs(word, db, Row):
+    freqs = db.query("""select year, score from word_frequencies where word = ?""", (word,))
     freq_by_year = {}
     for i in xrange(len(freqs)):
         freq_by_year[freqs[i]['year']] = freqs[i]['score']

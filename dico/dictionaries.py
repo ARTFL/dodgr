@@ -9,8 +9,9 @@ from Levenshtein import distance
 class Stack(object):
     """Container for a collection of dictionaries"""
 
-    def __init__(self, db, dicos=[], full_entry_url=None):
+    def __init__(self, db, backend, dicos=[], full_entry_url=None):
         """Create the stack"""
+        self.backend = backend
         self.index_dico = {}
         self.db = db
         self.add_dico(dicos)
@@ -20,7 +21,11 @@ class Stack(object):
     def add_dico(self, dicos):
         """Load a dico into the stack"""
         for dico, citation in dicos:
-            results = self.db.list("""SELECT headword FROM %s""" % dico)
+            results = self.db.list('select headword from ' + dico)
+            if self.backend == 'MySQL':
+                results = [result for result in results]
+            else:
+                results = [result.decode('utf-8') for result in results]
             for word in results:
                 if word in self.index_dico:
                     self.index_dico[word].append((dico, citation))
@@ -31,6 +36,7 @@ class Stack(object):
     def custom_sorting(self, word):
         """idea taken from http://code.activestate.com/recipes/576507-sort-strings-containing-german-umlauts-in-correct-/
         It's a workaround for OSX"""
+        #word = word.decode('utf-8')
         word = word.replace(u'é', u'e')
         word = word.replace(u'è', u'e')
         word = word.replace(u'ê', u'e')
@@ -50,9 +56,9 @@ class Stack(object):
         dico_entries = []
         try:
             for dico, citation in self.index_dico[word]:
-                results = self.db.list("""SELECT entry FROM %s WHERE headword="%s" collate utf8_bin""" % (dico, word))
+                results = self.db.list("""select entry from %s where headword='%s'""" % (dico, word))
                 if len(results) != 0:
-                    entries = cPickle.loads(results[0])
+                    entries = cPickle.loads(str(results[0]))
                     if dico == 'tlfi':
                         entries['url'] = self.full_entry_url + word
                     dico_entries.append((dico, citation, entries))

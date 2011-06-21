@@ -1,4 +1,7 @@
 import logging
+import itertools
+from tornado.database import Row
+from database import SQL
 
 from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to, url_for
@@ -78,19 +81,19 @@ class DodgrdicoController(BaseController):
                         
         
         db = app_globals.db()
+        #newdb = app_globals.newdb
+        newdb = SQL(backend=app_globals.backend)
+        c.backend = app_globals.backend
 
         # User-submitted definitions
-        try:
-            c.userdefs = db.list("""SELECT content FROM submit
-                             WHERE headword = %s""", word)
-        except:
-            c.userdefs = []
+        c.userdefs = newdb.list("""SELECT content FROM submit
+                             WHERE headword = '%s'""" % word)
 
         # SENTENCES
         
-        c.corpasentences = get_sentences('corpasentences_utf8', word, db)
-        c.websentences = get_sentences('websentences_utf8', word, db)
-        c.littresentences = get_sentences('littresentences_utf8', word, db)
+        c.corpasentences = get_sentences('corpasentences_utf8', word, newdb)
+        c.websentences = get_sentences('websentences_utf8', word, newdb)
+        c.littresentences = get_sentences('littresentences_utf8', word, newdb)
         c.word_to_highlight = word
         
         c.num_sentences = 0
@@ -104,10 +107,10 @@ class DodgrdicoController(BaseController):
             c.patterns = compile_patterns(c.word)
 
 
-        # Synonyms and antonyms
-        nym_rows = db.query("""SELECT synonyms, antonyms, ranksyns FROM nyms
-                            WHERE word = %s""", word)
-        
+        # Synonyms and antonyms                            
+        nym_rows = newdb.query("""select synonyms, antonyms, ranksyns from nyms
+                            where word = '%s'""" % word)
+                
         if nym_rows:
             synonyms = nym_rows[0]['synonyms'].decode('utf-8').rstrip('\n').split(',')
             ranksyns = nym_rows[0]['ranksyns'].decode('utf-8').rstrip('\n').split(',')
@@ -124,7 +127,7 @@ class DodgrdicoController(BaseController):
         
         
         try:
-            c.wordfreqs = get_freqs(word, db)
+            c.wordfreqs = get_freqs(word, newdb, Row)
         except:
             c.wordfreqs = []
 

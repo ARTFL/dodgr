@@ -2,11 +2,13 @@ import logging
 import MySQLdb
 
 from pylons import config, request, response, session, tmpl_context as c
+from pylons import app_globals
 from pylons.controllers.util import abort, redirect_to
 
 from dodgr.lib.base import BaseController, render
 
 from recaptcha.client.captcha import displayhtml, submit as submit_captcha
+from database import SQL
 
 log = logging.getLogger(__name__)
 
@@ -46,18 +48,9 @@ class UsersubController(BaseController):
         # DB connection
         # TODO obviously, this shouldn't all be defined in here
         # like this. At the very least it should come from config.
-        db = MySQLdb.connect(user='dvlf2', passwd='d00v33d',
-                             db='dvlf', use_unicode=True)
-        cursor = db.cursor()
-        db.set_character_set('utf8')
-        cursor.execute('SET NAMES utf8;')
-        cursor.execute('SET CHARACTER SET utf8;')
-        cursor.execute('SET character_set_connection=utf8;')
+        db = SQL(backend=app_globals.backend)
 
-        cursor.execute("""INSERT INTO submit
-                          (`headword`, `content`, `source`)
-                          VALUES (%s, %s, %s)""",
-                          (headword, definition, 'web'))
+        db.insert(headword, definition, 'web')
 
         c.word = headword
         return render('/userdef_success.html')
