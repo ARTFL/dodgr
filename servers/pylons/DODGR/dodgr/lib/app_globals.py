@@ -52,22 +52,14 @@ class Globals(object):
                  u'(1606)')]
 
         stack_dicos = []
-        #db = self.db()
         tlfi_url = 'http://www.cnrtl.fr/definition/'
         
-        self.backend = 'PostgreSQL'
+        dbname = config['psql.database']
+        user = config['psql.user']
         
-        self.newdb = SQL(backend=self.backend)
+        self.db = SQL(dbname, user)
 
-        self.stack = dico.Stack(self.newdb, self.backend, dicos=dicos, full_entry_url=tlfi_url)
+        self.stack = dico.Stack(self.db, dicos=dicos, full_entry_url=tlfi_url)
         
-        self.lem2words = get_forms(self.newdb)#, tornado.database.Row)
-        self.word2lem = get_lemma(self.newdb)#, tornado.database.Row)
-        #self.newdb.close()
-
-    def db(self):
-        """Return a database connection"""
-        return tornado.database.Connection("localhost",
-                                           config['mysql.database'],
-                                           user=config['mysql.user'],
-                                           password=config['mysql.password'])
+        self.lem2words = get_forms(self.db)
+        self.word2lem = get_lemma(self.db)   

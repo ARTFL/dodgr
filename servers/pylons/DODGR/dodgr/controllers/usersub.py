@@ -8,7 +8,6 @@ from pylons.controllers.util import abort, redirect_to
 from dodgr.lib.base import BaseController, render
 
 from recaptcha.client.captcha import displayhtml, submit as submit_captcha
-from database import SQL
 
 log = logging.getLogger(__name__)
 
@@ -43,14 +42,10 @@ class UsersubController(BaseController):
             return render('/userdef_submit.html')
 
         headword = request.params['headword']
-        definition = request.params['definition']
+        definition = request.params['definition'].encode('utf-8')
 
         # DB connection
-        # TODO obviously, this shouldn't all be defined in here
-        # like this. At the very least it should come from config.
-        db = SQL(backend=app_globals.backend)
-
-        db.insert(headword, definition, 'web')
+        app_globals.db.insert(headword, definition, 'web')
 
         c.word = headword
         return render('/userdef_success.html')

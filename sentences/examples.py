@@ -6,9 +6,9 @@ def get_sentences(sentence_db, word, db, limit=10):
     """Return a list of all sentences in each database"""
     
     #TODO set the number of sentences before query?
-    
+    args = 'ORDER BY score DESC LIMIT %d' % limit
     if sentence_db == 'corpasentences_utf8':
-        corpasentences = db.query("""SELECT id, content, score FROM corpasentences_utf8 WHERE headword = '%s' ORDER BY score DESC LIMIT %d""" % (word, limit))
+        corpasentences = db.query("id, content, score", sentence_db, word, args)
         return corpasentences
         
     elif sentence_db == 'littresentences_utf8':
@@ -19,10 +19,7 @@ def get_sentences(sentence_db, word, db, limit=10):
         return []
         
     elif sentence_db == 'websentences_utf8':
-
-        websentences = db.query("""SELECT id, content, source, link, score
-                                FROM websentences_utf8
-                                WHERE headword = '%s' ORDER BY score DESC LIMIT %d""" % (word, limit))
+        websentences = db.query('id, content, source, link, score', sentence_db, word, args)
         link_pattern = re.compile('(\w+\.)+\w+\/')
         for i in xrange(len(websentences)):
             link = websentences[i]['link']

@@ -30,7 +30,6 @@ class UservoteController(BaseController):
         return str(score)
         
     def updatedb(self,table, id, score):
-        db = SQL(backend=app_globals.backend)
-        db.updatedb(table, score, id)
+        app_globals.db.updatedb(table, score, id)
         
                         

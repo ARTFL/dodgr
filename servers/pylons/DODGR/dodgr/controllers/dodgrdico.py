@@ -80,20 +80,16 @@ class DodgrdicoController(BaseController):
             c.matches = [headword_link(term) for term in c.matches if term != word][:3]
                         
         
-        db = app_globals.db()
-        #newdb = app_globals.newdb
-        newdb = SQL(backend=app_globals.backend)
-        c.backend = app_globals.backend
+        db = app_globals.db
 
         # User-submitted definitions
-        c.userdefs = newdb.list("""SELECT content FROM submit
-                             WHERE headword = '%s'""" % word)
+        c.userdefs = db.list("content", "submit", word)
 
         # SENTENCES
         
-        c.corpasentences = get_sentences('corpasentences_utf8', word, newdb)
-        c.websentences = get_sentences('websentences_utf8', word, newdb)
-        c.littresentences = get_sentences('littresentences_utf8', word, newdb)
+        c.corpasentences = get_sentences('corpasentences_utf8', word, db)
+        c.websentences = get_sentences('websentences_utf8', word, db)
+        c.littresentences = get_sentences('littresentences_utf8', word, db)
         c.word_to_highlight = word
         
         c.num_sentences = 0
@@ -108,8 +104,7 @@ class DodgrdicoController(BaseController):
 
 
         # Synonyms and antonyms                            
-        nym_rows = newdb.query("""select synonyms, antonyms, ranksyns from nyms
-                            where word = '%s'""" % word)
+        nym_rows = db.query('synonyms, antonyms, ranksyns', 'nyms', word)
                 
         if nym_rows:
             synonyms = nym_rows[0]['synonyms'].decode('utf-8').rstrip('\n').split(',')
@@ -127,10 +122,8 @@ class DodgrdicoController(BaseController):
         
         
         try:
-            c.wordfreqs = get_freqs(word, newdb, Row)
+            c.wordfreqs = get_freqs(word, db, Row)
         except:
             c.wordfreqs = []
-
-        db.close()
 
         return render('/profile.html')

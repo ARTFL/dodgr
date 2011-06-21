@@ -9,9 +9,8 @@ from Levenshtein import distance
 class Stack(object):
     """Container for a collection of dictionaries"""
 
-    def __init__(self, db, backend, dicos=[], full_entry_url=None):
+    def __init__(self, db, dicos=[], full_entry_url=None):
         """Create the stack"""
-        self.backend = backend
         self.index_dico = {}
         self.db = db
         self.add_dico(dicos)
@@ -21,11 +20,8 @@ class Stack(object):
     def add_dico(self, dicos):
         """Load a dico into the stack"""
         for dico, citation in dicos:
-            results = self.db.list('select headword from ' + dico)
-            if self.backend == 'MySQL':
-                results = [result for result in results]
-            else:
-                results = [result.decode('utf-8') for result in results]
+            results = self.db.listall(dico)
+            results = [result.decode('utf-8') for result in results]
             for word in results:
                 if word in self.index_dico:
                     self.index_dico[word].append((dico, citation))
@@ -56,7 +52,7 @@ class Stack(object):
         dico_entries = []
         try:
             for dico, citation in self.index_dico[word]:
-                results = self.db.list("""select entry from %s where headword='%s'""" % (dico, word))
+                results = self.db.list("entry", dico, word)
                 if len(results) != 0:
                     entries = cPickle.loads(str(results[0]))
                     if dico == 'tlfi':
