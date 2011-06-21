@@ -122,7 +122,7 @@ class DodgrdicoController(BaseController):
         
         
         try:
-            c.wordfreqs = get_freqs(word, db, Row)
+            c.wordfreqs = get_freqs(word, db)
         except:
             c.wordfreqs = []
 

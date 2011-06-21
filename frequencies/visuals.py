@@ -2,7 +2,7 @@
 
 import itertools
 
-def get_freqs(word, db, Row):
+def get_freqs(word, db):
     freqs = db.query('year, score', 'word_frequencies', word)
     freq_by_year = {}
     for i in xrange(len(freqs)):
