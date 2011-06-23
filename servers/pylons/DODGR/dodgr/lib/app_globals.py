@@ -55,9 +55,13 @@ class Globals(object):
         tlfi_url = 'http://www.cnrtl.fr/definition/'
         
         dbname = config['psql.database']
-        user = config['psql.user']
+        user_r = config['psql.user_read']
+        user_r_pwd = config['psql.user_read_password']
+        user_w = config['psql.user_write']
+        user_w_pwd = config['psql.user_write_password']
         
-        self.db = SQL(dbname, user)
+        
+        self.db = SQL(dbname, user_r, user_r_pwd, user_w, user_w_pwd)
 
         self.stack = dico.Stack(self.db, dicos=dicos, full_entry_url=tlfi_url)
         

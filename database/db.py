@@ -7,15 +7,20 @@ import itertools
        
 class SQL(object):
     
-    def __init__(self, dbname, user):
-        self.cred = 'dbname=%s user=%s' % (dbname, user)
+    def __init__(self, dbname, user_r, pwd_r, user_w, pwd_w):
+        self.cred_r = 'dbname=%s user=%s password=%s' % (dbname, user_r, pwd_r)
+        self.cred_w = 'dbname=%s user=%s password=%s' % (dbname, user_w, pwd_w)
     
-    def __db_init__(self):
-        self.conn = psycopg2.connect(self.cred)
+    def __db_init_read__(self):
+        self.conn = psycopg2.connect(self.cred_r)
+        self.cursor = self.conn.cursor()
+        
+    def __db_init_write__(self):
+        self.conn = psycopg2.connect(self.cred_w)
         self.cursor = self.conn.cursor()
         
     def listall(self, dico):
-        self.__db_init__()
+        self.__db_init_read__()
         query = 'select headword from %s' % dico
         self.cursor.execute(query)
         result = [row[0] for row in self.cursor]
@@ -23,7 +28,7 @@ class SQL(object):
         return result
         
     def list(self, fields, table, word):
-        self.__db_init__()
+        self.__db_init_read__()
         query = "select %s from %s where headword=" % (fields, table)
         query += '%s'
         self.cursor.execute(query, (word,))
@@ -32,7 +37,7 @@ class SQL(object):
         return result
         
     def query(self, fields, table, word=None, args=''):
-        self.__db_init__()
+        self.__db_init_read__()
         if word:
             query = "select %s from %s where headword=" % (fields, table)
             query += '%s '
@@ -47,14 +52,14 @@ class SQL(object):
         return result
         
     def updatedb(self, table, score, id):
-        self.__db_init__()
+        self.__db_init_write__()
         query = "UPDATE %s SET score = %d WHERE id = %d" % (table, score, id)
         self.cursor.execute(query)
         self.conn.commit()
         self.close()
         
     def insert(self, headword, content, source):
-        self.__db_init__()
+        self.__db_init_write__()
         self.cursor.execute("""INSERT INTO submit (headword, content, source) VALUES (%s, %s, %s)""", (headword, content, source))
         self.conn.commit()
         self.close()
