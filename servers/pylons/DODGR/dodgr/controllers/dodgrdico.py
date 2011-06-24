@@ -83,7 +83,7 @@ class DodgrdicoController(BaseController):
         db = app_globals.db
 
         # User-submitted definitions
-        c.userdefs = db.list("content", "submit", word)
+        c.userdefs = db.query("content", "submit", word, obj='array')
 
         # SENTENCES
         

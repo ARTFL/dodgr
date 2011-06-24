@@ -19,24 +19,7 @@ class SQL(object):
         self.conn = psycopg2.connect(self.cred_w)
         self.cursor = self.conn.cursor()
         
-    def listall(self, dico):
-        self.__db_init_read__()
-        query = 'select headword from %s' % dico
-        self.cursor.execute(query)
-        result = [row[0] for row in self.cursor]
-        self.close()
-        return result
-        
-    def list(self, fields, table, word):
-        self.__db_init_read__()
-        query = "select %s from %s where headword=" % (fields, table)
-        query += '%s'
-        self.cursor.execute(query, (word,))
-        result = [row[0] for row in self.cursor]
-        self.close()
-        return result
-        
-    def query(self, fields, table, word=None, args=''):
+    def query(self, fields, table, word=None, obj='list_tuples', args=''):
         self.__db_init_read__()
         if word:
             query = "select %s from %s where headword=" % (fields, table)
@@ -45,7 +28,16 @@ class SQL(object):
             self.cursor.execute(query, (word,))
         else:
             query = "select %s from %s" % (fields, table)
+            print query
             self.cursor.execute(query)
+        return getattr(self, obj)()
+        
+    def array(self):
+        result = [row[0] for row in self.cursor]
+        self.close()
+        return result
+        
+    def list_tuples(self):
         column_names = [d[0] for d in self.cursor.description]
         result = [Row(itertools.izip(column_names, row)) for row in self.cursor]
         self.close()
