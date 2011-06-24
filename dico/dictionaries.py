@@ -32,7 +32,6 @@ class Stack(object):
     def custom_sorting(self, word):
         """idea taken from http://code.activestate.com/recipes/576507-sort-strings-containing-german-umlauts-in-correct-/
         It's a workaround for OSX"""
-        #word = word.decode('utf-8')
         word = word.replace(u'é', u'e')
         word = word.replace(u'è', u'e')
         word = word.replace(u'ê', u'e')

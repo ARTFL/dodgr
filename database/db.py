@@ -28,7 +28,6 @@ class SQL(object):
             self.cursor.execute(query, (word,))
         else:
             query = "select %s from %s" % (fields, table)
-            print query
             self.cursor.execute(query)
         return getattr(self, obj)()
         
@@ -47,16 +46,16 @@ class SQL(object):
         self.__db_init_write__()
         query = "UPDATE %s SET score = %d WHERE id = %d" % (table, score, id)
         self.cursor.execute(query)
-        self.conn.commit()
-        self.close()
+        self.close(commit=True)
         
     def insert(self, headword, content, source):
         self.__db_init_write__()
         self.cursor.execute("""INSERT INTO submit (headword, content, source) VALUES (%s, %s, %s)""", (headword, content, source))
-        self.conn.commit()
-        self.close()
+        self.close(commit=True)
     
-    def close(self):
+    def close(self, commit=False):
+        if commit:
+            self.conn.commit()
         self.cursor.close()
         self.conn.close()
     
