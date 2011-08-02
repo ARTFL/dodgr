@@ -25,7 +25,10 @@ class SQL(object):
             query = "select %s from %s where headword=" % (fields, table)
             query += '%s '
             query += args
-            self.cursor.execute(query, (word,))
+            try:
+                self.cursor.execute(query, (word,))
+            except UnicodeEncodeError:
+                self.cursor.execute(query, (word.encode('utf-8'),)) 
         else:
             query = "select %s from %s" % (fields, table)
             self.cursor.execute(query)

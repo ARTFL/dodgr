@@ -3,7 +3,7 @@
 """The application's Globals object"""
 
 from pylons import config
-import tornado.database
+#import tornado.database
 import dico
 from database import SQL
 from lemmas import get_lemma, get_forms

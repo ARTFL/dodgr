@@ -1,6 +1,6 @@
 import logging
 import itertools
-from tornado.database import Row
+#from tornado.database import Row
 from database import SQL
 
 from pylons import request, response, session, tmpl_context as c
