@@ -29,6 +29,8 @@ class Globals(object):
                 (u'acad1932',
                  u'Dictionnaire de L\'Académie française 8e édition '
                  u'(1932-1935)'),
+                 (u'bob',
+                 u"Bob: Dictionnaire d'argot"),
                  (u'littre',
                  u'Émile Littré: Dictionnaire de la langue '
                  u'française (1872-1877)'),
