@@ -3,11 +3,11 @@
 """The application's Globals object"""
 
 from pylons import config
-#import tornado.database
 import dico
 from database import SQL
 from lemmas import get_lemma, get_forms
 import sqlite3
+from virtual_normalization import Virtual_Normalize
 
 class Globals(object):
 
@@ -68,4 +68,6 @@ class Globals(object):
         self.stack = dico.Stack(self.db, dicos=dicos, full_entry_url=tlfi_url)
         
         self.lem2words = get_forms(self.db)
-        self.word2lem = get_lemma(self.db)   
+        self.word2lem = get_lemma(self.db)
+        
+        self.virt_norm = Virtual_Normalize()

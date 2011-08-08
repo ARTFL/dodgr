@@ -1,0 +1,1 @@
+from virtual_norm import Virtual_Normalize

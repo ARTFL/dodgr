@@ -1,6 +1,5 @@
 import logging
 import itertools
-#from tornado.database import Row
 from database import SQL
 
 from pylons import request, response, session, tmpl_context as c
@@ -39,6 +38,11 @@ class DodgrdicoController(BaseController):
         word = request.params['word']
         return redirect_to(url_for(controller='dodgrdico', action='define',
                             word=word))
+                            
+    def lem_search(self, word):
+        lem = app_globals.word2lem[word]
+        c.lem = stealth_headword_link(app_globals.word2lem[word])
+        return lem
 
     def define(self, word):
         """Load up the test dictionary and serve the definition, if any, for
@@ -47,23 +51,33 @@ class DodgrdicoController(BaseController):
         c.dico_entries = app_globals.stack.define(word)
         c.prons = []
         c.num_entries = 0
-        c.lem = u''
+        c.lem = None
         if not c.dico_entries:
             try:
-                lem = app_globals.word2lem[word]
-                c.lem = stealth_headword_link(app_globals.word2lem[word])
+                lem = self.lem_search(word)
                 c.dico_entries = app_globals.stack.define(lem)
                 if c.dico_entries:
                     word = lem
             except KeyError:
-                pass
+                norm_word = app_globals.virt_norm.normalize(word)
+                c.dico_entries = app_globals.stack.define(norm_word)
+                if c.dico_entries:
+                    word = norm_word
+                else:
+                    try:
+                        lem = self.lem_search(norm_word)
+                        c.dico_entries = app_globals.stack.define(lem)
+                        if c.dico_entries:
+                            word = lem
+                    except KeyError:
+                        pass
         if c.dico_entries:
             c.num_dicos = len(c.dico_entries)
             if c.num_dicos < 3:
                 try:
                     c.lem = stealth_headword_link(app_globals.word2lem[word])
                     if app_globals.word2lem[word] == word:
-                        c.lem = u''
+                        c.lem = None
                 except KeyError:
                     pass
                 c.matches = app_globals.stack.fuzzy_matching(word)
