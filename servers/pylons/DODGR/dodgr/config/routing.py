@@ -25,8 +25,6 @@ def make_map():
     map.connect('/s', controller='dodgrdico', action='lookup')
     map.connect('define', '/mot/{word}', controller='dodgrdico',
                 action='define')
-    #map.connect('define', '/lookup/{word}', controller='lookup',
-                #action='define')
     map.connect('contribute', '/soumissions/', controller='usersub', action='index')
     map.connect('/soumissions/new/{word}', controller='usersub', action='index')
     map.connect('/soumissions/submit', controller='usersub', action='submit')
@@ -38,7 +36,7 @@ def make_map():
     # STATIC ROUTES
 
     map.connect('jquery',
-        'http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js',
+        'http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js',
          _static=True)
 
     # Redirect the trailing-slash version to no slash, which should be the
