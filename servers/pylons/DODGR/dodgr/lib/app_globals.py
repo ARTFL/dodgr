@@ -6,8 +6,9 @@ from pylons import config
 import dico
 from database import SQL
 from lemmas import get_lemma, get_forms
-import sqlite3
 from virtual_normalization import Virtual_Normalize
+import re
+from operator import itemgetter
 
 class Globals(object):
 
@@ -29,8 +30,6 @@ class Globals(object):
                 (u'acad1932',
                  u'Dictionnaire de L\'Académie française 8e édition '
                  u'(1932-1935)'),
-                 (u'bob',
-                 u"Bob: Dictionnaire d'argot"),
                  (u'littre',
                  u'Émile Littré: Dictionnaire de la langue '
                  u'française (1872-1877)'),
@@ -51,7 +50,9 @@ class Globals(object):
                  u'(1694)'),
                  (u'nicot',
                  u'Jean Nicot: Thresor de la langue française '
-                 u'(1606)')]
+                 u'(1606)'),
+                 (u'bob',
+                 u"Bob: Dictionnaire d'argot")]
 
         stack_dicos = []
         tlfi_url = 'http://www.cnrtl.fr/definition/'
@@ -71,3 +72,18 @@ class Globals(object):
         self.word2lem = get_lemma(self.db)
         
         self.virt_norm = Virtual_Normalize()
+        
+        ## extra variables for quick dico lookup
+        bob = dicos.pop()
+        dicos.insert(0, bob)
+        self.quickdict_stack = dico.Stack(self.db, dicos=dicos, full_entry_url=tlfi_url)
+        
+        date = re.compile('(\d{4})')
+        self.dico_date = {}
+        for dic, citation in dicos:
+            try:
+                d = date.search(citation)
+                self.dico_date[dic] = int(d.group(1))
+            except AttributeError:
+                pass
+        self.dico_date = sorted(self.dico_date.iteritems(), key=itemgetter(1))

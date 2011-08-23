@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>${self.title()}</title>
+		<link rel="stylesheet"
+		 href="${url('/css/blueprint/screen.css')}"
+		 type="text/css" media="screen, projection">
+		<link rel="stylesheet"
+		 href="${url('/css/blueprint/print.css')}"
+		 type="text/css" media="print">
+		<link rel="stylesheet"
+		 href="${url('/css/blueprint/typography.css')}"
+		 type="text/css" media="screen, projection">
+		<!--[if lt IE 8]>
+		<link rel="stylesheet"
+		 href="${url('/css/blueprint/ie.css')}"
+		 type="text/css" media="screen, projection">
+		<![endif]-->
+		<link rel="stylesheet" href="${url('/css/dvlf.css')}"
+		 type="text/css" media="screen, projection">
+		<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+		<script src="${url('jquery')}"></script>
+		<script src="${url('/js/dodgr.js')}"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21151868-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+    </head>
+
+    <body>
+
+		<div id="main_container" class="span-14" style="padding:5;">
+
+			<%include file="compact_header_lookup.html" />
+            
+            <div id="main_body" style="display: none">
+			${self.body()}
+			<%include file="footer_lookup.html" />
+            </div>
+		</div>
+    </body>
+</html>

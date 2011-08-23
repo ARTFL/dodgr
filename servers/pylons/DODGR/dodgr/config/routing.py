@@ -25,12 +25,15 @@ def make_map():
     map.connect('/s', controller='dodgrdico', action='lookup')
     map.connect('define', '/mot/{word}', controller='dodgrdico',
                 action='define')
+    #map.connect('define', '/lookup/{word}', controller='lookup',
+                #action='define')
     map.connect('contribute', '/soumissions/', controller='usersub', action='index')
     map.connect('/soumissions/new/{word}', controller='usersub', action='index')
     map.connect('/soumissions/submit', controller='usersub', action='submit')
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
     map.connect('apropos', '/apropos', controller='dodgrdico', action='apropos')
+    
     
     # STATIC ROUTES
 

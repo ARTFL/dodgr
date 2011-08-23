@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+<%inherit file="/base_lookup.html"/>\
+<%namespace name="entries" file="/entries_lookup.html" />
+<%namespace name="sentences" file="/sentences.html" />
+
+<%def name="title()">ARTFL :: Dictionnaire vivant de la langue française :: ${c.word}</%def>
+
+<div class="span-14">
+	<div id="main_headword_container">
+		<form action="${url('/s')}" method="get">
+			<div id="main_headword_form">
+				<input type="text" id="main_headword_input"
+				 name="word" value="${c.word}" />
+			</div>
+		</form>
+	</div>
+
+	${entries.all_dico_entries()}
+
+</div>
+
+

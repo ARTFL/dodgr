@@ -1,0 +1,117 @@
+<%def name="all_dico_entries()">
+	% if c.num_dicos > 2:
+        % if c.lem:
+            <b>${c.word}</b> est une forme fléchie de <b>${c.lem | n}</b>.<br>
+        % endif
+		${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
+		${h.pluralize(['dictionnaire'], c.num_dicos)}.
+		<% count = 0 %>
+		<% dicos = 0 %>
+		% for dico_name, citation, entries in c.dico_entries:
+            <% dicos += 1 %>
+            ${dico_entries(dico_name, count, citation, entries, c.closer_dico)}
+            <% count += len(entries['content']) %>
+		% endfor
+    % else:
+        % if c.lem:
+            <b>${c.word}</b> est une forme fléchie de <b>${c.lem | n}</b>.
+            <br>Sinon, vouliez-vous dire:
+        % else:
+            Voulez-vous dire
+        % endif
+        ${' ou '.join([match for match in c.matches]) | n} ? <br>
+		% if c.dico_entries:
+            ${h.pluralize([u'définition', u'trouvée'], c.num_entries)} dans
+            ${h.pluralize(['dictionnaire'], c.num_dicos)}.
+            <% count = 0 %>
+            <% dicos = 0 %>
+            % for dico_name, citation, entries in c.dico_entries:
+                ${dico_entries(dico_name, count, citation, entries, dicos)}
+                <% count += len(entries['content']) %>
+            % endfor
+        % else:
+            <div class="empty">
+            <b>Aucune entrée ne correspond à votre recherche.  Vous pouvez ajouter la définition de ce mot à notre base de données <a href="/soumissions/new/${c.word}">ici</a>.</b>
+            <br>
+            </div>
+        % endif
+	% endif
+
+	% if len(c.userdefs) > 0:
+		${all_user_defs(c.userdefs)}
+	% endif
+</%def>
+
+<%def name="dico_entries(dico_name, count, citation, entries, closer_dico)">
+	<div class="block_header" style="display: block">
+	% if dico_name == closer_dico:
+        <div class='triangle'>▽</div>
+        <div class="dictionary_name">${citation}</div>
+        <div class="entry_count">${len(entries['content'])}</div>
+        </div>
+        <div class="dico_entries_container">
+    % else:
+        <div class='triangle'>▶</div>
+        <div class="dictionary_name">${citation}</div>
+        <div class="entry_count">${len(entries['content'])}</div>
+        </div>
+        <div class="dico_entries_container" style="display: none">
+    % endif
+    % for position, entry in enumerate(entries['content']):
+        % if position != 0:
+            <hr>
+        % endif
+        <div class="dico_entry">
+        % if dico_name == 'tlfi':
+            ${single_entry(dico_name, entry, count + position, citation, entries['url'])}
+        % else:
+            ${single_entry(dico_name, entry, count + position, citation)}
+        % endif
+        </div>
+    % endfor
+	</div>
+</%def>
+
+<%def name="single_entry(dico_name, entry, count, citation, url=None)">
+	<div class="entry_container">
+		<div class="content">
+		<li>
+		% if dico_name == 'tlfi':
+            ${h.sanitize_html(h.truncate(entry, dico_name)) | n}<span class="expand_entry"> [...]</span></div>
+            <a class="web_link" href="${url}" target="_blank">Voir la définition complète au CNRTL</a>
+        % elif len(entry) < 400:
+            ${h.sanitize_html(entry) | n}</div>
+        % else:
+            <span id="truncated${count}">${h.sanitize_html(h.truncate(entry)) | n}
+            <a href="javascript:void(0);" class="expand_entry" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"> [...]</a></span>
+            <span id="full${count}" style="display: none;">${h.sanitize_html(entry) | n}
+            <a href="javascript:void(0);" class="expand_entry" id="displayText${count}" onclick="expand('truncated${count}', 'full${count}')"><br>Cliquer pour réduire</a></span>
+            </div>
+        % endif
+	</div>
+</%def>
+
+
+<%def name="all_user_defs(userdefs)">
+	<div class="block_header" style="display: block">
+		<div class='triangle'>▽</div>
+		<div class="dictionary_name">Définitions d'Utilisateurs</div>
+		<div class="entry_count">${len(userdefs)}</div>
+	</div>
+	<div class="dico_entries_container">
+		% for position, userdef in enumerate(userdefs):
+            % if position != 0:
+                <hr>
+            % endif
+			<div class="dico_entry">
+			${user_def(userdef)}
+			</div>
+	    % endfor
+	</div>
+</%def>
+
+<%def name="user_def(content)">
+	<div class="entry_container">
+		<div class="content"><li>${c.word.upper()}: ${h.sanitize_html(content.decode('utf-8')) | n}</div>
+	</div>
+</%def>

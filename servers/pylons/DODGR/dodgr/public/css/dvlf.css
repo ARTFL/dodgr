@@ -12,6 +12,17 @@ body {
     vertical-align: bottom;
 }
 
+
+#header_lookup {
+    font-size: 210%;
+    font-family: 'Copperplate Gothic Bold';
+    color: #670000;
+    border-bottom: 1px solid #000000;
+    padding: .2%;
+    padding-bottom: 0;
+    vertical-align: bottom;
+}
+
 #footer {
     color:#FFFFFF;
     background-color:#670000;
@@ -21,6 +32,20 @@ body {
 }
 
 #footer a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1%;
+}
+
+#footer_lookup {
+    color:#FFFFFF;
+    background-color:#670000;
+    font-size: 79%;
+    padding: .2%;
+    margin-top: 1%;
+}
+
+#footer_lookup a {
     color: #fff;
     text-decoration: none;
     margin-left: 1%;
@@ -179,6 +204,16 @@ a.stealth_headword {
 a.stealth_headword:hover {
     text-decoration: underline;
     color: #670000;
+}
+
+a.title_lookup {
+    font-size: 92%;
+    text-decoration: none;
+    color: #670000;
+}
+
+a.title_lookup:hover {
+    text-decoration: underline;
 }
 
 a.visible_headword {
