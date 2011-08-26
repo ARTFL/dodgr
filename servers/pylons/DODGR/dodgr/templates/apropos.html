@@ -18,7 +18,10 @@
                 <link rel="stylesheet" href="${url('/css/dvlf.css')}"
                  type="text/css" media="screen, projection">
 		<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
-                <script src="${url('jquery')}"></script>
+		<style type="text/css">
+		  ul {margin-top: 0px; padding-top: 0px;}
+                </style>
+		<script src="${url('jquery')}"></script>
                 <script src="${url('/js/dodgr.js')}"></script>
 
 </head>
@@ -28,10 +31,34 @@
 
 			<%include file="compact_header.html" />
 
-			<b>Qu’est-ce que le DVLF?</b>
+			<b>Qu’est-ce que le DVLF ?</b>
 			<p>Le dictionnaire vivant de la langue française (DVLF) est une nouvelle manière de consulter le dictionnaire. Bien que nous incluons les entrées de nombreux dictionnaires traditionnels, nous avons aussi mis en place un dispositif qui rend possible votre propre contribution à notre base de données, vous permettant d’ajouter vous-même vos propres définitions, vos exemples. Nous avons ainsi réuni de nombreux exemples de phrases dans lesquels les mots recherchés sont utilisés, ce qui est utile pour voir de quelle manière l’utilisation d’un terme a pu évolué à travers les siècles. En outre, dans les semaines et mois qui viennent, vous aurez la possibilité de noter et de critiquer nos définitions et exemples, permettant ainsi au DVLF de montrer automatiquement la meilleure information possible en s’appuyant sur votre participation. Le DVLF existe pour vous donner un meilleur dictionnaire, un dictionnaire qui reflète la manière dont VOUS utilisez les mots.</p>
-			<br>
-			<b>Qui a mis en place le DVLF?</b>
+			<b>D’où viennent les données ?</b>
+			<p style="margin:0;"><i>Définitions</i></p>
+			<ul>
+			<li><a href="http://atilf.atilf.fr/tlf.htm" target="_blank">Le Trésor de la Langue Française informatisé (TLFi)</a></li>
+			<li><a href="http://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil" target="_blank">Wiktionnaire</a></li>
+			<li><a href="http://www.languefrancaise.net/bob/" target="_blank">Bob: dictionnaire arg. pop. fam.</a></li>
+			<li><a href="http://artfl-project.uchicago.edu/node/17" target="_blank">Dictionnaires d'autrefois</a></li>
+			</ul>
+			<i>Synonymes et antonymes</i>
+			<ul>
+			<li><a href="http://www.crisco.unicaen.fr/cgi-bin/cherches.cgi" target="_blank">CRISCO</a></li>
+			</ul>
+			<i>"Usage à travers le temps"</i>
+			<ul>
+			<li><a href="http://artfl-project.uchicago.edu/node/84" target="_blank">ARTFL-FRANTEXT Time Series</a></li>
+			</ul>
+			<i>Prononciation</i>
+			<ul>
+			<li><a href="http://atilf.atilf.fr/tlf.htm" target="_blank">TLFi</a></li>
+			<li><a href="http://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil" target="_blank">Wiktionnaire???</a></li>
+			</ul>
+			<i>Phrases en exemple</i>
+			<ul>
+			  <li><a href="http://www.lexique.org/public/corpatext.php" target="_blank">Corpatext</a></li>
+			</ul>
+			<b>Qui a mis en place le DVLF ?</b>
 			<p>Le DVLF a été réalisé par le <a href="http://artfl-project.uchicago.edu/" target="_blank">ARTFL Project</a> à <a href="http://www.uchicago.edu/index.shtml" target="_blank">l’Université de Chicago</a>. Les principaux développeurs sont Tim Allen, Charles Cooney, Clovis Gladstone, et Russell Horton. Nous aimerions remercier le National Endowment for the Humanities, tout le monde à ARTFL (en particulier nos directeurs Robert Morrissey et Mark Olsen), la division des Humanités et le Computation Institute de l’Université de Chicago, et <a href="http://www.wordnik.com/" target="_blank">Wordnik</a> pour leur soutien et leurs conseils tout au long du projet. Nous souhaiterions également remercier le travail fourni par nos collègues à <a href="http://www.atilf.fr/" target="_blank">ATILF</a>, <a href="http://www.lexique.org/" target="_blank">Lexique</a>, et <a href="http://www.crisco.unicaen.fr/cgi-bin/cherches.cgi" target="_blank">CRISCO</a>, sans lesquels le DVLF n’aurait pu offrir une si large gamme de données. Le DVLF est financé par le National Endowment for the Humanities <a href="http://www.neh.gov/grants/guidelines/digitalhumanitiesstartup.html" target="_blank">Digital Start-up Grant</a>.</p>
 
 			<center><a href="http://www.uchicago.edu/index.shtml" target="_blank"><img src="${url('img/University_Wordmark.gif')}"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.neh.gov/" target="_blank"><img src="${url('/img/NEH_Logo_Horizontal_RGB.jpg')}"></a></center>
