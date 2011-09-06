@@ -1,6 +1,7 @@
 """Setup the DODGR application"""
 import logging
 
+import pylons.test
 from dodgr.config.environment import load_environment
 from dodgr.model import meta
 
@@ -12,3 +13,6 @@ def setup_app(command, conf, vars):
 
     # Create the tables if they don't already exist
     meta.metadata.create_all(bind=meta.engine)
+    
+    if not pylons.test.pylonsapp:
+        load_environment(conf.global_conf, conf.local_conf)

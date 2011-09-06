@@ -2,8 +2,8 @@ import logging
 import itertools
 from database import SQL
 
-from pylons import request, response, session, tmpl_context as c
-from pylons.controllers.util import abort, redirect_to, url_for
+from pylons import request, response, session, url, tmpl_context as c
+from pylons.controllers.util import abort, redirect
 
 from dodgr.lib.base import BaseController, render
 from dodgr.lib.helpers import stealth_headword_link, headword_link
@@ -36,7 +36,7 @@ class DodgrdicoController(BaseController):
         """This action handles incoming search requests."""
 
         word = request.params['word']
-        return redirect_to(url_for(controller='dodgrdico', action='define',
+        return redirect(url(controller='dodgrdico', action='define',
                             word=word))
                             
     def lem_search(self, word):
@@ -47,6 +47,7 @@ class DodgrdicoController(BaseController):
     def define(self, word):
         """Load up the test dictionary and serve the definition, if any, for
         the word defined in the route"""
+        c.word = word
         word = word.rstrip().lower()
         c.dico_entries = app_globals.stack.define(word)
         c.prons = []
@@ -58,6 +59,7 @@ class DodgrdicoController(BaseController):
                 c.dico_entries = app_globals.stack.define(lem)
                 if c.dico_entries:
                     word = lem
+                    c.lem = word
             except KeyError:
                 pass
         if not c.dico_entries:
@@ -71,6 +73,7 @@ class DodgrdicoController(BaseController):
                     c.dico_entries = app_globals.stack.define(lem)
                     if c.dico_entries:
                         word = lem
+                        c.lem = word
                 except KeyError:
                     pass
         if c.dico_entries:
@@ -95,6 +98,8 @@ class DodgrdicoController(BaseController):
             c.matches = app_globals.stack.fuzzy_matching(word)
             c.matches = [headword_link(term) for term in c.matches if term != word][:3]
                         
+        if c.lem == None:
+            c.lem = c.word
         
         db = app_globals.db
 
@@ -116,7 +121,7 @@ class DodgrdicoController(BaseController):
                 c.num_sentences += len(sentence_db)
                 
         if c.num_corpora > 0:
-            c.patterns = compile_patterns(c.word)
+            c.patterns = compile_patterns(c.lem)
 
 
         # Synonyms and antonyms                            

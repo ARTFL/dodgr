@@ -4,8 +4,8 @@ import psycopg2
 
 import re
 
-from pylons import request, response, session, tmpl_context as c
-from pylons.controllers.util import abort, redirect_to, url_for
+from pylons import request, response, session, url, tmpl_context as c
+from pylons.controllers.util import abort, redirect
 from dodgr.lib.base import BaseController, render
 from pylons import app_globals
 from sentences import get_sentences

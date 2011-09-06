@@ -3,7 +3,7 @@ import MySQLdb
 
 from pylons import config, request, response, session, tmpl_context as c
 from pylons import app_globals
-from pylons.controllers.util import abort, redirect_to
+from pylons.controllers.util import abort, redirect
 
 from dodgr.lib.base import BaseController, render
 

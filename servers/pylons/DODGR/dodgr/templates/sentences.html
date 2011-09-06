@@ -31,7 +31,7 @@
             function votecorpa(table, id, action, score, tracker){
             $.ajax({
                 type: "GET",
-                url: '${h.url_for(controller="uservote", action="index")}',
+                url: '${h.url(controller="uservote", action="index")}',
                 data:{table:table, id:id, action:action, score:score},
                 dataType: "text",
                 success: function(num) {
@@ -86,7 +86,7 @@
         function votelittre(table, id, action, score, tracker){
             $.ajax({
                 type: "GET",
-                url: '${h.url_for(controller="uservote", action="index")}',
+                url: '${h.url(controller="uservote", action="index")}',
                 data:{table:table, id:id, action:action, score:score},
                 dataType: "text",
                 success: function(num) {
@@ -141,7 +141,7 @@
         function voteweb(table, id, action, score, tracker){
             $.ajax({
                 type: "GET",
-                url: '${h.url_for(controller="uservote", action="index")}',
+                url: '${h.url(controller="uservote", action="index")}',
                 data:{table:table, id:id, action:action, score:score},
                 dataType: "text",
                 success: function(num) {

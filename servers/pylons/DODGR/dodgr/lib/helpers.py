@@ -9,7 +9,7 @@ available to Controllers. This module is available to templates as 'h'.
 
 import tidylib
 import re
-from pylons.controllers.util import url_for
+from pylons import url
 from pylons import app_globals
 
 
@@ -47,11 +47,11 @@ def pluralize(word, count, plurals=None):
 def stealth_headword_link(word):
     """Return a "stealth" link for the word"""
 
-    word_url = url_for(controller='dodgrdico', action='define', word=word)
+    word_url = url(controller='dodgrdico', action='define', word=word)
     return '<a class="stealth_headword" href="%s">%s</a>' % (word_url, word)
 
 def headword_link(word):
-    word_url = url_for(controller='dodgrdico', action='define', word=word)
+    word_url = url(controller='dodgrdico', action='define', word=word)
     return '<a class="visible_headword" href="%s">%s</a>' % (word_url, word)
 
 def compile_patterns(word):

@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 """The application's Globals object"""
 
-from pylons import config
+#from pylons import config
+from beaker.cache import CacheManager
+from beaker.util import parse_cache_config_options
 import dico
 from database import SQL
 from lemmas import get_lemma, get_forms
@@ -17,12 +19,13 @@ class Globals(object):
 
     """
 
-    def __init__(self):
+    def __init__(self, config):
         """One instance of Globals is created during application
         initialization and is available during requests via the
         'app_globals' variable
 
         """
+        self.cache = CacheManager(**parse_cache_config_options(config))
 
         dicos = [('tlfi',
                 u'Le Trésor de la Langue Française ' +

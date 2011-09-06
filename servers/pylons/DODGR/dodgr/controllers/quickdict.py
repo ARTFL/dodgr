@@ -2,8 +2,8 @@ import logging
 import itertools
 from database import SQL
 
-from pylons import request, response, session, tmpl_context as c
-from pylons.controllers.util import abort, redirect_to, url_for
+from pylons import request, response, session, url, tmpl_context as c
+from pylons.controllers.util import abort, redirect
 
 from dodgr.lib.base import BaseController, render
 from dodgr.lib.helpers import stealth_headword_link, headword_link

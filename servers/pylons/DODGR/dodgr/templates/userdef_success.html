@@ -4,4 +4,4 @@
 <%def name="title()">ARTFL :: Dictionnaire vivant de la langue française :: Succès: nouvelle définition ajoutée</%def>
 
 <br>
-Merci pour votre contribution ! Vous pouvez voir votre nouvelle entrée à la page suivante: <a href="${h.url_for('define', word=c.word)}">${c.word}</a>
+Merci pour votre contribution ! Vous pouvez voir votre nouvelle entrée à la page suivante: <a href="${h.url('define', word=c.word)}">${c.word}</a>
