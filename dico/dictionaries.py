@@ -2,6 +2,7 @@
 """Dictionary models"""
 import cPickle
 import copy
+import psycopg2
 from Levenshtein import distance
 
         
@@ -20,14 +21,17 @@ class Stack(object):
     def add_dico(self, dicos):
         """Load a dico into the stack"""
         for dico, citation in dicos:
-            results = self.db.query('headword', dico, obj='array')
-            results = [result for result in results]
-            for word in results:
-                if word in self.index_dico:
-                    self.index_dico[word].append((dico, citation))
-                else:
-                    self.index_dico[word] = []
-                    self.index_dico[word].append((dico, citation))
+            try:
+                results = self.db.query('headword', dico, obj='array')
+                results = [result.decode('utf-8') for result in results]
+                for word in results:
+                    if word in self.index_dico:
+                        self.index_dico[word].append((dico, citation))
+                    else:
+                        self.index_dico[word] = []
+                        self.index_dico[word].append((dico, citation))
+            except psycopg2.ProgrammingError:
+                pass
                     
     def custom_sorting(self, word):
         """idea taken from http://code.activestate.com/recipes/576507-sort-strings-containing-german-umlauts-in-correct-/
@@ -53,7 +57,7 @@ class Stack(object):
             for dico, citation in self.index_dico[word]:
                 results = self.db.query("entry", dico, word, obj='array')
                 if len(results) != 0:
-                    entries = cPickle.loads(results[0])
+                    entries = cPickle.loads(str(results[0]))
                     if dico == 'tlfi':
                         entries['url'] = self.full_entry_url + word
                     dico_entries.append((dico, citation, entries))

@@ -1,41 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#import psycopg2
-import MySQLdb
+import psycopg2
 import itertools
 
        
 class SQL(object):
     
     def __init__(self, dbname, user_r, pwd_r, user_w, pwd_w):
-        self.cred_r = {'user': user_r, 'password': pwd_r, 'db': dbname}
-        self.cred_w = {'user': user_w, 'password': pwd_w, 'db': dbname}
-        
+        self.cred_r = 'dbname=%s user=%s password=%s' % (dbname, user_r, pwd_r)
+        self.cred_w = 'dbname=%s user=%s password=%s' % (dbname, user_w, pwd_w)
+    
     def __db_init_read__(self):
-        self.conn = MySQLdb.connect(user=self.cred_r['user'], passwd=self.cred_r['password'], db=self.cred_r['db'], use_unicode=True)
+        self.conn = psycopg2.connect(self.cred_r)
         self.cursor = self.conn.cursor()
-        self.conn.set_character_set('utf8')                                                                                                                                                                                                                                                   
-        self.cursor.execute('SET NAMES utf8;')                                                                                                                                                                                                                                              
-        self.cursor.execute('SET CHARACTER SET utf8;')                                                                                                                                                                                                                                      
-        self.cursor.execute('SET character_set_connection=utf8;')
         
     def __db_init_write__(self):
-        self.conn = MySQLdb.connect(user=self.cred_w['user'], passwd=self.cred_w['password'], db=self.cred_w['db'], use_unicode=True)
+        self.conn = psycopg2.connect(self.cred_w)
         self.cursor = self.conn.cursor()
-        self.conn.set_character_set('utf8')                                                                                                                                                                                                                                                   
-        self.cursor.execute('SET NAMES utf8;')                                                                                                                                                                                                                                              
-        self.cursor.execute('SET CHARACTER SET utf8;')                                                                                                                                                                                                                                      
-        self.cursor.execute('SET character_set_connection=utf8;')
         
     def query(self, fields, table, word=None, obj='list_tuples', args=''):
         self.__db_init_read__()
         if word:
             query = "select %s from %s where headword=" % (fields, table)
             query += '%s '
-            query += ' collate utf8_bin '
             query += args
-            
             try:
                 self.cursor.execute(query, (word,))
             except UnicodeEncodeError:

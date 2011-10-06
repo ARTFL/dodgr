@@ -98,8 +98,6 @@ class DodgrdicoController(BaseController):
             c.matches = app_globals.stack.fuzzy_matching(word)
             c.matches = [headword_link(term) for term in c.matches if term != word][:3]
                         
-        if c.lem == None:
-            c.lem = c.word
         
         db = app_globals.db
 
@@ -121,7 +119,10 @@ class DodgrdicoController(BaseController):
                 c.num_sentences += len(sentence_db)
                 
         if c.num_corpora > 0:
-            c.patterns = compile_patterns(c.lem)
+            if c.lem == None:
+                c.patterns = compile_patterns(c.word)
+            else:
+                c.patterns = compile_patterns(c.lem)
 
 
         # Synonyms and antonyms                            
