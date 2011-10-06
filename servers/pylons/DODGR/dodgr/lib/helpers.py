@@ -9,6 +9,7 @@ available to Controllers. This module is available to templates as 'h'.
 
 import tidylib
 import re
+from HTMLParser import HTMLParser
 from pylons import url
 from pylons import app_globals
 
@@ -79,3 +80,21 @@ def truncate(content, dico_name=None):
         length = 300
     truncated = u' '.join(content[:length].split(u' ')[0:-1])
     return truncated
+
+
+## Thank you Stack Overflow:
+## http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python
+class MLStripper(HTMLParser):
+    def __init__(self):
+        self.reset()
+        self.fed = []
+    def handle_data(self, d):
+        self.fed.append(d)
+    def get_data(self):
+        return ''.join(self.fed)
+
+def strip_tags(html):
+    html = sanitize_html(html)
+    s = MLStripper()
+    s.feed(html)
+    return s.get_data()

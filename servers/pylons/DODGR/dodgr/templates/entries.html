@@ -110,8 +110,9 @@
 	</div>
 </%def>
 
+    
 <%def name="user_def(content)">
 	<div class="entry_container">
-		<div class="content"><li>${c.word.upper()}: ${h.sanitize_html(content.decode('utf-8')) | n}</div>
+		<div class="content"><li>${c.word.upper()}: ${h.strip_tags(content.decode('utf-8'))}</div>
 	</div>
 </%def>

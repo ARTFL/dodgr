@@ -21,7 +21,7 @@ class Stack(object):
         """Load a dico into the stack"""
         for dico, citation in dicos:
             results = self.db.query('headword', dico, obj='array')
-            results = [result.decode('utf-8') for result in results]
+            results = [result for result in results]
             for word in results:
                 if word in self.index_dico:
                     self.index_dico[word].append((dico, citation))
@@ -53,7 +53,7 @@ class Stack(object):
             for dico, citation in self.index_dico[word]:
                 results = self.db.query("entry", dico, word, obj='array')
                 if len(results) != 0:
-                    entries = cPickle.loads(str(results[0]))
+                    entries = cPickle.loads(results[0])
                     if dico == 'tlfi':
                         entries['url'] = self.full_entry_url + word
                     dico_entries.append((dico, citation, entries))

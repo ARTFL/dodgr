@@ -27,7 +27,9 @@ class Globals(object):
         """
         self.cache = CacheManager(**parse_cache_config_options(config))
 
-        dicos = [('tlfi',
+        dicos = [('wiktionary',
+                u'Wiktionnaire ' u'2011'),
+                ('tlfi',
                 u'Le Trésor de la Langue Française ' +
                 u'Informatisé'),
                 (u'acad1932',
