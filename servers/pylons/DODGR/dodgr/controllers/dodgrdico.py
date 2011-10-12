@@ -40,8 +40,9 @@ class DodgrdicoController(BaseController):
                             word=word))
                             
     def lem_search(self, word):
-        lem = app_globals.word2lem[word]
-        c.lem = stealth_headword_link(app_globals.word2lem[word])
+        lem = app_globals.pull_lem(app_globals.db, word)
+        c.lem = stealth_headword_link(lem)
+        print c.lem.encode('utf-8')
         return lem
 
     def define(self, word):
@@ -59,7 +60,6 @@ class DodgrdicoController(BaseController):
                 c.dico_entries = app_globals.stack.define(lem)
                 if c.dico_entries:
                     word = lem
-                    c.lem = word
             except KeyError:
                 pass
         if not c.dico_entries:
@@ -73,15 +73,14 @@ class DodgrdicoController(BaseController):
                     c.dico_entries = app_globals.stack.define(lem)
                     if c.dico_entries:
                         word = lem
-                        c.lem = word
                 except KeyError:
                     pass
         if c.dico_entries:
             c.num_dicos = len(c.dico_entries)
             if c.num_dicos < 3:
                 try:
-                    c.lem = stealth_headword_link(app_globals.word2lem[word])
-                    if app_globals.word2lem[word] == word:
+                    lem = self.lem_search(word)
+                    if lem == word:
                         c.lem = None
                 except KeyError:
                     pass
@@ -122,7 +121,7 @@ class DodgrdicoController(BaseController):
             if c.lem == None:
                 c.patterns = compile_patterns(c.word)
             else:
-                c.patterns = compile_patterns(c.lem)
+                c.patterns = compile_patterns(lem)
 
 
         # Synonyms and antonyms                            

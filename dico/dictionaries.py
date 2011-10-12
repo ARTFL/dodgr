@@ -31,6 +31,7 @@ class Stack(object):
                         self.index_dico[word] = []
                         self.index_dico[word].append((dico, citation))
             except psycopg2.ProgrammingError:
+            # this is for development purposes, in case on of the dicos is not loaded in
                 pass
                     
     def custom_sorting(self, word):

@@ -1,1 +1,1 @@
-from lemma import get_lemma, get_forms
+from lemma import pull_lemma, pull_forms

@@ -60,7 +60,7 @@ def compile_patterns(word):
     #optimization according to http://wiki.python.org/moin/PythonSpeed/PerformanceTips
     add = patterns.add
     try:
-        lem2words = set(app_globals.lem2words[word])
+        lem2words = set(app_globals.pull_forms(word))
         for term in lem2words:
             add(re.compile('(?iu)(\W+|\A)(%s)(\W+|\Z)' % term))
     except:

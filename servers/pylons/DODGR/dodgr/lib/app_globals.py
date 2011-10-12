@@ -7,7 +7,7 @@ from beaker.cache import CacheManager
 from beaker.util import parse_cache_config_options
 import dico
 from database import SQL
-from lemmas import get_lemma, get_forms
+from lemmas import pull_lemma, pull_forms
 from virtual_normalization import Virtual_Normalize
 import re
 from operator import itemgetter
@@ -58,6 +58,9 @@ class Globals(object):
                  u'(1606)'),
                  (u'bob',
                  u"Bob: Dictionnaire d'argot")]
+                 
+        ## Remove wiktionary from stack until fixed
+        dicos.pop(0)
 
         stack_dicos = []
         tlfi_url = 'http://www.cnrtl.fr/definition/'
@@ -73,8 +76,8 @@ class Globals(object):
 
         self.stack = dico.Stack(self.db, dicos=dicos, full_entry_url=tlfi_url)
         
-        self.lem2words = get_forms(self.db)
-        self.word2lem = get_lemma(self.db)
+        self.pull_lem = pull_lemma
+        self.pull_forms = pull_forms
         
         self.virt_norm = Virtual_Normalize()
         
